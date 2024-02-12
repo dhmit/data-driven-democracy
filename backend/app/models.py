@@ -1,3 +1,3 @@
 """
-Models for the the [BOILERPLATE] web app.
+Models for the the data-driven-democracy web app.
 """
