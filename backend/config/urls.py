@@ -17,16 +17,21 @@ Including another URL configuration
 from django.contrib import admin
 from django.urls import path
 
-try:
-    from ..app import views
-except (ImportError, ModuleNotFoundError):
-    from app import views
+from app import views, api_views
 
 urlpatterns = [
     # Django admin page
     path('admin/', admin.site.urls),
-    # API endpoints
+
+    ################################################################################
+    # View Pages
+    ################################################################################
     path('', views.index),
     path('example/', views.example),
     path('example/<example_id>', views.example),
+
+    ################################################################################
+    # API endpoints
+    ################################################################################
+    path('1951-1962elections/', api_views.all_elections),
 ]
