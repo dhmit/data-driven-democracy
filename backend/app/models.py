@@ -17,3 +17,16 @@ class TCPDElection(models.Model):
     )
 
     number_of_seats = models.IntegerField()
+
+
+class SeatShare(models.Model):
+    # https://docs.djangoproject.com/en/5.0/ref/models/fields/#enumeration-types
+
+    party_name = models.CharField(
+        max_length=10,
+
+    )
+
+    seats_held = models.IntegerField()
+    election_year = models.IntegerField()
+    total_seats = models.IntegerField()
