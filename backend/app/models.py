@@ -6,6 +6,9 @@ from django.db import models
 
 
 class TCPDElection(models.Model):
+    """
+    Represents each assembly and general election from 1951-1962
+    """
     # https://docs.djangoproject.com/en/5.0/ref/models/fields/#enumeration-types
     class ElectionType(models.TextChoices):
         AE = "AE"
