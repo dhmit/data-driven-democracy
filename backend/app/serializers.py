@@ -32,7 +32,7 @@ class TCPDElectionSerializer(serializers.ModelSerializer):
 
 class SeatShareSerializer(serializers.ModelSerializer):
     """
-    Serializes a photo
+    Serializes seat shares
     """
 
     class Meta:

@@ -25,7 +25,8 @@ def all_elections(request):
 @api_view(['GET'])
 def all_seats(request):
     """
-    API endpoint to get all elections in the database
+    API endpoint to get the seats shares of each party
+    in each general election in the database
     """
     seat_shares = SeatShare.objects.all()
     serializer = SeatShareSerializer(seat_shares, many=True)

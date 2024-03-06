@@ -20,6 +20,10 @@ class TCPDElection(models.Model):
 
 
 class SeatShare(models.Model):
+    """
+    Represents a political party and the number of seats
+    it held in Lok Sahbha in a specific election year
+    """
     # https://docs.djangoproject.com/en/5.0/ref/models/fields/#enumeration-types
 
     party_name = models.CharField(
