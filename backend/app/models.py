@@ -37,3 +37,18 @@ class SeatShare(models.Model):
     seats_held = models.IntegerField()
     election_year = models.IntegerField()
     total_seats = models.IntegerField()
+
+class PartyContribution(models.Model):
+    """
+    Represents a contribution amount, the year it was donated, and the specific 
+    recognized national party it was donated to
+    """
+    # https://docs.djangoproject.com/en/5.0/ref/models/fields/#enumeration-types
+
+    party_name = models.CharField(
+        max_length=5,
+
+    )
+
+    year = models.IntegerField()
+    amount_contributed = models.IntegerField()
