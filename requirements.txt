@@ -9,4 +9,4 @@ sqlparse==0.4.4
 tqdm==4.66.2
 camelot-py>=0.11.0
 opencv-python==4.9.0.80
-ghostscript==10.03.0
+ghostscript
