@@ -60,6 +60,7 @@ class LSElectionSerializaer(serializers.ModelSerializer):
             "party_name",
             "candidate",
             "candidate_position",
-            "margin_percentage"
+            "margin_percentage",
+            "vote_share"
 
         ]

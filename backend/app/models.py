@@ -64,4 +64,6 @@ class LSElection(models.Model):
     election_year = models.IntegerField()
 
     candidate_position = models.IntegerField()
-    margin_percentage = models.FloatField()
+    margin_percentage = models.FloatField(null=True, blank=True, default=0)
+
+    vote_share = models.FloatField(null=True, blank=True, default=0)
