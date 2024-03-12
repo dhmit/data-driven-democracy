@@ -37,3 +37,31 @@ class SeatShare(models.Model):
     seats_held = models.IntegerField()
     election_year = models.IntegerField()
     total_seats = models.IntegerField()
+
+
+class LSElection(models.Model):
+    """
+    Represents a Lok Sahba election
+    """
+    # https://docs.djangoproject.com/en/5.0/ref/models/fields/#enumeration-types
+
+    party_name = models.CharField(
+        max_length=10,
+    )
+
+    state_name = models.CharField(
+        max_length=30,
+    )
+
+    constituency_name = models.CharField(
+        max_length=30,
+    )
+
+    candidate = models.CharField(
+        max_length=30
+    )
+
+    election_year = models.IntegerField()
+
+    candidate_position = models.IntegerField()
+    margin_percentage = models.FloatField()

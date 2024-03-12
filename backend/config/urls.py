@@ -35,4 +35,5 @@ urlpatterns = [
     ################################################################################
     path('1951-1962elections/', api_views.all_elections),
     path('1962-2019seats/', api_views.all_seats),
+    path('ls-elections/', api_views.all_ls_elections)
 ]

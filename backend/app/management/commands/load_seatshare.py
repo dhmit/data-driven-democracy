@@ -1,5 +1,5 @@
 """
-Django management command load_dataset
+Django management command load_seatshare
 
 Updates local db with values from base csv dataset
 """

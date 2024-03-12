@@ -2,11 +2,13 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import (
+    LSElection,
     TCPDElection,
     SeatShare
 )
 
 from .serializers import (
+    LSElectionSerializaer,
     TCPDElectionSerializer,
     SeatShareSerializer
 )
@@ -30,4 +32,15 @@ def all_seats(request):
     """
     seat_shares = SeatShare.objects.all()
     serializer = SeatShareSerializer(seat_shares, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def all_ls_elections(request):
+    """
+    API endpoint to get each Lok Sahbha election
+    in the database
+    """
+    ls_elections = LSElection.objects.all()
+    serializer = LSElectionSerializaer(ls_elections, many=True)
     return Response(serializer.data)
