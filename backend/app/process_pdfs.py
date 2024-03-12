@@ -3,6 +3,11 @@ import camelot
 import fnmatch
 import pandas as pd
 
+#TO-DO: Check for PDFs resulting in empty table, edit tables to ensure data in formed correctly in CSV file
+# Idea: check for cells with \n characters using the tables' .data attribute and separate them into rows 
+# if each column has the same number of elements split by \n
+
+#Search through data folder & only collect PDF files
 def find_files(directory, pattern):
     matches = []
     for root, _, filenames in os.walk(directory):
@@ -10,7 +15,6 @@ def find_files(directory, pattern):
             matches.append(os.path.join(root, filename))
     return matches  
 
-# Example usage:
 directory = 'data'
 pattern = '*.pdf'
 found_files = find_files(directory, pattern)
