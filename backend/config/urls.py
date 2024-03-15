@@ -33,6 +33,7 @@ urlpatterns = [
     ################################################################################
     # API endpoints
     ################################################################################
-    path('1951-1962elections/', api_views.all_elections),
-    path('1962-2019seats/', api_views.all_seats),
+    path('api/1951-1962elections/', api_views.all_elections),
+    path('api/1962-2019seats/', api_views.all_seats),
+    path("api/SDE_DATA_IN_F7DSTRBND_1991/<int:feature_limit>", api_views.get_SDE_DATA_IN_F7DSTRBND_1991),
 ]
