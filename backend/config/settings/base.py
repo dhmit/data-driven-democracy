@@ -17,6 +17,7 @@ SETTINGS_DIR = os.path.join(CONFIG_DIR, 'settings')
 DB_PATH = os.path.join(BACKEND_DIR, 'db.sqlite3')
 PROJECT_ROOT = os.path.dirname(BACKEND_DIR)
 DATASET_DIR = os.path.join(BACKEND_DIR, 'app', 'data')
+GEOJSON_DIR = os.path.join(DATASET_DIR, "geojson")
 
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
