@@ -12,7 +12,7 @@ const Nav = () => {
                 </li>
             </ul>
             <a className="lab-link" href="https://digitalhumanities.mit.edu/" target="_blank"
-               rel="noreferrer">
+                rel="noreferrer">
                 <img className="lab-image" src={DH_LOGO}/>
             </a>
         </nav>

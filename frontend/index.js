@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import {createRoot} from "react-dom/client";
 import "./scss/index.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Base from "./components/global/Base";
@@ -19,9 +19,11 @@ const COMPONENTS = {
 
 const PreselectedComponent = COMPONENTS[COMPONENT_NAME || "ErrorNotFoundComponent"];
 
-ReactDOM.render(
+const container = document.getElementById("app_root");
+const root = createRoot(container);
+
+root.render(
     <Base>
         <PreselectedComponent {...COMPONENT_PROPS} />
-    </Base>,
-    document.getElementById("app_root")
+    </Base>    
 );
