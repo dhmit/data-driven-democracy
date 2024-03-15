@@ -9,12 +9,12 @@ module.exports = {
         index: "./frontend/index"
     },
     output: {
-        path: path.resolve("./assets/bundles/"),
-        publicPath: "/assets/bundles/",
+        path: path.resolve("./assets/bundles"),
+        publicPath: "/assets/bundles",
         filename: "[name].bundle.js"
     },
     plugins: [
-        new BundleTracker({filename: "./webpack-stats.json"}),
+        new BundleTracker({filename: "webpack-stats.json"}),
         new MiniCssExtractPlugin({ filename: "[name].bundle.css" }),
         new ESLintPlugin(),
     ],
