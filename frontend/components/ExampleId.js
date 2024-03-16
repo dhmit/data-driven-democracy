@@ -165,17 +165,7 @@ const ExampleId = ({ id }) => {
 
     return (
         <div>
-             <h1>This is the Example ID page.</h1>
-            <p>
-                This page demonstrates passing view parameters from Django to React and very simple
-                state management.
-            </p>
-            <p>View params:</p>
-            <ul className="list">
-                <li>ID: {id}</li>
-            </ul>
-            <p>Example state: {tracker}</p>
-            <button onClick={onButtonClick}>Add to tracker</button>
+
 
         <div className="example">
 
@@ -203,23 +193,70 @@ const ExampleId = ({ id }) => {
             ) : <p>Loading...</p>}
 
 
-            <div className="flexJustCenter dataDisplay">
+            <div className="flexJustCenter dataDisplay" style={{padding:'0%'}}>
 
-                <div>
+                <div style={{}}>
                     <div className="mapTitle">
                         Competitiveness Distribution in {electionYear}
                     </div>
                     {displayData && <div>
                     <div className="mapSubtitle">
-                        Results in {displayData[0].constituency_name},{displayData[0].state_name}
+                        <span>
+                            Constituency: &nbsp;
+                        </span>
+                        <span style={{fontWeight:'normal'}}>
+                            {displayData[0].constituency_name}
+                        </span>
+                        <span style={{marginLeft:'5%'}}>
+                        State: &nbsp;
+                        </span>
+                        <span style={{fontWeight:'normal'}}>
+                            {displayData[0].state_name}
+                        </span>
+
                     </div>
+
+
+                    <div>
                     <span className="bold text-left-align">
                         Winning Party:&nbsp;
                     </span>
                     <span>
                         {displayData[0].party_name}
                     </span>
+                    <span className="bold text-left-align" style={{marginLeft:'3%'}}>
+                        Winning Candidate:&nbsp;
+                    </span>
+                    <span>
+                        {displayData[0].candidate}
+                    </span>
                     </div>
+                    <div>
+                    <span className="bold text-left-align">
+                        Runner-Up Party:&nbsp;
+                    </span>
+                    <span>
+                        {displayData[1].party_name}
+                    </span>
+                    <span className="bold text-left-align" style={{marginLeft:'3%'}}>
+                        Runner-Up Candidate:&nbsp;
+                    </span>
+                    <span>
+                        {displayData[1].candidate}
+                    </span>
+                    </div>
+
+                    <div>
+                    <span className="bold text-left-align">
+                        Margin Percentage:&nbsp;
+                    </span>
+                    <span>
+                        {displayData[0].margin_percentage}%
+                    </span>
+                    </div>
+
+                    </div>
+
                     }
 
                 </div>
