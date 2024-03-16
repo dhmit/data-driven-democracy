@@ -17,6 +17,10 @@ const fillBlueOptions = { fillColor: 'blue' };
 function geojsonLayer(geojson) {
     return geojson !== null ? (
         geojson["features"].map((feature) => {
+            const state=feature["properties"]["State_Name"];
+            const constituency=feature["properties"]["Constituency_Name"];
+            console.log(state,constituency);
+
             return (
                 <GeoJSON
                     style={{
@@ -49,13 +53,13 @@ const ExampleId = ({id}) => {
                 setMapData(result);
             }
         }
-    
+
         let ignore = false;
         getGeojson();
         return () => {
             ignore = true;
         };
-    });
+    },[]);
 
     return (
         <div className="example">

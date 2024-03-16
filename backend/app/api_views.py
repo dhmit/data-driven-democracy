@@ -71,8 +71,7 @@ def get_SDE_DATA_IN_F7DSTRBND_1991(request, feature_limit=10):
         settings.GEOJSON_DIR, "India_PC_2019.geojson")
     with open(geojson_path, encoding='utf-8') as f:
         geojson = json.load(f)
-        # num_features = feature_limit if feature_limit is not None else len(
-        #     geojson["features"])
+
         return Response({
             "type": geojson["type"],
             "features": geojson["features"]
