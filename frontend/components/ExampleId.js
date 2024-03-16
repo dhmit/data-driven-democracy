@@ -13,24 +13,75 @@ const multiPolygon = [
     ]
 ];
 const fillBlueOptions = { fillColor: 'blue' };
+function getColor(value){
+    if (value >70){
+        return "#E9EAE0";
+    }
+    else if (value>50){
+        return "#F7BEC0";
+    }
+    else if (value>40){
+        return "#FF8A8A";
+    }
+    else if (value>30){
+        return "#FF5C5C";
 
-function geojsonLayer(geojson) {
+    }
+    else if (value>20){
+        return "#FF2E2E";
+    }
+    else if (value>10){
+        return "#FF0000";
+    }
+    else if (value>5){
+        return "#D10000";
+    }
+    else if (value >3){
+        return "#A30000";
+    }
+    else {
+        return "#750000";
+    }
+}
+function geojsonLayer(geojson,year) {
     return geojson !== null ? (
         geojson["features"].map((feature) => {
+            let color="white";
+
             const state=feature["properties"]["State_Name"];
             const constituency=feature["properties"]["Constituency_Name"];
-            console.log(state,constituency);
+            console.log(state,"HI",constituency);
+            async function getData() {
 
-            return (
-                <GeoJSON
-                    style={{
-                        fillColor: "none",
-                        color: "#20CCD7",
-                    }}
-                    key={feature.properties["DIST_CODE"]}
-                    data={feature}
-                />
-            );
+                const dataResponse = await fetch(`/api/ls-elections/2019/${state}/${constituency}`);
+                const result = await dataResponse.json();
+
+                if (result){
+
+                    console.log("HI",result);
+
+                    if (result.length>0){
+                        color = getColor(result[0]["margin_percentage"]);
+                        console.log(color);
+
+                    }
+                    return result;
+                }
+                return (
+                    <GeoJSON
+                        style={{
+                            fillColor: color,
+                            color: "#20CCD7",
+                        }}
+                        key={feature.properties["DIST_CODE"]}
+                        data={feature}
+                    />
+                );
+
+            }
+            return getData();
+
+
         })
     ) : <></>;
 }
@@ -44,8 +95,13 @@ const ExampleId = ({id}) => {
     };
 
     const [mapData, setMapData] = useState(null);
+    const [mapValuesData,setMapValuesData] = useState(null);
+
+    const [electionYear,setElectionYear]=useState(2019);
 
     useEffect(() => {
+
+
         async function getGeojson() {
             const mapResponse = await fetch("/api/SDE_DATA_IN_F7DSTRBND_1991/10");
             const result = await mapResponse.json();
@@ -54,12 +110,18 @@ const ExampleId = ({id}) => {
             }
         }
 
+
         let ignore = false;
         getGeojson();
         return () => {
             ignore = true;
         };
-    },[]);
+
+    },[electionYear]);
+
+
+
+
 
     return (
         <div className="example">
@@ -76,7 +138,7 @@ const ExampleId = ({id}) => {
             <button onClick={onButtonClick}>Add to tracker</button>
             <MapBase layers={{
                 triangle: <Polygon pathOptions={fillBlueOptions} positions={multiPolygon} />,
-                SDE_DATA_IN_F7DSTRBND_1991: geojsonLayer(mapData)
+                SDE_DATA_IN_F7DSTRBND_1991: geojsonLayer(mapData,electionYear)
             }}/>
         </div>
     );
