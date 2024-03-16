@@ -14,6 +14,7 @@ const COMPONENT_NAME = JSON.parse(COMPONENT_NAME_RAW);
 const COMPONENTS = {
     ErrorNotFoundComponent,
     ExampleId,
+
     Home
 };
 
@@ -25,5 +26,5 @@ const root = createRoot(container);
 root.render(
     <Base>
         <PreselectedComponent {...COMPONENT_PROPS} />
-    </Base>    
+    </Base>
 );

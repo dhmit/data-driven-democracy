@@ -10,7 +10,7 @@ import {
 } from "react-leaflet";
 
 // Default latitude and longitude values for the center of the map
-export const DEFAULT_MAP_CENTER_LAT = 20.5937;
+export const DEFAULT_MAP_CENTER_LAT = 22.5937;
 export const DEFAULT_MAP_CENTER_LNG = 78.9629;
 
 export function MapBase({
@@ -19,11 +19,12 @@ export function MapBase({
     lng = DEFAULT_MAP_CENTER_LNG,
     scrollWheelZoom = true,
     layers = {},
-    singleLayer = false,    
+    singleLayer = false,
     defaultVisibleLayers = [],
     bounds = null,
     zoom = 5,
-    minZoom = 1
+    minZoom = 5,
+    maxZoom=8
 }) {
     let visibleLayersInit = defaultVisibleLayers;
     if (singleLayer) {
@@ -57,7 +58,7 @@ export function MapBase({
         }
         setvisibleLayers(newVisibleLayers);
         setOverlays(getOverlays());
-    }    
+    }
 
     return (
         <div className={className} id="map-container">
@@ -83,6 +84,7 @@ export function MapBase({
                 maxBoundsViscosity={1.0}
                 maxBounds={bounds}
                 minZoom={minZoom}
+                maxZoom={maxZoom}
                 zoomControl={false}>
                 <ZoomControl position="bottomleft"/>
                 <TileLayer
@@ -111,7 +113,8 @@ MapBase.propTypes = {
     singleLayer: PropTypes.bool,
     defaultVisibleLayers: PropTypes.array,
     bounds: PropTypes.array,
-    minZoom: PropTypes.number
+    minZoom: PropTypes.number,
+    maxZoom: PropTypes.number
 };
 
 export default MapBase;

@@ -41,4 +41,8 @@ urlpatterns = [
          api_views.get_specific_ls_election),
     path("api/SDE_DATA_IN_F7DSTRBND_1991/<int:feature_limit>",
          api_views.get_SDE_DATA_IN_F7DSTRBND_1991),
+    path("api/India_PC_2019_simplified/<int:feature_limit>",
+         api_views.get_India_PC_2019_simplified),
+    path("api/India_PC_2019/<int:feature_limit>",
+         api_views.get_India_PC_2019)
 ]
