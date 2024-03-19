@@ -7,7 +7,8 @@ allow the frontend to suggest changes to the backend/database.
 from rest_framework import serializers
 from .models import (
     TCPDElection,
-    SeatShare
+    SeatShare,
+    ElectoralBondCDenomination
 )
 
 
@@ -42,4 +43,15 @@ class SeatShareSerializer(serializers.ModelSerializer):
             "party_name",
             "seats_held",
             "total_seats"
+        ]
+
+class ElectoralBondCDenominationSerializer(serializers.ModelSerializer):
+    """
+    Serializes electoral bond denominations
+    """
+    class Meta: 
+        model = ElectoralBondCDenomination
+        fields = [
+            "party_name",
+            "denomination"
         ]

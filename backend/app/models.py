@@ -37,3 +37,15 @@ class SeatShare(models.Model):
     seats_held = models.IntegerField()
     election_year = models.IntegerField()
     total_seats = models.IntegerField()
+
+class ElectoralBondCDenomination(models.Model):
+    """
+    Represents a electoral bond denomination amount made
+    to a specific party
+    """
+    # use full party name + acronym in parens for now
+    # change to just acronym if preferred
+    party_name = models.CharField(
+        max_length=50
+    )
+    denomination = models.IntegerField()

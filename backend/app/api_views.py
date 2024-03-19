@@ -8,12 +8,14 @@ from rest_framework.response import Response
 
 from .models import (
     TCPDElection,
-    SeatShare
+    SeatShare,
+    ElectoralBondCDenomination
 )
 
 from .serializers import (
     TCPDElectionSerializer,
-    SeatShareSerializer
+    SeatShareSerializer,
+    ElectoralBondCDenominationSerializer
 )
 
 
@@ -50,3 +52,13 @@ def get_SDE_DATA_IN_F7DSTRBND_1991(request, feature_limit=10):
             "type": geojson["type"],
             "features": geojson["features"][:num_features]
         })
+
+@api_view(['GET'])
+def all_electoral_bonds_denominations(request):
+    """
+    API endpoint to get all the electoral bond denominations
+    made to each party
+    """
+    electoral_bonds = ElectoralBondCDenomination.objects.all()
+    serializer = ElectoralBondCDenominationSerializer(electoral_bonds, many=True)
+    return Response(serializer.data)
