@@ -28,6 +28,7 @@ urlpatterns = [
     ################################################################################
     path('', views.index),
     path('example/', views.example),
+    path('plot/', views.plot),
     path('example/<example_id>', views.example),
 
     ################################################################################
