@@ -52,10 +52,23 @@ const ExampleId = ({ id }) => {
 
     const onEachFeature = (feature, layer) => {
         layer.on({
+            click:()=>{
+                // if (constituencyData[e.target.feature.id].length>0){
+                //     console.log(constituencyData[e.target.feature.id]);
+                //     setDisplayData(constituencyData[e.target.feature['id']]);
+                // }
+                // else{
+                //     setDisplayData(null);
+                // }
+
+            },
             mouseover: (e) => {
                 // Highlight feature and display data on hover
                 layer.setStyle({ color: "white", weight:2 });
                 e.target.bringToFront();
+
+                // updates the data that displays on the side
+                // TO-DO: add a preview rather than the side data
                 if (constituencyData[e.target.feature.id].length>0){
                     console.log(constituencyData[e.target.feature.id]);
                     setDisplayData(constituencyData[e.target.feature['id']]);
@@ -147,6 +160,8 @@ const ExampleId = ({ id }) => {
         setConstituencyData(constData);
     },[features]);
 
+    // DEPENDENCY: election year
+    // TO-DO: cache results for all 5 election years
     useEffect(() => {
         async function getGeojson() {
             const mapResponse = await fetch("/api/India_PC_2019/10");
@@ -172,9 +187,7 @@ const ExampleId = ({ id }) => {
             {features ? (
                 <MapBase
                     layers={{
-                        triangle: (
-                            <Polygon pathOptions={fillBlueOptions} positions={multiPolygon} />
-                        ),
+
                         LS_2019_Competitiveness: features.map((obj) => (
                             <GeoJSON
                                 style={{

@@ -21,7 +21,7 @@ export function MapBase({
     layers = {},
     singleLayer = false,
     defaultVisibleLayers = [],
-    bounds = null,
+    bounds = null, // TO-DO: CHANGE BACK TO DEFAULT
     zoom = 5,
     minZoom = 5,
     maxZoom=8
@@ -48,6 +48,7 @@ export function MapBase({
         const clickedLayer = event.target.value;
         console.log(clickedLayer);
         let newVisibleLayers = visibleLayers;
+        console.log(newVisibleLayers);
         if (singleLayer) {
             newVisibleLayers = [];
         }
@@ -66,6 +67,7 @@ export function MapBase({
                 layers={Object.keys(layers)}
                 toggleLayer={toggleLayer}
                 visibleLayers={visibleLayers}/>
+
             <MapContainer
                 key={"map"}
                 // Initial state of Map
