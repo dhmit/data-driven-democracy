@@ -63,13 +63,13 @@ def get_ls_election_year(request, year):
 
 
 @api_view(['GET'])
-def get_specific_ls_election(request, year, state, constituency):
+def get_specific_ls_election(request, year, state, constituency_no):
     """
     API endpoint to get each Lok Sahbha election
     in the database
     """
     ls_elections = LSElection.objects.filter(
-        election_year=year, state_name=state, constituency_name=constituency.upper())
+        election_year=year, state_name=state, constituency_no=constituency_no)
     serializer = LSElectionSerializaer(ls_elections, many=True)
     return Response(serializer.data)
 
@@ -113,6 +113,22 @@ def get_India_PC_2019(request, feature_limit=10):
     """
     geojson_path = os.path.join(
         settings.GEOJSON_DIR, "India_PC_2019.geojson")
+    with open(geojson_path, encoding='utf-8') as f:
+        geojson = json.load(f)
+
+        return Response({
+            "type": geojson["type"],
+            "features": geojson["features"]
+        })
+
+
+@api_view(['GET'])
+def get_India_PC_2014(request, feature_limit=10):
+    """
+    API endpoint to get SDE_DATA_IN_F7DSTRBND_1991 geojson
+    """
+    geojson_path = os.path.join(
+        settings.GEOJSON_DIR, "SDE_DATA_IN_F7DSTRBND_2011.geojson")
     with open(geojson_path, encoding='utf-8') as f:
         geojson = json.load(f)
 

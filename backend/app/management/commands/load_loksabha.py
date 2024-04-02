@@ -34,10 +34,11 @@ class Command(BaseCommand):
         df = pandas.read_csv(file_path)
 
         # TODO: Generalize this to update correct model(s) and columns based on dataset
-        for year, state_name, constituency_name, party_name, candidate, candidate_position, margin_percentage, vote_share in zip(
+        for year, state_name, constituency_name, constituency_no, party_name, candidate, candidate_position, margin_percentage, vote_share in zip(
             df["Year"],
             df["State_Name"],
             df["Constituency_Name"],
+            df["Constituency_No"],
             df["Party"],
             df["Candidate"],
             df["Position"],
@@ -48,6 +49,7 @@ class Command(BaseCommand):
                 election_year=year,
                 state_name=state_name,
                 constituency_name=constituency_name,
+                constituency_no=constituency_no,
                 party_name=party_name,
                 candidate=candidate,
                 candidate_position=candidate_position,

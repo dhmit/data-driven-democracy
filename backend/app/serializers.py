@@ -57,6 +57,7 @@ class LSElectionSerializaer(serializers.ModelSerializer):
             "election_year",
             "state_name",
             "constituency_name",
+            "constituency_no",
             "party_name",
             "candidate",
             "candidate_position",

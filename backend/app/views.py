@@ -53,6 +53,21 @@ def example(request, example_id=None):
         'component_props': {
             'id': example_id
         },
-        'component_name': 'ExampleId'
+        'component_name': 'ExampleId',
+    }
+    return render(request, 'index.html', context)
+
+
+def competitiveness(request):
+    """
+    Competitiveness Map Page
+    """
+
+    context = {
+        'page_metadata': {
+            'title': 'Competitiveness Map'
+        },
+
+        'component_name': 'CompetitivenessMap',
     }
     return render(request, 'index.html', context)

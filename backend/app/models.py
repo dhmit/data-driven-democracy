@@ -57,6 +57,8 @@ class LSElection(models.Model):
         max_length=30,
     )
 
+    constituency_no = models.IntegerField(default=0)
+
     candidate = models.CharField(
         max_length=30
     )

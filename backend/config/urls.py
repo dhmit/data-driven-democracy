@@ -29,6 +29,7 @@ urlpatterns = [
     path('', views.index),
     path('example/', views.example),
     path('example/<example_id>', views.example),
+    path('competitiveness', views.competitiveness),
 
     ################################################################################
     # API endpoints
@@ -37,12 +38,15 @@ urlpatterns = [
     path('api/1962-2019seats/', api_views.all_seats),
     path('api/ls-elections/', api_views.all_ls_elections),
     path('api/ls-elections/<year>', api_views.get_ls_election_year),
-    path('api/ls-elections/<year>/<state>/<constituency>',
+    path('api/ls-elections/<year>/<state>/<constituency_no>',
          api_views.get_specific_ls_election),
     path("api/SDE_DATA_IN_F7DSTRBND_1991/<int:feature_limit>",
          api_views.get_SDE_DATA_IN_F7DSTRBND_1991),
     path("api/India_PC_2019_simplified/<int:feature_limit>",
          api_views.get_India_PC_2019_simplified),
     path("api/India_PC_2019/<int:feature_limit>",
-         api_views.get_India_PC_2019)
+         api_views.get_India_PC_2019),
+    path("api/India_PC_2014/<int:feature_limit>",
+         api_views.get_India_PC_2014)
+
 ]
