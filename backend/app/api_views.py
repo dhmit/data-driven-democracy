@@ -8,12 +8,14 @@ from rest_framework.response import Response
 
 from .models import (
     TCPDElection,
-    SeatShare
+    SeatShare,
+    CampaignFinance,
 )
 
 from .serializers import (
     TCPDElectionSerializer,
-    SeatShareSerializer
+    SeatShareSerializer,
+    CampaignFinanceSerializer,
 )
 
 
@@ -50,3 +52,12 @@ def get_SDE_DATA_IN_F7DSTRBND_1991(request, feature_limit=10):
             "type": geojson["type"],
             "features": geojson["features"][:num_features]
         })
+
+@api_view(['GET'])
+def all_campaign_finance(request):
+    """
+    API endpoint to get all campaign finance donations made by donors to parties
+    """
+    campaign_finances = CampaignFinance.objects.all()
+    serializer = CampaignFinanceSerializer(campaign_finances, many=True)
+    return Response(serializer.data)
