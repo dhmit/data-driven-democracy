@@ -36,5 +36,6 @@ urlpatterns = [
     path('api/1951-1962elections/', api_views.all_elections),
     path('api/1962-2019seats/', api_views.all_seats),
     path("api/SDE_DATA_IN_F7DSTRBND_1991/<int:feature_limit>", api_views.get_SDE_DATA_IN_F7DSTRBND_1991),
-    path("api/campaign-finance/", api_views.all_campaign_finance)
-]
+    path("api/all-campaign-finance/", api_views.campaign_finance),
+    path("api/campaign-finance/<donor_name>/<party_name>", api_views.campaign_finance)
+    ]

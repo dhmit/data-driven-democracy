@@ -1,5 +1,5 @@
 """
-Django management command load_dataset
+Django management command load_campaignfinance
 
 Updates local db with values from base csv dataset
 """
@@ -28,7 +28,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # pylint: disable=too-many-locals
         file_name = options.get('dataset_name')
-        file_path = os.path.join(settings.DATASET_DIR, file_name)
+        file_path = os.path.join(settings.DATASET_DIR, "campaignfinance", file_name)
         df = pandas.read_csv(file_path)
 
         # TODO: Generalize this to update correct model(s) and columns based on dataset
