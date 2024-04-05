@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as PropTypes from "prop-types";
 import MapBase from "../components/global/MapBase";
 import { GeoJSON, Polygon } from "react-leaflet";
+import DiscreteSlider from "./global/DiscreteSlider";
 export const DEFAULT_MAP_CENTER_LAT = 20.5937;
 export const DEFAULT_MAP_CENTER_LNG = 78.9629;
 
@@ -41,8 +42,14 @@ const CompetitivenessMap = () => {
 
     const [mapData, setMapData] = useState(null);
 
-    const [electionYear, setElectionYear] = useState(2019);
+    const [electionYear, setElectionYear] = useState(2004);
     const [displayData, setDisplayData] = useState(null);
+
+    const handleSliderChange = (newValue) =>{
+
+        setElectionYear(newValue);
+    };
+
 
     const onEachFeature = (feature, layer) => {
         layer.on({
@@ -64,8 +71,8 @@ const CompetitivenessMap = () => {
                 // updates the data that displays on the side
                 // TO-DO: add a preview rather than the side data
                 if (constituencyData[e.target.feature.id].length>0){
-                    console.log(constituencyData[e.target.feature.id]);
                     setDisplayData(constituencyData[e.target.feature['id']]);
+
                 }
                 else{
                     setDisplayData(null);
@@ -89,13 +96,33 @@ const CompetitivenessMap = () => {
                     let state = feature["properties"]["State_Name"];
 
                     if (state){
+                        if (state==="Telangana" && year<2019){
+                            state="Andhra Pradesh";
+                        }
+                        else if (state==="Vanachal" && year===1999){
+                            state="Jharkhand";
+
+                        }
+
+                        else if (state==="Uttaranchal" && year===1999){
+                            state="Uttarakhand";
+
+                        }
+                        else if (state==="Uttarakhand" && year===1999){
+                            state="Uttaranchal";
+
+                        }
+                        else if (state==="Chhattisgarh"&& year===1999){
+                            state="Chhattisgarh";
+                        }
+
                         state=state.replace(/ /g, "_");
+
                     }
 
                     const constituency = feature["properties"]["Constituency_Name"];
                     const constituency_no = feature["properties"]["Constituency_No"];
 
-                    console.log(constituency,state);
                     const dataResponse = await fetch(
                         `/api/ls-elections/${year}/${state}/${constituency_no}`
                     );
@@ -114,8 +141,6 @@ const CompetitivenessMap = () => {
                     else{
                         console.log("NOT FOUND",state,constituency);
                     }
-
-                    // console.log(feature, feature.id);
 
                     return {
                         feature,
@@ -139,21 +164,22 @@ const CompetitivenessMap = () => {
 
         async function getFeatures() {
             setFeatures(await fetchMoreFeatures(mapData,electionYear));
+
         }
         getFeatures();
-    }, [mapData]);
 
+    }, [mapData,electionYear]);
+
+    // data about constitencies from the selected year
     useEffect(()=>{
+
         if (!features) return;
+        console.log("features changeed",electionYear,features);
+
         let constData={};
-        console.log(features);
         for (const obj of features){
-            console.log(obj);
 
             constData={...constData,[obj.feature.id]:obj.result};
-
-
-
         }
         setConstituencyData(constData);
     },[features]);
@@ -164,20 +190,16 @@ const CompetitivenessMap = () => {
         async function getGeojson() {
             const mapResponse = await fetch("/api/India_PC_2019/10");
             const result = await mapResponse.json();
-            if (!ignore) {
                 setMapData(result);
-            }
-        }
 
-        let ignore = false;
+        }
         getGeojson();
-        return () => {
-            ignore = true;
-        };
-    }, [electionYear]);
+
+    }, []);
 
     return (
         <div>
+            <DiscreteSlider handleSliderChange={handleSliderChange}/>
 
 
         <div className="example">
@@ -188,6 +210,7 @@ const CompetitivenessMap = () => {
 
                         LS_2019_Competitiveness: features.map((obj) => (
                             <GeoJSON
+
                                 style={{
                                     fillColor: obj.color,
                                     color: "black",
@@ -200,6 +223,8 @@ const CompetitivenessMap = () => {
                             />
                         )),
                     }}
+                    defaultVisibleLayers={["LS_2019_Competitiveness"]}
+
                 />
             ) : <p>Loading...</p>}
 
