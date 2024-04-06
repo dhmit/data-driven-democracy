@@ -49,10 +49,11 @@ class CampaignFinanceSerializer(serializers.ModelSerializer):
     """
     Serializes campaign finance donations
     """
-    model = CampaignFinance
-    fields = [
-        "donor_name",
-        "party_name",
-        "amount",
-        "fullbondnumber"
-    ]
+    class Meta:
+        model = CampaignFinance
+        fields = [
+            "donor_name",
+            "party_name",
+            "amount",
+            "full_bond_number"
+        ]

@@ -58,11 +58,11 @@ def campaign_finance(request,donor_name=None, party_name=None):
     """
     API endpoint to get all campaign finance donations made by donors to parties
     """
+    print("HERE ============")
+    print(donor_name, party_name)
     if donor_name is not None and party_name is not None:
         campaign_finances = CampaignFinance.objects.filter(donor_name=donor_name, party_name=party_name)
     else:
         campaign_finances = CampaignFinance.objects.all()
-    print("yes")
     serializer = CampaignFinanceSerializer(campaign_finances, many=True)
-    print(serializer)
     return Response(serializer.data)
