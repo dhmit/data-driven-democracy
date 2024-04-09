@@ -56,3 +56,36 @@ def example(request, example_id=None):
         'component_name': 'ExampleId'
     }
     return render(request, 'index.html', context)
+
+
+def finance(request, example_id=None):
+    """
+    Example page
+    """
+
+    context = {
+        'page_metadata': {
+            'title': 'Example ID page'
+        },
+        'component_props': {
+            'id': example_id
+        },
+        'component_name': 'Finance'
+    }
+    return render(request, 'index.html', context)
+
+def finance2(request, example_id=None):
+    """
+    Example page
+    """
+
+    context = {
+        'page_metadata': {
+            'title': 'Example ID page'
+        },
+        'component_props': {
+            'id': example_id
+        },
+        'component_name': 'Finance2'
+    }
+    return render(request, 'index.html', context)

@@ -29,6 +29,10 @@ urlpatterns = [
     path('', views.index),
     path('example/', views.example),
     path('example/<example_id>', views.example),
+    path('finance/', views.finance),
+    path('finance2/', views.finance2),
+
+
 
     ################################################################################
     # API endpoints
