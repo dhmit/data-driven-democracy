@@ -29,8 +29,10 @@ urlpatterns = [
     path('', views.index),
     path('example/', views.example),
     path('example/<example_id>', views.example),
-    path('finance/', views.finance),
-    path('finance2/', views.finance2),
+    path('campaign-finance/top-10-donors-piechart/', views.PieChart),
+    path('campaign-finance/top-10-donors-barchart/', views.BarChart),    
+    path('campaign-finance/SankeyGraph/', views.SankeyGraph),
+
 
 
 

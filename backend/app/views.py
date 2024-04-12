@@ -58,34 +58,41 @@ def example(request, example_id=None):
     return render(request, 'index.html', context)
 
 
-def finance(request, example_id=None):
+def PieChart(request, example_id=None):
     """
-    Example page
+    Displays PieChart for data from election campaign finance 
     """
 
     context = {
         'page_metadata': {
-            'title': 'Example ID page'
+            'title': 'PieChart Visualization '
         },
-        'component_props': {
-            'id': example_id
-        },
-        'component_name': 'Finance'
+        'component_name': 'PieChart'
     }
     return render(request, 'index.html', context)
 
-def finance2(request, example_id=None):
+def BarChart(request, example_id=None):
     """
-    Example page
+    Displays Bar Chart for data from election campaign finance 
     """
 
     context = {
         'page_metadata': {
-            'title': 'Example ID page'
+            'title': 'Bar Chart Visualization'
         },
-        'component_props': {
-            'id': example_id
+        'component_name': 'BarChart'
+    }
+    return render(request, 'index.html', context)
+
+def SankeyGraph(request, example_id=None):
+    """
+    Displays SankeyGraph for data from election campaign finance 
+    """
+
+    context = {
+        'page_metadata': {
+            'title': 'SankeyGraph Visualization'
         },
-        'component_name': 'Finance2'
+        'component_name': 'SankeyGraph'
     }
     return render(request, 'index.html', context)
