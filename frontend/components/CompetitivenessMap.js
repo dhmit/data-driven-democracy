@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import * as PropTypes from "prop-types";
 import MapBase from "../components/global/MapBase";
 import { GeoJSON, Polygon } from "react-leaflet";
@@ -6,14 +6,7 @@ import DiscreteSlider from "./global/DiscreteSlider";
 export const DEFAULT_MAP_CENTER_LAT = 20.5937;
 export const DEFAULT_MAP_CENTER_LNG = 78.9629;
 
-const multiPolygon = [
-    [
-        [20.5536, 78.9681],
-        [20.553, 78.9681],
-        [20.553, 78.9695],
-    ],
-];
-const fillBlueOptions = { fillColor: "blue" };
+
 function getColor(value) {
     if (value > 70) {
         return "#E9EAE0";
@@ -38,12 +31,23 @@ function getColor(value) {
 
 const CompetitivenessMap = () => {
     const [features, setFeatures] = useState(null);
-    const[constituencyData,setConstituencyData]=useState(null);
+    let newConstData={};
+    const [constituencyData,setConstituencyData]=useState(null);
 
     const [mapData, setMapData] = useState(null);
 
     const [electionYear, setElectionYear] = useState(2004);
     const [displayData, setDisplayData] = useState(null);
+    const [mapChanged,setMapChanged]=useState(false);
+    const[allFeatures,setAllFeatures]=useState({});
+    const[allConstData,setAllConstData]=useState({});
+    const constituencyDataRef = useRef(constituencyData);
+
+    useEffect(() => {
+        constituencyDataRef.current = constituencyData;
+    }, [constituencyData]);
+
+
 
     const handleSliderChange = (newValue) =>{
 
@@ -53,7 +57,8 @@ const CompetitivenessMap = () => {
 
     const onEachFeature = (feature, layer) => {
         layer.on({
-            click:()=>{
+            click:(e)=>{
+                layer.setStyle({ color: "white", weight:2 });
                 // if (constituencyData[e.target.feature.id].length>0){
                 //     console.log(constituencyData[e.target.feature.id]);
                 //     setDisplayData(constituencyData[e.target.feature['id']]);
@@ -61,17 +66,22 @@ const CompetitivenessMap = () => {
                 // else{
                 //     setDisplayData(null);
                 // }
+                console.log("on click",constituencyDataRef.current);
+                console.log(constituencyDataRef.current[e.target.feature.id]);
 
             },
             mouseover: (e) => {
                 // Highlight feature and display data on hover
-                layer.setStyle({ color: "white", weight:2 });
                 e.target.bringToFront();
+
+                layer.setStyle({ color: "white", weight:2 });
 
                 // updates the data that displays on the side
                 // TO-DO: add a preview rather than the side data
+                // console.log("CONSTITHFSJKDF",constituencyData[e.target.feature.id]);
+
                 if (constituencyData[e.target.feature.id].length>0){
-                    setDisplayData(constituencyData[e.target.feature['id']]);
+                    setDisplayData(constituencyDataRef.current[e.target.feature['id']]);
 
                 }
                 else{
@@ -95,26 +105,27 @@ const CompetitivenessMap = () => {
 
                     let state = feature["properties"]["State_Name"];
 
+                    // account for differences in state name
                     if (state){
                         if (state==="Telangana" && year<2019){
                             state="Andhra Pradesh";
                         }
-                        else if (state==="Vanachal" && year===1999){
-                            state="Jharkhand";
+                        // else if (state==="Vanachal" && year===1999){
+                        //     state="Jharkhand";
 
-                        }
+                        // }
 
-                        else if (state==="Uttaranchal" && year===1999){
-                            state="Uttarakhand";
+                        // else if (state==="Uttaranchal" && year===1999){
+                        //     state="Uttarakhand";
 
-                        }
-                        else if (state==="Uttarakhand" && year===1999){
-                            state="Uttaranchal";
+                        // }
+                        // else if (state==="Uttarakhand" && year===1999){
+                        //     state="Uttaranchal";
 
-                        }
-                        else if (state==="Chhattisgarh"&& year===1999){
-                            state="Chhattisgarh";
-                        }
+                        // }
+                        // else if (state==="Chhattisgarh"&& year===1999){
+                        //     state="Chhattisgarh";
+                        // }
 
                         state=state.replace(/ /g, "_");
 
@@ -131,10 +142,10 @@ const CompetitivenessMap = () => {
                     if (result) {
                         if (result.length > 0) {
                             color = getColor(result[0]["margin_percentage"]);
+                            newConstData[feature.id]=result;
                         }
                         else{
                             console.log("NOT FOUND",state,constituency);
-
 
                         }
                     }
@@ -161,32 +172,54 @@ const CompetitivenessMap = () => {
 
     useEffect(() => {
         if (!mapData) return;
+        let fetchMore=true;
 
-        async function getFeatures() {
-            setFeatures(await fetchMoreFeatures(mapData,electionYear));
+        if (allFeatures){
+            console.log("HI",allFeatures);
+            if (allFeatures[electionYear]){
+                setFeatures(allFeatures[electionYear]);
+                console.log(allFeatures[electionYear]);
+                setConstituencyData(allConstData[electionYear]);
+                console.log(allConstData[electionYear]);
+                setMapChanged(!mapChanged);
+                fetchMore=false;
+            }
+
 
         }
-        getFeatures();
+        if (fetchMore){
+            async function getFeatures() {
+                newConstData={};
+                const newFeatures= (await fetchMoreFeatures(mapData,electionYear));
+                setFeatures(newFeatures);
+                allFeatures[electionYear]=newFeatures;
+                const updatedFeatures = { ...allFeatures };
+
+                updatedFeatures[electionYear] = newFeatures;
+
+                setAllFeatures(updatedFeatures);
+                // console.log(newConstData,"HERE");
+                setConstituencyData(newConstData);
+                const updatedConstData={...allConstData};
+                updatedConstData[electionYear]=newConstData;
+                setAllConstData(updatedConstData);
+                setMapChanged(!mapChanged);
+
+            }
+            getFeatures();
+
+        }
+
+
 
     }, [mapData,electionYear]);
 
-    // data about constitencies from the selected year
     useEffect(()=>{
+        console.log("CONS CHANGED",constituencyData);
+    },[constituencyData]);
 
-        if (!features) return;
-        console.log("features changeed",electionYear,features);
-
-        let constData={};
-        for (const obj of features){
-
-            constData={...constData,[obj.feature.id]:obj.result};
-        }
-        setConstituencyData(constData);
-    },[features]);
-
-    // DEPENDENCY: election year
-    // TO-DO: cache results for all 5 election years
     useEffect(() => {
+        if (mapData) return;
         async function getGeojson() {
             const mapResponse = await fetch("/api/India_PC_2019/10");
             const result = await mapResponse.json();
@@ -197,10 +230,10 @@ const CompetitivenessMap = () => {
 
     }, []);
 
+
     return (
         <div>
             <DiscreteSlider handleSliderChange={handleSliderChange}/>
-
 
         <div className="example">
 
@@ -224,6 +257,7 @@ const CompetitivenessMap = () => {
                         )),
                     }}
                     defaultVisibleLayers={["LS_2019_Competitiveness"]}
+                    mapChanged={mapChanged}
 
                 />
             ) : <p>Loading...</p>}

@@ -1,5 +1,5 @@
 import React from "react";
-import {useState} from "react";
+import {useState,useEffect} from "react";
 import Legend from "./Legend";
 
 import * as PropTypes from "prop-types";
@@ -8,6 +8,7 @@ import {
     TileLayer,
     ZoomControl
 } from "react-leaflet";
+import GradientLegend from "./GradientLegend";
 
 // Default latitude and longitude values for the center of the map
 export const DEFAULT_MAP_CENTER_LAT = 22.5937;
@@ -24,7 +25,8 @@ export function MapBase({
     bounds = null, // TO-DO: CHANGE BACK TO DEFAULT
     zoom = 5,
     minZoom = 5,
-    maxZoom=8
+    maxZoom=8,
+    mapChanged=false
 }) {
     let visibleLayersInit = defaultVisibleLayers;
     if (singleLayer) {
@@ -43,12 +45,14 @@ export function MapBase({
 
     const [visibleLayers, setvisibleLayers] = useState(visibleLayersInit);
     const [overlays, setOverlays] = useState(getOverlays());
+    useEffect(() => {
+        toggleLayer({target:{value:defaultVisibleLayers}});
+    }, [mapChanged]);
 
     function toggleLayer(event) {
         const clickedLayer = event.target.value;
         console.log(clickedLayer);
         let newVisibleLayers = visibleLayers;
-        console.log(newVisibleLayers);
         if (singleLayer) {
             newVisibleLayers = [];
         }
@@ -63,11 +67,11 @@ export function MapBase({
 
     return (
         <div className={className} id="map-container">
-            <Legend
+            {/* <Legend
                 layers={Object.keys(layers)}
                 toggleLayer={toggleLayer}
-                visibleLayers={visibleLayers}/>
-
+                visibleLayers={visibleLayers}/> */}
+            <GradientLegend/>
             <MapContainer
                 key={"map"}
                 // Initial state of Map
@@ -116,7 +120,8 @@ MapBase.propTypes = {
     defaultVisibleLayers: PropTypes.array,
     bounds: PropTypes.array,
     minZoom: PropTypes.number,
-    maxZoom: PropTypes.number
+    maxZoom: PropTypes.number,
+    mapChanged: PropTypes.bool
 };
 
 export default MapBase;
