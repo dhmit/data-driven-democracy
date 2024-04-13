@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import * as d3 from "d3";
-import { sankey, sankeyLinkHorizontal } from "d3-sankey";
+import {sankey, sankeyLinkHorizontal} from "d3-sankey";
 
 const FinanceSankey = () => {
     const [data, setData] = useState([]);
@@ -10,10 +10,10 @@ const FinanceSankey = () => {
             try {
                 const response = await fetch("/api/all-campaign-finance/");
                 const jsonData = await response.json();
-                console.log('Fetched data:', jsonData); // Log fetched data to the console
+                console.log("Fetched data:", jsonData); // Log fetched data to the console
                 setData(jsonData);
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error("Error fetching data:", error);
             }
         }
         fetchData();
@@ -44,13 +44,13 @@ const FinanceSankey = () => {
             
             let donorIndex = nodes.findIndex(node => node.name === donor);
             if (donorIndex === -1) {
-                nodes.push({ name: donor });
+                nodes.push({name: donor});
                 donorIndex = nodes.length - 1;
             }
 
             let partyIndex = nodes.findIndex(node => node.name === party);
             if (partyIndex === -1) {
-                nodes.push({ name: party });
+                nodes.push({name: party});
                 partyIndex = nodes.length - 1;
             }
 
@@ -77,7 +77,7 @@ const FinanceSankey = () => {
             .size([width, height]);
 
         // Generate Sankey diagram data
-        const { nodes: sankeyNodes, links: sankeyLinks } = sankeyLayout({
+        const {nodes: sankeyNodes, links: sankeyLinks} = sankeyLayout({
             nodes,
             links
         });
@@ -98,7 +98,8 @@ const FinanceSankey = () => {
             .data(sankeyNodes)
             .join("g")
             .attr("class", "node")
-            .attr("transform", d => `translate(${d.x0},${(d.y0 + d.y1) / 2})`); // Position at the center of the node
+            // Position at the center of the node
+            .attr("transform", d => `translate(${d.x0},${(d.y0 + d.y1) / 2})`);
 
         // Add rectangles for nodes
         node.append("rect")
@@ -113,7 +114,7 @@ const FinanceSankey = () => {
 
         // Add text for node labels
         node.append("text")
-            .attr("x", 10) // Adjust this value to position the text properly
+            .attr("x", 10) //TODO: Adjust this value to position the text properly
             .attr("y", 0)
             .attr("dy", "0.35em")
             .attr("text-anchor", "start")

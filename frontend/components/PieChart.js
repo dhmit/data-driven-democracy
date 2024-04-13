@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import Chart from "chart.js/auto";
 
 const PieChart = () => {
@@ -62,7 +62,7 @@ const PieChart = () => {
                             "rgba(255, 0, 0, 0.6)",
                             "rgba(0, 255, 0, 0.6)",
                             "rgba(0, 0, 255, 0.6)",
-                            "rgba(128, 128, 128, 0.6)",
+                            "rgba(128, 128, 128, 0.6)"
                         ],
                         borderColor: [
                             "rgba(255, 99, 132, 1)",
@@ -74,7 +74,7 @@ const PieChart = () => {
                             "rgba(255, 0, 0, 1)",
                             "rgba(0, 255, 0, 1)",
                             "rgba(0, 0, 255, 1)",
-                            "rgba(128, 128, 128, 1)",
+                            "rgba(128, 128, 128, 1)"
                         ],
                         borderWidth: 1
                     }
@@ -89,15 +89,15 @@ const PieChart = () => {
                     title: {
                         display: true,
                         text: "Top 10 Donors by Donation Amount"
-                    },
+                    }
                 },
                 layout: {
                     padding: {
                         top: 20,
                         bottom: 20,
                         left: 20,
-                        right: 20,
-                    },
+                        right: 20
+                    }
                 },
                 radius: "60%" // Adjust the size of the pie chart
             }

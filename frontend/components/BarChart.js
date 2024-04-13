@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import Chart from "chart.js/auto";
 
 
@@ -65,7 +65,7 @@ const BarChart = () => {
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: "Total Donation Amount",
+                            text: "Total Donation Amount"
                         },
                         ticks: {
                             callback: function(value, index, values) {
@@ -76,11 +76,11 @@ const BarChart = () => {
                     x: {
                         title: {
                             display: true,
-                            text: "Donor Name",
+                            text: "Donor Name"
                         }
                     }
                 }
-            },
+            }
         });
     };
 
