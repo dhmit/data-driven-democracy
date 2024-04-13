@@ -30,8 +30,8 @@ urlpatterns = [
     path('example/', views.example),
     path('example/<example_id>', views.example),
     path('campaign-finance/top-10-donors-piechart/', views.PieChart),
-    path('campaign-finance/top-10-donors-barchart/', views.BarChart),    
-    path('campaign-finance/SankeyGraph/', views.SankeyGraph),
+    path('campaign-finance/top-10-donors-barchart/', views.BarChart),  
+    path('campaign-finance/donor-party-sankey/', views.FinanceSankey),
 
 
 

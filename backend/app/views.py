@@ -84,15 +84,15 @@ def BarChart(request, example_id=None):
     }
     return render(request, 'index.html', context)
 
-def SankeyGraph(request, example_id=None):
+def FinanceSankey(request, example_id=None):
     """
-    Displays SankeyGraph for data from election campaign finance 
+    Displays FinanceSankey for data from election campaign finance 
     """
 
     context = {
         'page_metadata': {
-            'title': 'SankeyGraph Visualization'
+            'title': 'FinanceSankey Visualization'
         },
-        'component_name': 'SankeyGraph'
+        'component_name': 'FinanceSankey'
     }
     return render(request, 'index.html', context)
