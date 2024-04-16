@@ -28,10 +28,11 @@ const PieChart = () => {
     const renderChart = () => {
         const donors = {};
         data.forEach(item => {
+            let amountInCrores = item.amount / 10000000; // Convert rupees to crores
             if (!donors[item.donor_name]) {
-                donors[item.donor_name] = item.amount;
+                donors[item.donor_name] = amountInCrores;
             } else {
-                donors[item.donor_name] += item.amount;
+                donors[item.donor_name] += amountInCrores;
             }
         });
 
@@ -89,17 +90,36 @@ const PieChart = () => {
                     title: {
                         display: true,
                         text: "Top 10 Donors by Donation Amount"
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || "";
+                                if (label) {
+                                    label += ": " + context.formattedValue + " crores";
+                                }
+                                return label;
+                            }
+                        },
+                        // Customize tooltip appearance
+                        backgroundColor: "rgba(0, 0, 0, 0.8)", // Set background color
+                        titleFont: {
+                            size: 20 // Set font size for title in tooltip
+                        },
+                        bodyFont: {
+                            size: 16 // Set font size for body text in tooltip
+                        }
                     }
                 },
                 layout: {
                     padding: {
-                        top: 20,
-                        bottom: 20,
+                        top: 0,
+                        bottom: 0,
                         left: 20,
                         right: 20
                     }
                 },
-                radius: "60%" // Adjust the size of the pie chart
+                radius: "70%" // Adjust the size of the pie chart
             }
         });
     };
@@ -107,7 +127,7 @@ const PieChart = () => {
     return (
         <div className="plot-figure">
             <h1>Top 10 Donors by Donation Amount</h1>
-            <canvas id="myChart" width="400" height="200"></canvas>
+            <canvas id="myChart" width="400" height="100"></canvas>
         </div>
     );
 };

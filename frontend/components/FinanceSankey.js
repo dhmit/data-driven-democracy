@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import * as d3 from "d3";
 import {sankey, sankeyLinkHorizontal} from "d3-sankey";
+import "../scss/finance.scss";
 
 const FinanceSankey = () => {
     const [data, setData] = useState([]);
@@ -32,37 +33,40 @@ const FinanceSankey = () => {
         
         data.forEach(item => {
             const key = `${item.donor_name}-${item.party_name}`;
+            let amountInCrores = item.amount / 10000000; // Convert rupees to crores
             if (contributions[key]) {
-                contributions[key] += item.amount;
+                contributions[key] += amountInCrores;
             } else {
-                contributions[key] = item.amount;
+                contributions[key] = amountInCrores;
             }
         });
 
         Object.entries(contributions).forEach(([contribution, amount]) => {
             const [donor, party] = contribution.split("-");
-            
-            let donorIndex = nodes.findIndex(node => node.name === donor);
-            if (donorIndex === -1) {
-                nodes.push({name: donor});
-                donorIndex = nodes.length - 1;
-            }
 
-            let partyIndex = nodes.findIndex(node => node.name === party);
-            if (partyIndex === -1) {
-                nodes.push({name: party});
-                partyIndex = nodes.length - 1;
-            }
+            if (amount > 100){
+                
+                let donorIndex = nodes.findIndex(node => node.name === donor);
+                if (donorIndex === -1) {
+                    nodes.push({name: donor});
+                    donorIndex = nodes.length - 1;
+                }
 
-            links.push({
-                source: donorIndex,
-                target: partyIndex,
-                value: amount
-            });
-        });
+                let partyIndex = nodes.findIndex(node => node.name === party);
+                if (partyIndex === -1) {
+                    nodes.push({name: party});
+                    partyIndex = nodes.length - 1;
+                }
+
+                links.push({
+                    source: donorIndex,
+                    target: partyIndex,
+                    value: amount
+                });
+            }});
 
         // SVG dimensions
-        const width = 1000;
+        const width = 1200;
         const height = 800;
 
         // Create SVG
@@ -72,8 +76,8 @@ const FinanceSankey = () => {
 
         // Create Sankey layout
         const sankeyLayout = sankey()
-            .nodeWidth(15)
-            .nodePadding(10)
+            .nodeWidth(50)
+            .nodePadding(20)
             .size([width, height]);
 
         // Generate Sankey diagram data
@@ -81,6 +85,9 @@ const FinanceSankey = () => {
             nodes,
             links
         });
+
+        // Color scale for parties
+        const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
         // Render links
         svg.selectAll(".link")
@@ -92,6 +99,39 @@ const FinanceSankey = () => {
             .attr("stroke", "#000")
             .attr("stroke-opacity", 0.5)
             .attr("stroke-width", d => Math.max(1, d.width));
+
+        // Add hover event listeners
+        svg.selectAll(".link")  // Select the links again
+            .on("mouseover", function(event, d) {
+                // Enlarge the hovered link
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .attr("stroke-width", 3)
+                    .attr("stroke-opacity", 1);
+
+                // Access the contribution amount value
+                const contributionAmount = d.value.toFixed(2); // Access the value attribute
+
+                // Update text element with contribution amount
+                const tooltip = d3.select("#tooltip"); 
+                tooltip.html(`Contribution Amount: ${contributionAmount} crores`)
+                    .style("font-size", "22px")
+                    .style("left", (event.pageX + 20) + "px") 
+                    .style("top", (event.pageY - 20) + "px")
+                    .style("opacity", 1);
+            })
+            .on("mouseout", function() {
+                // Restore original size and opacity
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .attr("stroke-width", d => Math.max(1, d.width))
+                    .attr("stroke-opacity", 0.5);
+
+                // Hide the tooltip
+                d3.select("#tooltip").style("opacity", 0);
+            });
 
         // Render nodes
         const node = svg.selectAll(".node")
@@ -106,20 +146,17 @@ const FinanceSankey = () => {
             .attr("x", 0)
             .attr("y", d => -((d.y1 - d.y0) / 2))
             .attr("height", d => d.y1 - d.y0)
-            .attr("width", d => d.x1 - d.x0)
-            .attr("fill", d => {
-                if (d.name.startsWith("Donor")) return "blue";
-                else return "green";
-            });
+            .attr("width", d => (d.x1 - d.x0)*3)
+            .attr("fill", (d) => colorScale(d.name)); // Use color scale based on party name
 
         // Add text for node labels
         node.append("text")
-            .attr("x", 10) //TODO: Adjust this value to position the text properly
+            .attr("x", 0) //TODO: Adjust this value to position the text properly
             .attr("y", 0)
             .attr("dy", "0.35em")
             .attr("text-anchor", "start")
             .text(d => d.name)
-            .style("font-size", "12px")
+            .style("font-size", "22px")
             .style("fill", "black");
     };
     
@@ -127,6 +164,7 @@ const FinanceSankey = () => {
         <div className="plot-figure">
             <h1>Sankey Graph of Donors and Parties</h1>
             <svg id="sankey-graph"></svg>
+            <div id="tooltip" className="tooltip"></div>
         </div>
     );
 };

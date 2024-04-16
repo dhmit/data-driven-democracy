@@ -29,10 +29,11 @@ const BarChart = () => {
     const renderChart = () => {
         const donors = {};
         data.forEach(item => {
+            let amountInCrores = item.amount / 10000000; // Convert rupees to crores
             if (!donors[item.donor_name]) {
-                donors[item.donor_name] = item.amount;
+                donors[item.donor_name] = amountInCrores;
             } else {
-                donors[item.donor_name] += item.amount;
+                donors[item.donor_name] += amountInCrores;
             }
         });
 
@@ -65,18 +66,25 @@ const BarChart = () => {
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: "Total Donation Amount"
+                            text: "Total Donation Amount (crores)",
+                            font: {size: 25}// Set the font size for the y-axis title
                         },
                         ticks: {
-                            callback: function(value, index, values) {
+                            callback: function(value) {
                                 return "₹" + value.toLocaleString(); // Format as currency
-                            }
+                            },
+                            font: {size: 16}
                         }
                     },
                     x: {
                         title: {
                             display: true,
-                            text: "Donor Name"
+                            text: "Donor Name",
+                            font: {size: 25}
+                        },
+                        ticks: {
+                            font: {size: 16}
+                            
                         }
                     }
                 }
