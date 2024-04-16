@@ -39,6 +39,7 @@ const CompetitivenessMap = () => {
 
     const [electionYear, setElectionYear] = useState(2004);
     const [displayData, setDisplayData] = useState(null);
+    const [previewData,setPreviewData]=useState(null);
     const [mapChanged,setMapChanged]=useState(false);
 
     // cache to store map features and constituency data
@@ -69,6 +70,14 @@ const CompetitivenessMap = () => {
                 // else{
                 //     setDisplayData(null);
                 // }
+                if (constituencyData[e.target.feature.id].length>0){
+                    console.log("YEP",e.target.feature);
+                    setDisplayData(constituencyDataRef.current[e.target.feature['id']]);
+
+                }
+                else{
+                    setDisplayData(null);
+                }
 
 
             },
@@ -84,11 +93,11 @@ const CompetitivenessMap = () => {
 
                 if (constituencyData[e.target.feature.id].length>0){
                     console.log("YEP",e.target.feature);
-                    setDisplayData(constituencyDataRef.current[e.target.feature['id']]);
+                    setPreviewData(constituencyDataRef.current[e.target.feature['id']]);
 
                 }
                 else{
-                    setDisplayData(null);
+                    setPreviewData(null);
                 }
             },
             mouseout: () => {
@@ -241,7 +250,7 @@ const CompetitivenessMap = () => {
                     }}
                     defaultVisibleLayers={["LS_2019_Competitiveness"]}
                     mapChanged={mapChanged}
-                    dataToDisplay={displayData}
+                    dataToDisplay={previewData}
 
                 />
             ) : <p>Loading...</p>}
