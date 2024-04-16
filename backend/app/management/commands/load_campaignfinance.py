@@ -32,11 +32,16 @@ class Command(BaseCommand):
         df = pandas.read_csv(file_path)
 
         # TODO: Generalize this to update correct model(s) and columns based on dataset
-        for full_bond_number, amount, donor_name, party_name in zip(df["FullBondNumber"], df["Amount"], df["Donor"], df["Party"]):
+        for full_bond_number, amount, donor_name, party_name in zip(
+            df["FullBondNumber"],
+            df["Amount"],
+            df["Donor"],
+            df["Party"]
+        ):
             campaignfinance = CampaignFinance(
-                full_bond_number = full_bond_number,
-                amount = amount,
-                donor_name = donor_name,
-                party_name = party_name,
+                full_bond_number=full_bond_number,
+                amount=amount,
+                donor_name=donor_name,
+                party_name=party_name,
             )
             campaignfinance.save()

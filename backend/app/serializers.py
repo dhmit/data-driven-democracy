@@ -45,6 +45,7 @@ class SeatShareSerializer(serializers.ModelSerializer):
             "total_seats"
         ]
 
+
 class CampaignFinanceSerializer(serializers.ModelSerializer):
     """
     Serializes campaign finance donations
