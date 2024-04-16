@@ -1,7 +1,7 @@
 import React from 'react';
 import * as PropTypes from "prop-types";
 
-import "../../scss/gradientLegend.scss";
+import "../../scss/mapLegends.scss";
 
 const DataPreview = ({dataToDisplay}) => {
     return (
@@ -50,6 +50,6 @@ const DataPreview = ({dataToDisplay}) => {
 };
 DataPreview.propTypes = {
 
-    dataToDisplay:PropTypes.object
+    dataToDisplay:PropTypes.array
 };
 export default DataPreview;

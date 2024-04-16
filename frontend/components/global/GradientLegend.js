@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-import "../../scss/gradientLegend.scss";
+import "../../scss/mapLegends.scss";
 
 const GradientLegend = () => {
     // TO DO: make this a prop

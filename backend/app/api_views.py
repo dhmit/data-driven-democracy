@@ -79,9 +79,9 @@ def get_SDE_DATA_IN_F7DSTRBND_1991(request, feature_limit=10):
     """
     API endpoint to get SDE_DATA_IN_F7DSTRBND_1991 geojson
     """
-    geojson_path = os.path.join(
+    geocolors_path = os.path.join(
         settings.GEOJSON_DIR, "SDE_DATA_IN_F7DSTRBND_1991.geojson")
-    with open(geojson_path, encoding='utf-8') as f:
+    with open(geocolors_path, encoding='utf-8') as f:
         geojson = json.load(f)
 
         return Response({
@@ -95,9 +95,9 @@ def get_India_PC_2019_simplified(request, feature_limit=10):
     """
     API endpoint to get SDE_DATA_IN_F7DSTRBND_1991 geojson
     """
-    geojson_path = os.path.join(
+    geocolors_path = os.path.join(
         settings.GEOJSON_DIR, "india_pc_2019_simplified.geojson")
-    with open(geojson_path, encoding='utf-8') as f:
+    with open(geocolors_path, encoding='utf-8') as f:
         geojson = json.load(f)
 
         return Response({
@@ -111,9 +111,9 @@ def get_India_PC_2019(request, feature_limit=10):
     """
     API endpoint to get SDE_DATA_IN_F7DSTRBND_1991 geojson
     """
-    geojson_path = os.path.join(
+    geocolors_path = os.path.join(
         settings.GEOJSON_DIR, "India_PC_2019.geojson")
-    with open(geojson_path, encoding='utf-8') as f:
+    with open(geocolors_path, encoding='utf-8') as f:
         geojson = json.load(f)
 
         return Response({
@@ -123,16 +123,21 @@ def get_India_PC_2019(request, feature_limit=10):
 
 
 @api_view(['GET'])
-def get_India_PC_2014(request, feature_limit=10):
+def get_competiveness_colors(request, election_year=2004):
     """
-    API endpoint to get SDE_DATA_IN_F7DSTRBND_1991 geojson
+    API endpoint to get data and colors for competitiveness map
     """
-    geojson_path = os.path.join(
-        settings.GEOJSON_DIR, "SDE_DATA_IN_F7DSTRBND_2011.geojson")
-    with open(geojson_path, encoding='utf-8') as f:
-        geojson = json.load(f)
+    colors_path = os.path.join(
+        settings.GEOJSON_DIR, "competitivenessColors.json")
+    with open(colors_path, encoding='utf-8') as f:
+        colors_json = json.load(f)
+
+    data_path = os.path.join(
+        settings.GEOJSON_DIR, "competitivenessData.json")
+    with open(data_path, encoding='utf-8') as f:
+        data_json = json.load(f)
 
         return Response({
-            "type": geojson["type"],
-            "features": geojson["features"]
+            "colors": colors_json[str(election_year)],
+            "data": data_json[str(election_year)]
         })
