@@ -6,7 +6,7 @@ import DiscreteSlider from "./global/DiscreteSlider";
 export const DEFAULT_MAP_CENTER_LAT = 20.5937;
 export const DEFAULT_MAP_CENTER_LNG = 78.9629;
 
-// assigns a color to a constituency
+// assigns a color to a constituency, will be used later
 // function getColor(value) {
 
 //     if (value > 70) {
@@ -41,13 +41,13 @@ const CompetitivenessMap = () => {
     const [previewData,setPreviewData]=useState(null);
     const [mapChanged,setMapChanged]=useState(false);
 
-    // cache to store map features and constituency data
-    // unused variable are to get the inital data to place in backend
+    // COMMENTED VARIABLES USED TO GET INITIAL DATA TO PLACE ON BACKEND
     // let newConstData={};
     // const[allFeatures,setAllFeatures]=useState({});
     // const[allConstData,setAllConstData]=useState({});
-    const constituencyDataRef = useRef(constituencyData);
     // const [allColors,setAllColors]=useState({});
+
+    const constituencyDataRef = useRef(constituencyData);
 
     useEffect(() => {
         constituencyDataRef.current = constituencyData;
@@ -60,7 +60,7 @@ const CompetitivenessMap = () => {
         setElectionYear(newValue);
     };
 
-
+    // handle click and hover events
     const onEachFeature = (feature, layer) => {
         layer.on({
             click:(e)=>{
@@ -98,7 +98,46 @@ const CompetitivenessMap = () => {
         });
     };
 
-    // FUNCTION USED TO GET MAP DATA
+    // get map data from geojson on mount
+    useEffect(() => {
+        if (mapData) return;
+        async function getGeojson() {
+            const mapResponse = await fetch("/api/India_PC_2019/10");
+            const result = await mapResponse.json();
+            setMapData(result);
+
+        }
+        getGeojson();
+
+    }, []);
+
+    // updates map colors and data when electionYear changes
+    useEffect(()=>{
+        if (!mapData) return;
+        async function getMapColors(){
+
+            const colorsResponse = await fetch(`/api/competitiveness_colors/${electionYear}`);
+
+            const colorsResult = await colorsResponse.json();
+
+            const newFeatures = mapData["features"].map((feature, index) => ({
+                "feature": feature,
+                ...colorsResult["colors"][index+1] // Merge color object at index
+            }));
+
+            setFeatures(newFeatures);
+            setConstituencyData(colorsResult["data"]);
+            setMapChanged(!mapChanged);
+
+        }
+
+        getMapColors();
+
+    },[mapData,electionYear]);
+
+
+    // UNCOMMENT CODE BELOW TO GET INITAL COLOR DATA AND CONSTITUENCY DATA
+
     // async function fetchMoreFeatures(geojson, year) {
     //     if (!geojson) return null;
 
@@ -133,8 +172,6 @@ const CompetitivenessMap = () => {
 
     //     return result;
     // }
-
-    // UNCOMMENT CODE BELOW TO GET COLORS AND CONSTITUENCY DATA
 
     // update colors on map and constituency data displayed when year changes
     // useEffect(() => {
@@ -190,45 +227,6 @@ const CompetitivenessMap = () => {
 
 
     // }, [mapData,electionYear]);
-
-    // get map data (only called once)
-    useEffect(() => {
-        if (mapData) return;
-        async function getGeojson() {
-            const mapResponse = await fetch("/api/India_PC_2019/10");
-            const result = await mapResponse.json();
-            setMapData(result);
-
-
-        }
-        getGeojson();
-
-    }, []);
-
-    useEffect(()=>{
-        if (!mapData) return;
-        async function getMapColors(){
-            const colorsResponse = await fetch(`/api/competitiveness_colors/${electionYear}`);
-
-            const colorsResult = await colorsResponse.json();
-
-            const newArray = mapData["features"].map((item, index) => ({
-                "feature": item,
-                ...colorsResult["colors"][index+1] // Merge color object at index
-            }));
-
-
-            setFeatures(newArray);
-            setConstituencyData(colorsResult["data"]);
-            setMapChanged(!mapChanged);
-
-
-        }
-
-        getMapColors();
-
-    },[mapData,electionYear]);
-
 
     return (
         <div>

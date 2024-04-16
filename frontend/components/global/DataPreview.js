@@ -6,7 +6,8 @@ import "../../scss/mapLegends.scss";
 const DataPreview = ({dataToDisplay}) => {
     return (
         <div className="previewLegend">
-            {dataToDisplay && <div>
+
+            {dataToDisplay && dataToDisplay.length>0 && <div>
                 <div>
                     <span style={{fontWeight:"bold"}}>
 
