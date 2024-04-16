@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 
 import "../../scss/mapLegends.scss";
@@ -34,7 +34,7 @@ const GradientLegend = () => {
             <p>{title}</p>
             {grades.map((grade, index) => (
                 <div key={index}>
-                    <i style={{ background: getColor(grade + 1) }}></i>
+                    <i style={{background: getColor(grade + 1)}}></i>
                     {grade}%
                 </div>
             ))}

@@ -1,38 +1,37 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, {useState, useEffect,useRef} from "react";
 import * as PropTypes from "prop-types";
 import MapBase from "../components/global/MapBase";
-import { GeoJSON, Polygon } from "react-leaflet";
+import {GeoJSON} from "react-leaflet";
 import DiscreteSlider from "./global/DiscreteSlider";
 export const DEFAULT_MAP_CENTER_LAT = 20.5937;
 export const DEFAULT_MAP_CENTER_LNG = 78.9629;
 
 // assigns a color to a constituency
-function getColor(value) {
+// function getColor(value) {
 
-    if (value > 70) {
-        return "#E9EAE0";
-    } else if (value > 50) {
-        return "#F7BEC0";
-    } else if (value > 40) {
-        return "#FF8A8A";
-    } else if (value > 30) {
-        return "#FF5C5C";
-    } else if (value > 20) {
-        return "#FF2E2E";
-    } else if (value > 10) {
-        return "#FF0000";
-    } else if (value > 5) {
-        return "#D10000";
-    } else if (value > 3) {
-        return "#A30000";
-    } else {
-        return "#750000";
-    }
-}
+//     if (value > 70) {
+//         return "#E9EAE0";
+//     } else if (value > 50) {
+//         return "#F7BEC0";
+//     } else if (value > 40) {
+//         return "#FF8A8A";
+//     } else if (value > 30) {
+//         return "#FF5C5C";
+//     } else if (value > 20) {
+//         return "#FF2E2E";
+//     } else if (value > 10) {
+//         return "#FF0000";
+//     } else if (value > 5) {
+//         return "#D10000";
+//     } else if (value > 3) {
+//         return "#A30000";
+//     } else {
+//         return "#750000";
+//     }
+// }
 
 const CompetitivenessMap = () => {
     const [features, setFeatures] = useState(null);
-    let newConstData={};
     const [constituencyData,setConstituencyData]=useState(null);
 
     const [mapData, setMapData] = useState(null);
@@ -44,10 +43,11 @@ const CompetitivenessMap = () => {
 
     // cache to store map features and constituency data
     // unused variable are to get the inital data to place in backend
-    const[allFeatures,setAllFeatures]=useState({});
-    const[allConstData,setAllConstData]=useState({});
+    // let newConstData={};
+    // const[allFeatures,setAllFeatures]=useState({});
+    // const[allConstData,setAllConstData]=useState({});
     const constituencyDataRef = useRef(constituencyData);
-    const [allColors,setAllColors]=useState({});
+    // const [allColors,setAllColors]=useState({});
 
     useEffect(() => {
         constituencyDataRef.current = constituencyData;
@@ -65,10 +65,10 @@ const CompetitivenessMap = () => {
         layer.on({
             click:(e)=>{
                 // shows more information on the side of the map onClick
-                layer.setStyle({ color: "white", weight:2 });
+                layer.setStyle({color: "white", weight:2});
 
                 if (constituencyData[e.target.feature.id].length>0){
-                    setDisplayData(constituencyDataRef.current[e.target.feature['id']]);
+                    setDisplayData(constituencyDataRef.current[e.target.feature["id"]]);
 
                 }
                 else{
@@ -81,10 +81,10 @@ const CompetitivenessMap = () => {
                 // Highlight feature and display data on hover
                 e.target.bringToFront();
 
-                layer.setStyle({ color: "white", weight:2 });
+                layer.setStyle({color: "white", weight:2});
 
                 if (constituencyData[e.target.feature.id].length>0){
-                    setPreviewData(constituencyDataRef.current[e.target.feature['id']]);
+                    setPreviewData(constituencyDataRef.current[e.target.feature["id"]]);
 
                 }
                 else{
@@ -93,46 +93,46 @@ const CompetitivenessMap = () => {
             },
             mouseout: () => {
                 // Reset style on mouseout
-                layer.setStyle({ color: "black",weight:1 });
-            },
+                layer.setStyle({color: "black",weight:1});
+            }
         });
     };
 
     // FUNCTION USED TO GET MAP DATA
-    async function fetchMoreFeatures(geojson, year) {
-        if (!geojson) return null;
+    // async function fetchMoreFeatures(geojson, year) {
+    //     if (!geojson) return null;
 
-        const result = await Promise.all(
-            geojson["features"].map(async (feature) => {
-                let color = getColor(30);
-                let state = feature["properties"]["State_Name"];
+    //     const result = await Promise.all(
+    //         geojson["features"].map(async (feature) => {
+    //             let color = getColor(30);
+    //             let state = feature["properties"]["State_Name"];
 
-                if (state) {
-                    if (state === "Telangana" && year < 2019) {
-                        state = "Andhra Pradesh";
-                    }
-                    state = state.replace(/ /g, "_");
-                }
+    //             if (state) {
+    //                 if (state === "Telangana" && year < 2019) {
+    //                     state = "Andhra Pradesh";
+    //                 }
+    //                 state = state.replace(/ /g, "_");
+    //             }
 
-                const constituency_no = feature["properties"]["Constituency_No"];
-                const dataResponse = await fetch(
-                    `/api/ls-elections/${year}/${state}/${constituency_no}`
-                );
-                const result = await dataResponse.json();
+    //             const constituency_no = feature["properties"]["Constituency_No"];
+    //             const dataResponse = await fetch(
+    //                 `/api/ls-elections/${year}/${state}/${constituency_no}`
+    //             );
+    //             const result = await dataResponse.json();
 
-                if (result && result.length > 0) {
-                    color = getColor(result[0]["margin_percentage"]);
-                    newConstData[feature.id] = result;
-                } else {
-                    newConstData[feature.id] = result;
-                }
+    //             if (result && result.length > 0) {
+    //                 color = getColor(result[0]["margin_percentage"]);
+    //                 newConstData[feature.id] = result;
+    //             } else {
+    //                 newConstData[feature.id] = result;
+    //             }
 
-                return { feature, color };
-            })
-        );
+    //             return {feature, color};
+    //         })
+    //     );
 
-        return result;
-    }
+    //     return result;
+    // }
 
     // UNCOMMENT CODE BELOW TO GET COLORS AND CONSTITUENCY DATA
 
@@ -214,8 +214,8 @@ const CompetitivenessMap = () => {
 
             const newArray = mapData["features"].map((item, index) => ({
                 "feature": item,
-                ...colorsResult["colors"][index+1], // Merge color object at index
-                }));
+                ...colorsResult["colors"][index+1] // Merge color object at index
+            }));
 
 
             setFeatures(newArray);
@@ -234,111 +234,111 @@ const CompetitivenessMap = () => {
         <div>
             <DiscreteSlider handleSliderChange={handleSliderChange}/>
 
-        <div className="example">
+            <div className="example">
 
-            {features ? (
-                <MapBase
-                    layers={{
+                {features ? (
+                    <MapBase
+                        layers={{
 
-                        LS_2019_Competitiveness: features.map((obj) => (
-                            <GeoJSON
+                            LS_2019_Competitiveness: features.map((obj) => (
+                                <GeoJSON
 
-                                style={{
-                                    fillColor: obj.color,
-                                    color: "black",
-                                    weight: 1,
-                                    fillOpacity:0.8
-                                }}
-                                key={obj.feature.id}
-                                data={obj.feature}
-                                onEachFeature={onEachFeature}
+                                    style={{
+                                        fillColor: obj.color,
+                                        color: "black",
+                                        weight: 1,
+                                        fillOpacity:0.8
+                                    }}
+                                    key={obj.feature.id}
+                                    data={obj.feature}
+                                    onEachFeature={onEachFeature}
 
-                            />
-                        )),
-                    }}
-                    defaultVisibleLayers={["LS_2019_Competitiveness"]}
-                    mapChanged={mapChanged}
-                    dataToDisplay={previewData}
+                                />
+                            ))
+                        }}
+                        defaultVisibleLayers={["LS_2019_Competitiveness"]}
+                        mapChanged={mapChanged}
+                        dataToDisplay={previewData}
 
-                />
-            ) : <p>Loading...</p>}
+                    />
+                ) : <p>Loading...</p>}
 
 
-            <div className="flexJustCenter dataDisplay" style={{padding:'0%'}}>
+                <div className="flexJustCenter dataDisplay" style={{padding:"0%"}}>
 
-                <div style={{}}>
-                    <div className="mapTitle">
+                    <div style={{}}>
+                        <div className="mapTitle">
                         Competitiveness Distribution in {electionYear}
-                    </div>
-                    {displayData && <div>
-                    <div className="mapSubtitle">
-                        <span>
+                        </div>
+                        {displayData && <div>
+                            <div className="mapSubtitle">
+                                <span>
                             Constituency: &nbsp;
-                        </span>
-                        <span style={{fontWeight:'normal'}}>
-                            {displayData[0].constituency_name}
-                        </span>
-                        <span style={{marginLeft:'5%'}}>
+                                </span>
+                                <span style={{fontWeight:"normal"}}>
+                                    {displayData[0].constituency_name}
+                                </span>
+                                <span style={{marginLeft:"5%"}}>
                         State: &nbsp;
-                        </span>
-                        <span style={{fontWeight:'normal'}}>
-                            {displayData[0].state_name}
-                        </span>
+                                </span>
+                                <span style={{fontWeight:"normal"}}>
+                                    {displayData[0].state_name}
+                                </span>
 
-                    </div>
+                            </div>
 
 
-                    <div>
-                    <span className="bold text-left-align">
+                            <div>
+                                <span className="bold text-left-align">
                         Winning Party:&nbsp;
-                    </span>
-                    <span>
-                        {displayData[0].party_name}
-                    </span>
-                    <span className="bold text-left-align" style={{marginLeft:'3%'}}>
+                                </span>
+                                <span>
+                                    {displayData[0].party_name}
+                                </span>
+                                <span className="bold text-left-align" style={{marginLeft:"3%"}}>
                         Winning Candidate:&nbsp;
-                    </span>
-                    <span>
-                        {displayData[0].candidate}
-                    </span>
-                    </div>
-                    <div>
-                    <span className="bold text-left-align">
+                                </span>
+                                <span>
+                                    {displayData[0].candidate}
+                                </span>
+                            </div>
+                            <div>
+                                <span className="bold text-left-align">
                         Runner-Up Party:&nbsp;
-                    </span>
-                    <span>
-                        {displayData[1].party_name}
-                    </span>
-                    <span className="bold text-left-align" style={{marginLeft:'3%'}}>
+                                </span>
+                                <span>
+                                    {displayData[1].party_name}
+                                </span>
+                                <span className="bold text-left-align" style={{marginLeft:"3%"}}>
                         Runner-Up Candidate:&nbsp;
-                    </span>
-                    <span>
-                        {displayData[1].candidate}
-                    </span>
-                    </div>
+                                </span>
+                                <span>
+                                    {displayData[1].candidate}
+                                </span>
+                            </div>
 
-                    <div>
-                    <span className="bold text-left-align">
+                            <div>
+                                <span className="bold text-left-align">
                         Margin Percentage:&nbsp;
-                    </span>
-                    <span>
-                        {displayData[0].margin_percentage}%
-                    </span>
-                    </div>
+                                </span>
+                                <span>
+                                    {displayData[0].margin_percentage}%
+                                </span>
+                            </div>
+
+                        </div>
+
+                        }
 
                     </div>
-
-                    }
-
                 </div>
-          </div>
-        </div>
+            </div>
         </div>
     );
 };
 
 CompetitivenessMap.propTypes = {
-    id: PropTypes.number,
+    id: PropTypes.number
 };
 
 export default CompetitivenessMap;

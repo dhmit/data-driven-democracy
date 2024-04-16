@@ -1,6 +1,6 @@
 import React from "react";
 import {useState,useEffect} from "react";
-import Legend from "./Legend";
+// import Legend from "./Legend";
 
 import * as PropTypes from "prop-types";
 import {
@@ -124,7 +124,7 @@ MapBase.propTypes = {
     minZoom: PropTypes.number,
     maxZoom: PropTypes.number,
     mapChanged: PropTypes.bool,
-    dataToDisplay:PropTypes.object
+    dataToDisplay:PropTypes.array
 };
 
 export default MapBase;
