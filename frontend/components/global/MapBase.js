@@ -9,7 +9,7 @@ import {
     ZoomControl
 } from "react-leaflet";
 import GradientLegend from "./GradientLegend";
-
+import DataPreview from "./DataPreview";
 // Default latitude and longitude values for the center of the map
 export const DEFAULT_MAP_CENTER_LAT = 22.5937;
 export const DEFAULT_MAP_CENTER_LNG = 78.9629;
@@ -26,7 +26,8 @@ export function MapBase({
     zoom = 5,
     minZoom = 5,
     maxZoom=8,
-    mapChanged=false
+    mapChanged=false,
+    dataToDisplay={}
 }) {
     let visibleLayersInit = defaultVisibleLayers;
     if (singleLayer) {
@@ -72,6 +73,7 @@ export function MapBase({
                 toggleLayer={toggleLayer}
                 visibleLayers={visibleLayers}/> */}
             <GradientLegend/>
+            <DataPreview dataToDisplay={dataToDisplay}/>
             <MapContainer
                 key={"map"}
                 // Initial state of Map
@@ -121,7 +123,8 @@ MapBase.propTypes = {
     bounds: PropTypes.array,
     minZoom: PropTypes.number,
     maxZoom: PropTypes.number,
-    mapChanged: PropTypes.bool
+    mapChanged: PropTypes.bool,
+    dataToDisplay:PropTypes.object
 };
 
 export default MapBase;

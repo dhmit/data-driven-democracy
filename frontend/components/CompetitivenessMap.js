@@ -69,8 +69,7 @@ const CompetitivenessMap = () => {
                 // else{
                 //     setDisplayData(null);
                 // }
-                console.log("on click",e.target,allFeatures,e.target.result);
-                console.log(constituencyDataRef.current[e.target.feature.id]);
+
 
             },
             mouseover: (e) => {
@@ -142,7 +141,6 @@ const CompetitivenessMap = () => {
                     return {
                         feature,
                         color,
-
                     };
                 }
 
@@ -178,7 +176,7 @@ const CompetitivenessMap = () => {
                 const newFeatures= (await fetchMoreFeatures(mapData,electionYear));
                 setFeatures(newFeatures);
 
-                // cache features
+                // cache map features
                 allFeatures[electionYear]=newFeatures;
                 const updatedFeatures = { ...allFeatures };
                 updatedFeatures[electionYear] = newFeatures;
@@ -237,11 +235,13 @@ const CompetitivenessMap = () => {
                                 key={obj.feature.id}
                                 data={obj.feature}
                                 onEachFeature={onEachFeature}
+
                             />
                         )),
                     }}
                     defaultVisibleLayers={["LS_2019_Competitiveness"]}
                     mapChanged={mapChanged}
+                    dataToDisplay={displayData}
 
                 />
             ) : <p>Loading...</p>}
