@@ -30,6 +30,12 @@ urlpatterns = [
     path('example/', views.example),
     path('example/<example_id>', views.example),
     path('competitiveness', views.competitiveness),
+    path('campaign-finance/top-10-donors-piechart/', views.PieChart),
+    path('campaign-finance/top-10-donors-barchart/', views.BarChart),
+    path('campaign-finance/donor-party-sankey/', views.FinanceSankey),
+
+
+
 
     ################################################################################
     # API endpoints
@@ -40,8 +46,20 @@ urlpatterns = [
     path('api/ls-elections/<year>', api_views.get_ls_election_year),
     path('api/ls-elections/<year>/<state>/<constituency_no>',
          api_views.get_specific_ls_election),
-    path("api/SDE_DATA_IN_F7DSTRBND_1991/<int:feature_limit>",
-         api_views.get_SDE_DATA_IN_F7DSTRBND_1991),
+    path(
+        "api/SDE_DATA_IN_F7DSTRBND_1991/<int:feature_limit>",
+
+        api_views.get_SDE_DATA_IN_F7DSTRBND_1991
+    ),
+    path("api/all-campaign-finance/", api_views.campaign_finance),
+    path(
+        "api/campaign-finance/party-donor-pair/<party_name>/<donor_name>",
+        api_views.campaign_finance
+    ),
+    path("api/campaign-finance/all-donors/<party_name>",
+         api_views.campaign_finance_party_subset),
+    path("api/campaign-finance/all-parties/<donor_name>",
+         api_views.campaign_finance_donor_subset),
     path("api/India_PC_2019_simplified/<int:feature_limit>",
          api_views.get_India_PC_2019_simplified),
     path("api/India_PC_2019/<int:feature_limit>",

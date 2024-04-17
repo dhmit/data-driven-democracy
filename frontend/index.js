@@ -7,6 +7,9 @@ import ErrorNotFoundComponent from "./components/ErrorNotFoundComponent";
 import ExampleId from "./components/ExampleId";
 import Home from "./components/Home";
 import CompetitivenessMap from "./components/CompetitivenessMap";
+import PieChart from "./components/PieChart";
+import BarChart from "./components/BarChart";
+import FinanceSankey from "./components/FinanceSankey";
 const COMPONENT_PROPS_RAW = document.getElementById("component_props").text;
 const COMPONENT_NAME_RAW = document.getElementById("component_name").text;
 const COMPONENT_PROPS = JSON.parse(COMPONENT_PROPS_RAW);
@@ -16,7 +19,10 @@ const COMPONENTS = {
     ErrorNotFoundComponent,
     ExampleId,
     CompetitivenessMap,
-    Home
+    Home,
+    PieChart,
+    BarChart,
+    FinanceSankey
 };
 
 const PreselectedComponent = COMPONENTS[COMPONENT_NAME || "ErrorNotFoundComponent"];

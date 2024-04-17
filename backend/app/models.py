@@ -69,3 +69,19 @@ class LSElection(models.Model):
     margin_percentage = models.FloatField(null=True, blank=True, default=0)
 
     vote_share = models.FloatField(null=True, blank=True, default=0)
+
+
+class CampaignFinance(models.Model):
+    """
+    Represents a donation amount made by a donor to a party
+    """
+    full_bond_number = models.CharField(
+        max_length=7,
+    )
+    amount = models.IntegerField()
+    donor_name = models.CharField(
+        max_length=61,
+    )
+    party_name = models.CharField(
+        max_length=37,
+    )

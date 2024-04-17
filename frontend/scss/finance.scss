@@ -1,0 +1,23 @@
+.link {
+    fill: none;
+    stroke: #000;
+    stroke-opacity: 0.5;
+    stroke-width: 1;
+    transition: stroke-width 0.2s ease, stroke-opacity 0.2s ease;
+}
+
+.link:hover {
+    stroke-width: 5; /* Enlarge the link */
+    stroke-opacity: 8; /* Increase opacity */
+}
+
+.tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    pointer-events: none; 
+    opacity: 0; 
+    transition: opacity 0.3s ease-in-out;
+  }

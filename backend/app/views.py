@@ -71,3 +71,45 @@ def competitiveness(request):
         'component_name': 'CompetitivenessMap',
     }
     return render(request, 'index.html', context)
+
+
+def PieChart(request, example_id=None):
+    """
+    Displays PieChart for data from election campaign finance 
+    """
+
+    context = {
+        'page_metadata': {
+            'title': 'PieChart Visualization '
+        },
+        'component_name': 'PieChart'
+    }
+    return render(request, 'index.html', context)
+
+
+def BarChart(request, example_id=None):
+    """
+    Displays Bar Chart for data from election campaign finance 
+    """
+
+    context = {
+        'page_metadata': {
+            'title': 'Bar Chart Visualization'
+        },
+        'component_name': 'BarChart'
+    }
+    return render(request, 'index.html', context)
+
+
+def FinanceSankey(request, example_id=None):
+    """
+    Displays FinanceSankey for data from election campaign finance 
+    """
+
+    context = {
+        'page_metadata': {
+            'title': 'FinanceSankey Visualization'
+        },
+        'component_name': 'FinanceSankey'
+    }
+    return render(request, 'index.html', context)

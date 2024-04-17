@@ -90,6 +90,7 @@ DATABASES = {
     }
 }
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -135,7 +136,6 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 # where collectstatic looks for static files
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'build'),
     os.path.join(PROJECT_ROOT, 'assets'),
 )
 

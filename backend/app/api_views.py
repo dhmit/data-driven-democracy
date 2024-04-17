@@ -9,13 +9,15 @@ from rest_framework.response import Response
 from .models import (
     LSElection,
     TCPDElection,
-    SeatShare
+    SeatShare,
+    CampaignFinance,
 )
 
 from .serializers import (
     LSElectionSerializaer,
     TCPDElectionSerializer,
-    SeatShareSerializer
+    SeatShareSerializer,
+    CampaignFinanceSerializer,
 )
 
 
@@ -141,3 +143,41 @@ def get_competiveness_colors(request, election_year=2004):
             "colors": colors_json[str(election_year)],
             "data": data_json[str(election_year)]
         })
+
+
+@api_view(['GET'])
+def campaign_finance(request, donor_name=None, party_name=None):
+    """
+    API endpoint to get all campaign finance donations made by donors to parties, or a specified
+    pair of donor-party donations
+    """
+    if donor_name is not None and party_name is not None:
+        campaign_finances = CampaignFinance.objects.filter(
+            donor_name=donor_name, party_name=party_name
+        )
+    else:
+        campaign_finances = CampaignFinance.objects.all()
+    serializer = CampaignFinanceSerializer(campaign_finances, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def campaign_finance_party_subset(request, party_name):
+    """
+    API endpoint to get campaign finance donations made by all donors to
+    a specified party
+    """
+    campaign_finances = CampaignFinance.objects.filter(party_name=party_name)
+    serializer = CampaignFinanceSerializer(campaign_finances, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def campaign_finance_donor_subset(request, donor_name):
+    """
+    API endpoint to get campaign finance donations made to all parties by
+    a specified donor
+    """
+    campaign_finances = CampaignFinance.objects.filter(donor_name=donor_name)
+    serializer = CampaignFinanceSerializer(campaign_finances, many=True)
+    return Response(serializer.data)

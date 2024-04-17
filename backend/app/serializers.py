@@ -8,7 +8,8 @@ from rest_framework import serializers
 from .models import (
     LSElection,
     TCPDElection,
-    SeatShare
+    SeatShare,
+    CampaignFinance,
 )
 
 
@@ -64,4 +65,18 @@ class LSElectionSerializaer(serializers.ModelSerializer):
             "margin_percentage",
             "vote_share"
 
+        ]
+
+
+class CampaignFinanceSerializer(serializers.ModelSerializer):
+    """
+    Serializes campaign finance donations
+    """
+    class Meta:
+        model = CampaignFinance
+        fields = [
+            "donor_name",
+            "party_name",
+            "amount",
+            "full_bond_number"
         ]
