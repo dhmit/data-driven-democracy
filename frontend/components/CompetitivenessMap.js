@@ -228,9 +228,27 @@ const CompetitivenessMap = () => {
 
     // }, [mapData,electionYear]);
 
+    const yearMarks=[
+        {
+            value:2004,
+            label:2004
+        },
+        {
+            value:2009,
+            label:2009
+        },
+        {
+            value:2014,
+            label:2014
+        },
+        {
+            value:2019,
+            label:2019
+        }
+    ];
     return (
         <div>
-            <DiscreteSlider handleSliderChange={handleSliderChange}/>
+
             <div className="mapTitle">
                 Competitiveness Distribution in {electionYear}
             </div>
@@ -264,66 +282,84 @@ const CompetitivenessMap = () => {
                     />
                 ) : <p>Loading...</p>}
 
+                <div className="slider">
+                    <div style={{fontSize:"x-large",fontWeight:"bold",textAlign:"left"}}>
+                        Election Year:&nbsp; {electionYear}
+                    </div>
+                    <DiscreteSlider handleSliderChange={handleSliderChange} marks={yearMarks}/>
 
-                <div className="flexJustCenter dataDisplay" style={{padding:"0%"}}>
+                </div>
+
+                <div className="dataDisplay">
+
 
                     <div style={{}}>
 
                         {displayData && <div>
                             <div className="mapSubtitle">
-                                <span>
-                            Constituency: &nbsp;
-                                </span>
-                                <span style={{fontWeight:"normal"}}>
-                                    {displayData[0].constituency_name}
-                                </span>
-                                <span style={{marginLeft:"5%"}}>
-                        State: &nbsp;
-                                </span>
-                                <span style={{fontWeight:"normal"}}>
-                                    {displayData[0].state_name}
-                                </span>
+                                <div>
+                        State:
+                                </div>
+                                <div style={{fontWeight:"normal"}}>
+                                    {displayData[0].state_name.replace("_", " ")}
+                                </div>
+                            </div>
+                            <div className="mapSubtitle">
+                                <div>
+                            Constituency:
+                                </div>
+                                <div style={{fontWeight:"normal"}}>
+                                    {displayData[0].constituency_name.charAt(0).toUpperCase()+
+                        displayData[0].constituency_name.slice(1).toLowerCase()}
+                                </div>
+
 
                             </div>
 
 
+
                             <div>
-                                <span className="bold text-left-align">
-                        Winning Party:&nbsp;
-                                </span>
-                                <span>
+                                <div className="mapSubtitle">
+                        Winning Party:
+                                </div>
+                                <div>
                                     {displayData[0].party_name}
-                                </span>
-                                <span className="bold text-left-align" style={{marginLeft:"3%"}}>
-                        Winning Candidate:&nbsp;
-                                </span>
-                                <span>
-                                    {displayData[0].candidate}
-                                </span>
+                                </div>
+
                             </div>
                             <div>
-                                <span className="bold text-left-align">
-                        Runner-Up Party:&nbsp;
-                                </span>
-                                <span>
+                                <div className="mapSubtitle">
+                        Margin:
+                                </div>
+                                <div>
+                                    {displayData[0].margin_percentage}%
+                                </div>
+                            </div>
+                            <div>
+                                <div className="bold text-left-align">
+                        Winning Candidate:
+                                </div>
+                                <div>
+                                    {displayData[0].candidate}
+                                </div>
+
+                            </div>
+                            <div>
+                                <div className="bold text-left-align">
+                        Runner-Up Party:
+                                </div>
+                                <div>
                                     {displayData[1].party_name}
-                                </span>
-                                <span className="bold text-left-align" style={{marginLeft:"3%"}}>
-                        Runner-Up Candidate:&nbsp;
-                                </span>
-                                <span>
+                                </div>
+                                <div className="bold text-left-align">
+                        Runner-Up Candidate:
+                                </div>
+                                <div>
                                     {displayData[1].candidate}
-                                </span>
+                                </div>
                             </div>
 
-                            <div>
-                                <span className="bold text-left-align">
-                        Margin Percentage:&nbsp;
-                                </span>
-                                <span>
-                                    {displayData[0].margin_percentage}%
-                                </span>
-                            </div>
+
 
                         </div>
 

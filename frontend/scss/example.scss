@@ -7,11 +7,32 @@
 
 }
 .dataDisplay{
-    text-align: center;
+    display: flex;
+    text-align: left;
     font-size: large;
     background-color: 'red';
-    width: 50%;
-    margin: 0.1rem;
+    width: 30%;
+    align-items: center;
+    justify-content: left;
+    font-size: larger;
+    padding-left: 2%;
+    margin-top: 5%;
+
+}
+
+.dataDisplay div {
+    margin-top: 5px;
+
+}
+
+.slider{
+    width: 25%;
+    position: absolute;
+    right:0;
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+
 }
 
 .mapTitle{
@@ -24,7 +45,7 @@
 .mapSubtitle{
     font-weight: bold;
     font-size: larger;
-    margin: 1rem;
+
 }
 #map-container {
     z-index: 1;
