@@ -33,7 +33,6 @@ class Command(BaseCommand):
         file_path = os.path.join(settings.DATASET_DIR, file_name)
         df = pandas.read_csv(file_path)
 
-        # TODO: Generalize this to update correct model(s) and columns based on dataset
         for year, seats_held, total_seats, party_name in zip(
             df["Year"],
             df["Total_Candidates"],
