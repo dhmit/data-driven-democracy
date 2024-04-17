@@ -37,3 +37,19 @@ class SeatShare(models.Model):
     seats_held = models.IntegerField()
     election_year = models.IntegerField()
     total_seats = models.IntegerField()
+
+
+class CampaignFinance(models.Model):
+    """
+    Represents a donation amount made by a donor to a party
+    """
+    full_bond_number = models.CharField(
+        max_length=7,
+    )
+    amount = models.IntegerField()
+    donor_name = models.CharField(
+        max_length=61,
+    )
+    party_name = models.CharField(
+        max_length=37,
+    )
