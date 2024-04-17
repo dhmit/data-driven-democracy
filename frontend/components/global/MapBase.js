@@ -21,7 +21,7 @@ export function MapBase({
     layers = {},
     singleLayer = false,
     defaultVisibleLayers = [],
-    bounds = [ [38.20, 101],[5.63, 63.53]],
+    bounds = [ [38.20, 105],[5.63, 61.53]],
     zoom = 5,
     minZoom = 5,
     maxZoom=8,
