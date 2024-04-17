@@ -75,7 +75,7 @@ def competitiveness(request):
 
 def PieChart(request, example_id=None):
     """
-    Displays PieChart for data from election campaign finance 
+    Displays PieChart for data from election campaign finance
     """
 
     context = {
@@ -89,7 +89,7 @@ def PieChart(request, example_id=None):
 
 def BarChart(request, example_id=None):
     """
-    Displays Bar Chart for data from election campaign finance 
+    Displays Bar Chart for data from election campaign finance
     """
 
     context = {
@@ -103,7 +103,7 @@ def BarChart(request, example_id=None):
 
 def FinanceSankey(request, example_id=None):
     """
-    Displays FinanceSankey for data from election campaign finance 
+    Displays FinanceSankey for data from election campaign finance
     """
 
     context = {
