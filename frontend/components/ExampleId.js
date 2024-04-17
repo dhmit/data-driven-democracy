@@ -9,10 +9,10 @@ const multiPolygon = [
     [
         [20.5536, 78.9681],
         [20.5530, 78.9681],
-        [20.5530, 78.9695],
+        [20.5530, 78.9695]
     ]
 ];
-const fillBlueOptions = { fillColor: 'blue' };
+const fillBlueOptions = {fillColor: "blue"};
 
 function geojsonLayer(geojson) {
     return geojson !== null ? (
@@ -21,7 +21,7 @@ function geojsonLayer(geojson) {
                 <GeoJSON
                     style={{
                         fillColor: "none",
-                        color: "#20CCD7",
+                        color: "#20CCD7"
                     }}
                     key={feature.properties["DIST_CODE"]}
                     data={feature}
