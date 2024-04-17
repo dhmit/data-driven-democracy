@@ -11,6 +11,8 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 from app.models import LSElection
 
+# pylint: disable=R0801
+
 
 class Command(BaseCommand):
     """
@@ -32,6 +34,7 @@ class Command(BaseCommand):
         file_name = options.get("dataset_name")
         file_path = os.path.join(settings.DATASET_DIR, file_name)
         df = pandas.read_csv(file_path)
+    # pylint: disable=R0801
 
         for year, state_name, constituency_name, constituency_no, party_name, candidate, \
                 candidate_position, margin_percentage, vote_share in zip(
