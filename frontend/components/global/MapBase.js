@@ -1,6 +1,5 @@
 import React from "react";
 import {useState,useEffect} from "react";
-// import Legend from "./Legend";
 
 import * as PropTypes from "prop-types";
 import {
@@ -22,7 +21,7 @@ export function MapBase({
     layers = {},
     singleLayer = false,
     defaultVisibleLayers = [],
-    bounds = null, // TO-DO: CHANGE BACK TO DEFAULT
+    bounds = [ [38.20, 101],[5.63, 63.53]],
     zoom = 5,
     minZoom = 5,
     maxZoom=8,
@@ -68,10 +67,6 @@ export function MapBase({
 
     return (
         <div className={className} id="map-container">
-            {/* <Legend
-                layers={Object.keys(layers)}
-                toggleLayer={toggleLayer}
-                visibleLayers={visibleLayers}/> */}
             <GradientLegend/>
             <DataPreview dataToDisplay={dataToDisplay}/>
             <MapContainer

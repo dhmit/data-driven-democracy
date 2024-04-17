@@ -231,6 +231,9 @@ const CompetitivenessMap = () => {
     return (
         <div>
             <DiscreteSlider handleSliderChange={handleSliderChange}/>
+            <div className="mapTitle">
+                Competitiveness Distribution in {electionYear}
+            </div>
 
             <div className="example">
 
@@ -265,9 +268,7 @@ const CompetitivenessMap = () => {
                 <div className="flexJustCenter dataDisplay" style={{padding:"0%"}}>
 
                     <div style={{}}>
-                        <div className="mapTitle">
-                        Competitiveness Distribution in {electionYear}
-                        </div>
+
                         {displayData && <div>
                             <div className="mapSubtitle">
                                 <span>
