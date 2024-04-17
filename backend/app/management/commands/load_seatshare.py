@@ -14,7 +14,8 @@ from app.models import SeatShare
 
 class Command(BaseCommand):
     """
-    Custom django-admin command used to run an analysis from the app/analysis folder
+    Custom django-admin command used to load the party seatshare data
+    over the years
     """
 
     help = ""

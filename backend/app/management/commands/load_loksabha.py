@@ -14,7 +14,7 @@ from app.models import LSElection
 
 class Command(BaseCommand):
     """
-    Custom django-admin command used to run an analysis from the app/analysis folder
+    Custom django-admin command to load Lok Sabha data over the years
     """
 
     help = ""
@@ -33,7 +33,6 @@ class Command(BaseCommand):
         file_path = os.path.join(settings.DATASET_DIR, file_name)
         df = pandas.read_csv(file_path)
 
-        # TODO: Generalize this to update correct model(s) and columns based on dataset
         for year, state_name, constituency_name, constituency_no, party_name, candidate, \
                 candidate_position, margin_percentage, vote_share in zip(
                     df["Year"],
