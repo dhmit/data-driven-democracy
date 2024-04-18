@@ -125,7 +125,7 @@ def get_India_PC_2019(request, feature_limit=10):
 
 
 @api_view(['GET'])
-def get_competiveness_colors(request, election_year=2004):
+def get_competitiveness_data(request, election_year=2004):
     """
     API endpoint to get data and colors for competitiveness map
     """

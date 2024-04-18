@@ -65,6 +65,6 @@ urlpatterns = [
     path("api/India_PC_2019/<int:feature_limit>",
          api_views.get_India_PC_2019),
     path("api/competitiveness_colors/<election_year>",
-         api_views.get_competiveness_colors),
+         api_views.get_competitiveness_data),
 
 ]
