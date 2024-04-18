@@ -72,7 +72,7 @@ const CompetitivenessMap = () => {
     useEffect(() => {
         if (mapData) return;
         async function getGeojson() {
-            const mapResponse = await fetch("/api/India_PC_2019/10");
+            const mapResponse = await fetch("/api/India_PC_2019/");
             const result = await mapResponse.json();
             setMapData(result);
 

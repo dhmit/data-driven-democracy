@@ -77,7 +77,7 @@ def get_specific_ls_election(request, year, state, constituency_no):
 
 
 @api_view(['GET'])
-def get_SDE_DATA_IN_F7DSTRBND_1991(request, feature_limit=10):
+def get_SDE_DATA_IN_F7DSTRBND_1991(request):
     """
     API endpoint to get SDE_DATA_IN_F7DSTRBND_1991 geojson
     """
@@ -93,7 +93,7 @@ def get_SDE_DATA_IN_F7DSTRBND_1991(request, feature_limit=10):
 
 
 @api_view(['GET'])
-def get_India_PC_2019_simplified(request, feature_limit=10):
+def get_India_PC_2019_simplified(request):
     """
     API endpoint to get SDE_DATA_IN_F7DSTRBND_1991 geojson
     """
@@ -109,7 +109,7 @@ def get_India_PC_2019_simplified(request, feature_limit=10):
 
 
 @api_view(['GET'])
-def get_India_PC_2019(request, feature_limit=10):
+def get_India_PC_2019(request):
     """
     API endpoint to get SDE_DATA_IN_F7DSTRBND_1991 geojson
     """
