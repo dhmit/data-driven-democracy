@@ -11,9 +11,9 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 from app.models import SeatShare
 
-# pylint: disable=R0801
 
-
+# TODO: refactor
+# pylint: disable=duplicate-code
 class Command(BaseCommand):
     """
     Custom django-admin command used to load the party seatshare data
@@ -35,7 +35,7 @@ class Command(BaseCommand):
         file_name = options.get("dataset_name")
         file_path = os.path.join(settings.DATASET_DIR, file_name)
         df = pandas.read_csv(file_path)
-    # pylint: disable=R0801
+        # pylint: disable=duplicate-code
 
         for year, seats_held, total_seats, party_name in zip(
             df["Year"],
