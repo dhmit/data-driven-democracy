@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from "react";
 import * as PropTypes from "prop-types";
 import MapBase from "../components/global/MapBase";
+import Loading from "../components/global/Loading";
 import {GeoJSON} from "react-leaflet";
 import DiscreteSlider from "./global/DiscreteSlider";
 export const DEFAULT_MAP_CENTER_LAT = 20.5937;
@@ -137,7 +138,7 @@ const CompetitivenessMap = () => {
                         dataToDisplay={previewData}
                     />
                 ) : (
-                    <p>Loading...</p>
+                    <Loading />
                 )}
 
                 <div className="slider">
