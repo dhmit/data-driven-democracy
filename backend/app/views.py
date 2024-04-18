@@ -31,7 +31,7 @@ def index(request):
     Home page
     """
 
-    context = {
+    _context = {
         'page_metadata': {
             'title': 'Home page'
         },
