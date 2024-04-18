@@ -6,30 +6,6 @@ import DiscreteSlider from "./global/DiscreteSlider";
 export const DEFAULT_MAP_CENTER_LAT = 20.5937;
 export const DEFAULT_MAP_CENTER_LNG = 78.9629;
 
-// assigns a color to a constituency, will be used later
-// function getColor(value) {
-
-//     if (value > 70) {
-//         return "#E9EAE0";
-//     } else if (value > 50) {
-//         return "#F7BEC0";
-//     } else if (value > 40) {
-//         return "#FF8A8A";
-//     } else if (value > 30) {
-//         return "#FF5C5C";
-//     } else if (value > 20) {
-//         return "#FF2E2E";
-//     } else if (value > 10) {
-//         return "#FF0000";
-//     } else if (value > 5) {
-//         return "#D10000";
-//     } else if (value > 3) {
-//         return "#A30000";
-//     } else {
-//         return "#750000";
-//     }
-// }
-
 const CompetitivenessMap = () => {
     const [features, setFeatures] = useState(null);
     const [constituencyData,setConstituencyData]=useState(null);
@@ -40,12 +16,6 @@ const CompetitivenessMap = () => {
     const [displayData, setDisplayData] = useState(null);
     const [previewData,setPreviewData]=useState(null);
     const [mapChanged,setMapChanged]=useState(false);
-
-    // COMMENTED VARIABLES USED TO GET INITIAL DATA TO PLACE ON BACKEND
-    // let newConstData={};
-    // const[allFeatures,setAllFeatures]=useState({});
-    // const[allConstData,setAllConstData]=useState({});
-    // const [allColors,setAllColors]=useState({});
 
     const constituencyDataRef = useRef(constituencyData);
 
@@ -135,99 +105,6 @@ const CompetitivenessMap = () => {
 
     },[mapData,electionYear]);
 
-
-    // UNCOMMENT CODE BELOW TO GET INITAL COLOR DATA AND CONSTITUENCY DATA
-
-    // async function fetchMoreFeatures(geojson, year) {
-    //     if (!geojson) return null;
-
-    //     const result = await Promise.all(
-    //         geojson["features"].map(async (feature) => {
-    //             let color = getColor(30);
-    //             let state = feature["properties"]["State_Name"];
-
-    //             if (state) {
-    //                 if (state === "Telangana" && year < 2019) {
-    //                     state = "Andhra Pradesh";
-    //                 }
-    //                 state = state.replace(/ /g, "_");
-    //             }
-
-    //             const constituency_no = feature["properties"]["Constituency_No"];
-    //             const dataResponse = await fetch(
-    //                 `/api/ls-elections/${year}/${state}/${constituency_no}`
-    //             );
-    //             const result = await dataResponse.json();
-
-    //             if (result && result.length > 0) {
-    //                 color = getColor(result[0]["margin_percentage"]);
-    //                 newConstData[feature.id] = result;
-    //             } else {
-    //                 newConstData[feature.id] = result;
-    //             }
-
-    //             return {feature, color};
-    //         })
-    //     );
-
-    //     return result;
-    // }
-
-    // update colors on map and constituency data displayed when year changes
-    // useEffect(() => {
-    //     if (!mapData) return;
-    //     let fetchMore=true;
-
-    //     // checks if any year's data has been cached
-
-    //     if (allFeatures){
-    //         console.log(allFeatures,allConstData);
-    //         const newObj = {};
-    //         let counter = 1;
-    //         for (const key in allFeatures[electionYear]) {
-
-    //             newObj[counter++] = { color: allFeatures[electionYear][key].color };
-
-    //         }
-    //         let newColorsData={...allColors};
-    //         newColorsData[electionYear]=newObj;
-    //         setAllColors({...newColorsData});
-    //         console.log("COLORS DATA", newColorsData,allColors);
-
-
-    //         // if the data for that given year is already cached
-    //         if (allFeatures[electionYear]){
-    //             setFeatures(allFeatures[electionYear]);
-    //             setConstituencyData(allConstData[electionYear]);
-    //             setMapChanged(!mapChanged);
-    //             fetchMore=false;
-    //         }
-
-
-    //     }
-    //     if (fetchMore){
-    //         async function getFeatures() {
-    //             newConstData = {};
-    //             const newFeatures = await fetchMoreFeatures(mapData, electionYear);
-    //             setFeatures(newFeatures);
-
-    //             allFeatures[electionYear] = newFeatures;
-    //             setAllFeatures({ ...allFeatures });
-
-    //             setConstituencyData(newConstData);
-    //             allConstData[electionYear] = newConstData;
-    //             setAllConstData({ ...allConstData });
-
-    //             setMapChanged(!mapChanged);
-    //         }
-    //         getFeatures();
-
-
-    //     }
-
-
-    // }, [mapData,electionYear]);
-
     const yearMarks=[
         {
             value:2004,
@@ -246,6 +123,7 @@ const CompetitivenessMap = () => {
             label:2019
         }
     ];
+
     return (
         <div>
 
