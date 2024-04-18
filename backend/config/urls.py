@@ -27,14 +27,10 @@ urlpatterns = [
     # View Pages
     ################################################################################
     path('', views.index),
-    path('example/', views.example),
-    path('example/<example_id>', views.example),
     path('competitiveness', views.competitiveness),
     path('campaign-finance/top-10-donors-piechart/', views.PieChart),
     path('campaign-finance/top-10-donors-barchart/', views.BarChart),
     path('campaign-finance/donor-party-sankey/', views.FinanceSankey),
-
-
 
 
     ################################################################################

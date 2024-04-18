@@ -41,23 +41,6 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-def example(request, example_id=None):
-    """
-    Example page
-    """
-
-    context = {
-        'page_metadata': {
-            'title': 'Example ID page'
-        },
-        'component_props': {
-            'id': example_id
-        },
-        'component_name': 'ExampleId',
-    }
-    return render(request, 'index.html', context)
-
-
 def competitiveness(request):
     """
     Competitiveness Map Page
@@ -73,7 +56,7 @@ def competitiveness(request):
     return render(request, 'index.html', context)
 
 
-def PieChart(request, example_id=None):
+def PieChart(request):
     """
     Displays PieChart for data from election campaign finance
     """
@@ -87,7 +70,7 @@ def PieChart(request, example_id=None):
     return render(request, 'index.html', context)
 
 
-def BarChart(request, example_id=None):
+def BarChart(request):
     """
     Displays Bar Chart for data from election campaign finance
     """
@@ -101,7 +84,7 @@ def BarChart(request, example_id=None):
     return render(request, 'index.html', context)
 
 
-def FinanceSankey(request, example_id=None):
+def FinanceSankey(request):
     """
     Displays FinanceSankey for data from election campaign finance
     """

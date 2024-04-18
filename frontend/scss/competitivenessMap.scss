@@ -1,52 +1,45 @@
-.example {
-    .list {
-        list-style: none;
-        padding: 0.5rem;
-    }
+.map-display {
     display: flex;
-
 }
-.dataDisplay{
+
+.data-display {
     display: flex;
     text-align: left;
     font-size: large;
-    background-color: 'red';
+    background-color: "red";
     width: 30%;
     align-items: center;
     justify-content: left;
     font-size: larger;
     padding-left: 2%;
     margin-top: 5%;
-
 }
 
-.dataDisplay div {
+.data-display div {
     margin-top: 5px;
-
 }
 
-.slider{
+.slider {
     width: 25%;
     position: absolute;
-    right:0;
+    right: 0;
     display: flex;
     justify-content: left;
     flex-direction: column;
-
 }
 
-.mapTitle{
+.map-title {
     font-weight: bold;
     font-size: xx-large;
     margin: 0.5rem;
     text-align: center;
 }
 
-.mapSubtitle{
+.map-subtitle {
     font-weight: bold;
     font-size: larger;
-
 }
+
 #map-container {
     z-index: 1;
     height: calc(100vh);
