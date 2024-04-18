@@ -30,8 +30,8 @@ const FinanceSankey = () => {
         const contributions = {};
         const nodes = [];
         const links = [];
-        
-        data.forEach(item => {
+
+        data.forEach((item) => {
             const key = `${item.donor_name}-${item.party_name}`;
             let amountInCrores = item.amount / 10000000; // Convert rupees to crores
             if (contributions[key]) {
@@ -44,15 +44,14 @@ const FinanceSankey = () => {
         Object.entries(contributions).forEach(([contribution, amount]) => {
             const [donor, party] = contribution.split("-");
 
-            if (amount > 100){
-                
-                let donorIndex = nodes.findIndex(node => node.name === donor);
+            if (amount > 100) {
+                let donorIndex = nodes.findIndex((node) => node.name === donor);
                 if (donorIndex === -1) {
                     nodes.push({name: donor});
                     donorIndex = nodes.length - 1;
                 }
 
-                let partyIndex = nodes.findIndex(node => node.name === party);
+                let partyIndex = nodes.findIndex((node) => node.name === party);
                 if (partyIndex === -1) {
                     nodes.push({name: party});
                     partyIndex = nodes.length - 1;
@@ -63,22 +62,18 @@ const FinanceSankey = () => {
                     target: partyIndex,
                     value: amount
                 });
-            }});
+            }
+        });
 
         // SVG dimensions
         const width = 1200;
         const height = 800;
 
         // Create SVG
-        const svg = d3.select("#sankey-graph")
-            .attr("width", width)
-            .attr("height", height);
+        const svg = d3.select("#sankey-graph").attr("width", width).attr("height", height);
 
         // Create Sankey layout
-        const sankeyLayout = sankey()
-            .nodeWidth(50)
-            .nodePadding(20)
-            .size([width, height]);
+        const sankeyLayout = sankey().nodeWidth(50).nodePadding(20).size([width, height]);
 
         // Generate Sankey diagram data
         const {nodes: sankeyNodes, links: sankeyLinks} = sankeyLayout({
@@ -94,15 +89,15 @@ const FinanceSankey = () => {
             .data(sankeyLinks)
             .join("path")
             .attr("class", "link")
-            .attr("d", sankeyLinkHorizontal())  // <-- Import this function
+            .attr("d", sankeyLinkHorizontal()) // <-- Import this function
             .attr("fill", "none")
             .attr("stroke", "#000")
             .attr("stroke-opacity", 0.5)
-            .attr("stroke-width", d => Math.max(1, d.width));
+            .attr("stroke-width", (d) => Math.max(1, d.width));
 
         // Add hover event listeners
-        svg.selectAll(".link")  // Select the links again
-            .on("mouseover", function(event, d) {
+        svg.selectAll(".link") // Select the links again
+            .on("mouseover", function (event, d) {
                 // Enlarge the hovered link
                 d3.select(this)
                     .transition()
@@ -114,19 +109,20 @@ const FinanceSankey = () => {
                 const contributionAmount = d.value.toFixed(2); // Access the value attribute
 
                 // Update text element with contribution amount
-                const tooltip = d3.select("#tooltip"); 
-                tooltip.html(`Contribution Amount: ${contributionAmount} crores`)
+                const tooltip = d3.select("#tooltip");
+                tooltip
+                    .html(`Contribution Amount: ${contributionAmount} crores`)
                     .style("font-size", "22px")
-                    .style("left", (event.pageX + 20) + "px") 
-                    .style("top", (event.pageY - 20) + "px")
+                    .style("left", event.pageX + 20 + "px")
+                    .style("top", event.pageY - 20 + "px")
                     .style("opacity", 1);
             })
-            .on("mouseout", function() {
+            .on("mouseout", function () {
                 // Restore original size and opacity
                 d3.select(this)
                     .transition()
                     .duration(200)
-                    .attr("stroke-width", d => Math.max(1, d.width))
+                    .attr("stroke-width", (d) => Math.max(1, d.width))
                     .attr("stroke-opacity", 0.5);
 
                 // Hide the tooltip
@@ -134,19 +130,20 @@ const FinanceSankey = () => {
             });
 
         // Render nodes
-        const node = svg.selectAll(".node")
+        const node = svg
+            .selectAll(".node")
             .data(sankeyNodes)
             .join("g")
             .attr("class", "node")
             // Position at the center of the node
-            .attr("transform", d => `translate(${d.x0},${(d.y0 + d.y1) / 2})`);
+            .attr("transform", (d) => `translate(${d.x0},${(d.y0 + d.y1) / 2})`);
 
         // Add rectangles for nodes
         node.append("rect")
             .attr("x", 0)
-            .attr("y", d => -((d.y1 - d.y0) / 2))
-            .attr("height", d => d.y1 - d.y0)
-            .attr("width", d => (d.x1 - d.x0)*3)
+            .attr("y", (d) => -((d.y1 - d.y0) / 2))
+            .attr("height", (d) => d.y1 - d.y0)
+            .attr("width", (d) => (d.x1 - d.x0) * 3)
             .attr("fill", (d) => colorScale(d.name)); // Use color scale based on party name
 
         // Add text for node labels
@@ -155,11 +152,11 @@ const FinanceSankey = () => {
             .attr("y", 0)
             .attr("dy", "0.35em")
             .attr("text-anchor", "start")
-            .text(d => d.name)
+            .text((d) => d.name)
             .style("font-size", "22px")
             .style("fill", "black");
     };
-    
+
     return (
         <div className="plot-figure">
             <h1>Sankey Graph of Donors and Parties</h1>
@@ -168,5 +165,5 @@ const FinanceSankey = () => {
         </div>
     );
 };
-   
+
 export default FinanceSankey;

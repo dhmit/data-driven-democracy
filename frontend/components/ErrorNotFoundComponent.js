@@ -1,7 +1,6 @@
 import React from "react";
 
 const ErrorNotFoundComponent = () => {
-
     return (
         <>
             <h1>Error: No React Component found</h1>

@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from "react";
 import Chart from "chart.js/auto";
 
-
 const BarChart = () => {
     const [data, setData] = useState([]);
-
 
     useEffect(() => {
         async function fetchData() {
@@ -28,7 +26,7 @@ const BarChart = () => {
 
     const renderChart = () => {
         const donors = {};
-        data.forEach(item => {
+        data.forEach((item) => {
             let amountInCrores = item.amount / 10000000; // Convert rupees to crores
             if (!donors[item.donor_name]) {
                 donors[item.donor_name] = amountInCrores;
@@ -67,10 +65,10 @@ const BarChart = () => {
                         title: {
                             display: true,
                             text: "Total Donation Amount (crores)",
-                            font: {size: 25}// Set the font size for the y-axis title
+                            font: {size: 25} // Set the font size for the y-axis title
                         },
                         ticks: {
-                            callback: function(value) {
+                            callback: function (value) {
                                 return "₹" + value.toLocaleString(); // Format as currency
                             },
                             font: {size: 16}
@@ -84,7 +82,6 @@ const BarChart = () => {
                         },
                         ticks: {
                             font: {size: 16}
-                            
                         }
                     }
                 }

@@ -3,7 +3,9 @@
     stroke: #000;
     stroke-opacity: 0.5;
     stroke-width: 1;
-    transition: stroke-width 0.2s ease, stroke-opacity 0.2s ease;
+    transition:
+        stroke-width 0.2s ease,
+        stroke-opacity 0.2s ease;
 }
 
 .link:hover {
@@ -17,7 +19,7 @@
     color: white;
     padding: 5px;
     border-radius: 3px;
-    pointer-events: none; 
-    opacity: 0; 
+    pointer-events: none;
+    opacity: 0;
     transition: opacity 0.3s ease-in-out;
-  }
+}

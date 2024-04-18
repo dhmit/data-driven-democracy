@@ -5,7 +5,7 @@ import * as PropTypes from "prop-types";
 const Base = ({children}) => {
     return (
         <>
-            <Nav/>
+            <Nav />
             <div id="main-container">
                 <main role="main">{children}</main>
             </div>
@@ -16,6 +16,5 @@ const Base = ({children}) => {
 Base.propTypes = {
     children: PropTypes.object
 };
-
 
 export default Base;

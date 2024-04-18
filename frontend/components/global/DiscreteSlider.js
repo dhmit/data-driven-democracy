@@ -7,15 +7,21 @@ function valuetext(value) {
     return `${value}°C`;
 }
 
-
-export default function DiscreteSlider({handleSliderChange,marks}) {
-    function handleChange(event,newValue){
+export default function DiscreteSlider({handleSliderChange, marks}) {
+    function handleChange(event, newValue) {
         handleSliderChange(newValue);
     }
 
     return (
-        <Box style={{width: 320, right:0, display: "flex",justifyContent: "right", marginTop:"5%"
-        }}>
+        <Box
+            style={{
+                width: 320,
+                right: 0,
+                display: "flex",
+                justifyContent: "right",
+                marginTop: "5%"
+            }}
+        >
             <Slider
                 sx={{
                     "& .MuiSlider-markLabel": {
@@ -24,20 +30,17 @@ export default function DiscreteSlider({handleSliderChange,marks}) {
                     "& .MuiSlider-rail": {
                         height: 12, // Increase the height of the track
                         borderRadius: 6,
-                        backgroundColor:"black"
-
+                        backgroundColor: "black"
                     },
                     "& .MuiSlider-thumb": {
                         width: 24, // Increase the width of the thumb
                         height: 24, // Increase the height of the thumb
-                        backgroundColor:"darkRed"
+                        backgroundColor: "darkRed"
                     },
                     "& .MuiSlider-track": {
                         color: "transparent" // Make the active part (track) transparent
                     }
                 }}
-
-
                 aria-label="Year"
                 size="large"
                 defaultValue={30}
@@ -49,16 +52,12 @@ export default function DiscreteSlider({handleSliderChange,marks}) {
                 marks={marks}
                 min={2004}
                 max={2019}
-
-
-
             />
         </Box>
     );
 }
 
 DiscreteSlider.propTypes = {
-
     handleSliderChange: PropTypes.func,
     marks: PropTypes.array
 };

@@ -1,6 +1,13 @@
 {
-    "editor.defaultFormatter": "ms-python.autopep8",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "pylint.args": [
         "--disable=E0015"
-    ],
+    ],    
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8",
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    }
 }

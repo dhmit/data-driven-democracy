@@ -9,7 +9,7 @@ const Nav = () => {
             </a>
             <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                    <a href="/competitiveness">Competitiveness Map</a>
+                    <a href="/competitiveness/">Competitiveness Map</a>
                 </li>
             </ul>
             <a

@@ -1,12 +1,8 @@
 import React from "react";
-import {useState,useEffect} from "react";
+import {useState, useEffect} from "react";
 
 import * as PropTypes from "prop-types";
-import {
-    MapContainer,
-    TileLayer,
-    ZoomControl
-} from "react-leaflet";
+import {MapContainer, TileLayer, ZoomControl} from "react-leaflet";
 import GradientLegend from "./GradientLegend";
 import DataPreview from "./DataPreview";
 // Default latitude and longitude values for the center of the map
@@ -21,12 +17,15 @@ export function MapBase({
     layers = {},
     singleLayer = false,
     defaultVisibleLayers = [],
-    bounds = [ [38.20, 105],[5.63, 61.53]],
+    bounds = [
+        [38.2, 105],
+        [5.63, 61.53]
+    ],
     zoom = 5,
     minZoom = 5,
-    maxZoom=8,
-    mapChanged=false,
-    dataToDisplay={}
+    maxZoom = 8,
+    mapChanged = false,
+    dataToDisplay = {}
 }) {
     let visibleLayersInit = defaultVisibleLayers;
     if (singleLayer) {
@@ -37,16 +36,14 @@ export function MapBase({
 
     function getOverlays() {
         return Object.keys(layers).map((layerName) => {
-            return visibleLayers.includes(layerName)
-                ? layers[layerName]
-                : <></>;
+            return visibleLayers.includes(layerName) ? layers[layerName] : <></>;
         });
     }
 
     const [visibleLayers, setvisibleLayers] = useState(visibleLayersInit);
     const [overlays, setOverlays] = useState(getOverlays());
     useEffect(() => {
-        toggleLayer({target:{value:defaultVisibleLayers}});
+        toggleLayer({target: {value: defaultVisibleLayers}});
     }, [mapChanged]);
 
     function toggleLayer(event) {
@@ -67,17 +64,13 @@ export function MapBase({
 
     return (
         <div className={className} id="map-container">
-            <GradientLegend/>
-            <DataPreview dataToDisplay={dataToDisplay}/>
+            <GradientLegend />
+            <DataPreview dataToDisplay={dataToDisplay} />
             <MapContainer
                 key={"map"}
                 // Initial state of Map
-                center={[
-                    lat ?? DEFAULT_MAP_CENTER_LAT,
-                    lng ?? DEFAULT_MAP_CENTER_LNG
-                ]}
+                center={[lat ?? DEFAULT_MAP_CENTER_LAT, lng ?? DEFAULT_MAP_CENTER_LNG]}
                 zoom={zoom}
-
                 scrollWheelZoom={scrollWheelZoom}
                 style={{
                     width: "100%",
@@ -88,8 +81,9 @@ export function MapBase({
                 maxBounds={bounds}
                 minZoom={minZoom}
                 maxZoom={maxZoom}
-                zoomControl={false}>
-                <ZoomControl position="bottomleft"/>
+                zoomControl={false}
+            >
+                <ZoomControl position="bottomleft" />
                 <TileLayer
                     // Sets Map Boundaries - Keeps user from leaving Paris
                     maxBoundsViscosity={1.0}
@@ -119,7 +113,7 @@ MapBase.propTypes = {
     minZoom: PropTypes.number,
     maxZoom: PropTypes.number,
     mapChanged: PropTypes.bool,
-    dataToDisplay:PropTypes.array
+    dataToDisplay: PropTypes.array
 };
 
 export default MapBase;

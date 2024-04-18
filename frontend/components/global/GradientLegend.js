@@ -1,6 +1,5 @@
 import React from "react";
 
-
 import "../../scss/mapLegends.scss";
 
 const GradientLegend = () => {
@@ -27,8 +26,8 @@ const GradientLegend = () => {
         }
     }
 
-    const grades=[0,3,5,10,20,30,40,50,70];
-    const title="Percent Margin";
+    const grades = [0, 3, 5, 10, 20, 30, 40, 50, 70];
+    const title = "Percent Margin";
     return (
         <div className="gradientLegend">
             <p>{title}</p>

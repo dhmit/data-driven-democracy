@@ -27,7 +27,7 @@ const PieChart = () => {
 
     const renderChart = () => {
         const donors = {};
-        data.forEach(item => {
+        data.forEach((item) => {
             let amountInCrores = item.amount / 10000000; // Convert rupees to crores
             if (!donors[item.donor_name]) {
                 donors[item.donor_name] = amountInCrores;
@@ -93,7 +93,7 @@ const PieChart = () => {
                     },
                     tooltip: {
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 let label = context.label || "";
                                 if (label) {
                                     label += ": " + context.formattedValue + " crores";

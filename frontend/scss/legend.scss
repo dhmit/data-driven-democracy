@@ -1,18 +1,16 @@
 @import "variables";
-// @import "fonts";
 
 .legend {
     position: absolute;
     background-color: $color-white;
     border: 1px solid $color-black;
     z-index: 999;
-    padding: .5em;
+    padding: 0.5em;
     right: 0.5em;
     top: 0.5em;
     color: $color-black;
     text-align: left;
     line-height: 0px;
-    // font-family: $font-family-bold;
 
     h6 {
         font-weight: 700;
@@ -33,7 +31,7 @@
 
     .label {
         position: relative;
-        font-size: .7em;
+        font-size: 0.7em;
         bottom: 0.5em;
     }
 
@@ -41,7 +39,7 @@
         position: absolute;
         bottom: 1.2em;
         right: 1.5em;
-        font-size: .55em;
+        font-size: 0.55em;
         text-align: center;
     }
 }
@@ -54,7 +52,6 @@
 
     &.photos {
         border: 0.1px solid $color-white;
-        // background: url("../images/icons/photo_density_legend_icon.svg");
         background-size: cover;
     }
     &.photos.inactive {
@@ -62,8 +59,8 @@
     }
 
     &.arrondissement {
-        background-color: #70D8F1;
-        border: 4px solid #00B1DB;
+        background-color: #70d8f1;
+        border: 4px solid #00b1db;
     }
     &.arrondissement.inactive {
         filter: grayscale(60%);
