@@ -6,6 +6,7 @@ import Base from "./components/global/Base";
 import ErrorNotFoundComponent from "./components/ErrorNotFoundComponent";
 import ExampleId from "./components/ExampleId";
 import Home from "./components/Home";
+import CompetitivenessMap from "./components/CompetitivenessMap";
 import PieChart from "./components/PieChart";
 import BarChart from "./components/BarChart";
 import FinanceSankey from "./components/FinanceSankey";
@@ -17,6 +18,7 @@ const COMPONENT_NAME = JSON.parse(COMPONENT_NAME_RAW);
 const COMPONENTS = {
     ErrorNotFoundComponent,
     ExampleId,
+    CompetitivenessMap,
     Home,
     PieChart,
     BarChart,
@@ -31,5 +33,5 @@ const root = createRoot(container);
 root.render(
     <Base>
         <PreselectedComponent {...COMPONENT_PROPS} />
-    </Base>    
+    </Base>
 );

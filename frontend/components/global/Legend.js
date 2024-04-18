@@ -8,7 +8,7 @@ export default function Legend({
     visibleLayers,
     toggleLayer
 }) {
-    
+
     return (
         <div className="legend">
             <ul>
@@ -24,6 +24,7 @@ export default function Legend({
                     </li>;
                 })}
             </ul>
+
         </div>
     );
 }

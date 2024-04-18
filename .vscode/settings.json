@@ -2,5 +2,5 @@
     "editor.defaultFormatter": "ms-python.autopep8",
     "pylint.args": [
         "--disable=E0015"
-    ]
+    ],
 }

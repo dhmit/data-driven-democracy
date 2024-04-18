@@ -1,5 +1,5 @@
 """
-Django management command load_dataset
+Django management command load_seatshare
 
 Updates local db with values from base csv dataset
 """
@@ -12,9 +12,12 @@ from django.core.management.base import BaseCommand
 from app.models import SeatShare
 
 
+# TODO: refactor
+# pylint: disable=duplicate-code
 class Command(BaseCommand):
     """
-    Custom django-admin command used to run an analysis from the app/analysis folder
+    Custom django-admin command used to load the party seatshare data
+    over the years
     """
 
     help = ""
@@ -32,8 +35,8 @@ class Command(BaseCommand):
         file_name = options.get("dataset_name")
         file_path = os.path.join(settings.DATASET_DIR, file_name)
         df = pandas.read_csv(file_path)
+        # pylint: disable=duplicate-code
 
-        # TODO: Generalize this to update correct model(s) and columns based on dataset
         for year, seats_held, total_seats, party_name in zip(
             df["Year"],
             df["Total_Candidates"],

@@ -6,6 +6,7 @@ allow the frontend to suggest changes to the backend/database.
 
 from rest_framework import serializers
 from .models import (
+    LSElection,
     TCPDElection,
     SeatShare,
     CampaignFinance,
@@ -43,6 +44,27 @@ class SeatShareSerializer(serializers.ModelSerializer):
             "party_name",
             "seats_held",
             "total_seats"
+        ]
+
+
+class LSElectionSerializaer(serializers.ModelSerializer):
+    """
+    Serializes Lok Sahbha Elections
+    """
+
+    class Meta:
+        model = LSElection
+        fields = [
+            "election_year",
+            "state_name",
+            "constituency_name",
+            "constituency_no",
+            "party_name",
+            "candidate",
+            "candidate_position",
+            "margin_percentage",
+            "vote_share"
+
         ]
 
 

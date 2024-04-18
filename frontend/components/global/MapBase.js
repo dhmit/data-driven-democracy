@@ -1,6 +1,5 @@
 import React from "react";
-import {useState} from "react";
-import Legend from "./Legend";
+import {useState,useEffect} from "react";
 
 import * as PropTypes from "prop-types";
 import {
@@ -8,9 +7,10 @@ import {
     TileLayer,
     ZoomControl
 } from "react-leaflet";
-
+import GradientLegend from "./GradientLegend";
+import DataPreview from "./DataPreview";
 // Default latitude and longitude values for the center of the map
-export const DEFAULT_MAP_CENTER_LAT = 20.5937;
+export const DEFAULT_MAP_CENTER_LAT = 22.5937;
 export const DEFAULT_MAP_CENTER_LNG = 78.9629;
 
 export function MapBase({
@@ -19,11 +19,14 @@ export function MapBase({
     lng = DEFAULT_MAP_CENTER_LNG,
     scrollWheelZoom = true,
     layers = {},
-    singleLayer = false,    
+    singleLayer = false,
     defaultVisibleLayers = [],
-    bounds = null,
+    bounds = [ [38.20, 105],[5.63, 61.53]],
     zoom = 5,
-    minZoom = 1
+    minZoom = 5,
+    maxZoom=8,
+    mapChanged=false,
+    dataToDisplay={}
 }) {
     let visibleLayersInit = defaultVisibleLayers;
     if (singleLayer) {
@@ -42,6 +45,9 @@ export function MapBase({
 
     const [visibleLayers, setvisibleLayers] = useState(visibleLayersInit);
     const [overlays, setOverlays] = useState(getOverlays());
+    useEffect(() => {
+        toggleLayer({target:{value:defaultVisibleLayers}});
+    }, [mapChanged]);
 
     function toggleLayer(event) {
         const clickedLayer = event.target.value;
@@ -57,14 +63,12 @@ export function MapBase({
         }
         setvisibleLayers(newVisibleLayers);
         setOverlays(getOverlays());
-    }    
+    }
 
     return (
         <div className={className} id="map-container">
-            <Legend
-                layers={Object.keys(layers)}
-                toggleLayer={toggleLayer}
-                visibleLayers={visibleLayers}/>
+            <GradientLegend/>
+            <DataPreview dataToDisplay={dataToDisplay}/>
             <MapContainer
                 key={"map"}
                 // Initial state of Map
@@ -83,6 +87,7 @@ export function MapBase({
                 maxBoundsViscosity={1.0}
                 maxBounds={bounds}
                 minZoom={minZoom}
+                maxZoom={maxZoom}
                 zoomControl={false}>
                 <ZoomControl position="bottomleft"/>
                 <TileLayer
@@ -111,7 +116,10 @@ MapBase.propTypes = {
     singleLayer: PropTypes.bool,
     defaultVisibleLayers: PropTypes.array,
     bounds: PropTypes.array,
-    minZoom: PropTypes.number
+    minZoom: PropTypes.number,
+    maxZoom: PropTypes.number,
+    mapChanged: PropTypes.bool,
+    dataToDisplay:PropTypes.array
 };
 
 export default MapBase;

@@ -49,7 +49,7 @@ const ExampleId = ({id}) => {
                 setMapData(result);
             }
         }
-    
+
         let ignore = false;
         getGeojson();
         return () => {

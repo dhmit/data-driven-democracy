@@ -5,3 +5,18 @@ body {
 #main-container {
     padding: 1em 2em;
 }
+
+.bold {
+    font-weight: bold;
+}
+.text-center{
+    text-align: center;
+}
+
+.text-left-align{
+    text-align: left;
+}
+.flexJustCenter{
+    display: flex;
+    justify-content: center;
+}
