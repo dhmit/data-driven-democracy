@@ -5,7 +5,7 @@ import Loading from "../components/global/Loading";
 import {GeoJSON} from "react-leaflet";
 import DiscreteSlider from "./global/DiscreteSlider";
 export const DEFAULT_MAP_CENTER_LAT = 20.5937;
-export const DEFAULT_MAP_CENTER_LNG = 78.9629;
+export const DEFAULT_MAP_CENTER_LNG = 100.9629;
 
 const CompetitivenessMap = () => {
     const [features, setFeatures] = useState(null);

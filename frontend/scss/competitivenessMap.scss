@@ -43,10 +43,13 @@
 #map-container {
     z-index: 1;
     height: calc(100vh);
+    padding-bottom: -20%;
+
     position: relative;
 }
 
 .map-base {
-    width: 80%;
-    height: 48em !important;
+    width: 50%;
+    padding-bottom: -20%;
+    position: relative;
 }

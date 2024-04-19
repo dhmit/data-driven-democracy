@@ -7,7 +7,7 @@ import GradientLegend from "./GradientLegend";
 import DataPreview from "./DataPreview";
 // Default latitude and longitude values for the center of the map
 export const DEFAULT_MAP_CENTER_LAT = 22.5937;
-export const DEFAULT_MAP_CENTER_LNG = 78.9629;
+export const DEFAULT_MAP_CENTER_LNG = 75.9629;
 
 export function MapBase({
     className = "map-base",
@@ -18,8 +18,8 @@ export function MapBase({
     singleLayer = false,
     defaultVisibleLayers = [],
     bounds = [
-        [38.2, 105],
-        [5.63, 61.53]
+        [38.2, 100],
+        [5.63, 67]
     ],
     zoom = 5,
     minZoom = 5,
@@ -64,38 +64,45 @@ export function MapBase({
 
     return (
         <div className={className} id="map-container">
-            <GradientLegend />
-            <DataPreview dataToDisplay={dataToDisplay} />
-            <MapContainer
-                key={"map"}
-                // Initial state of Map
-                center={[lat ?? DEFAULT_MAP_CENTER_LAT, lng ?? DEFAULT_MAP_CENTER_LNG]}
-                zoom={zoom}
-                scrollWheelZoom={scrollWheelZoom}
+            <div
                 style={{
                     width: "100%",
                     height: "100%"
                 }}
-                // Sets Map Boundaries - Keeps user from leaving Paris
-                maxBoundsViscosity={1.0}
-                maxBounds={bounds}
-                minZoom={minZoom}
-                maxZoom={maxZoom}
-                zoomControl={false}
             >
-                <ZoomControl position="bottomleft" />
-                <TileLayer
+                <GradientLegend />
+                <DataPreview dataToDisplay={dataToDisplay} />
+                <MapContainer
+                    key={"map"}
+                    // Initial state of Map
+                    center={[lat ?? DEFAULT_MAP_CENTER_LAT, lng ?? DEFAULT_MAP_CENTER_LNG]}
+                    zoom={zoom}
+                    scrollWheelZoom={scrollWheelZoom}
+                    style={{
+                        width: "100%",
+                        height: "100%"
+                    }}
                     // Sets Map Boundaries - Keeps user from leaving Paris
                     maxBoundsViscosity={1.0}
-                    bounds={bounds}
+                    maxBounds={bounds}
                     minZoom={minZoom}
-                    // Retrieves Map image
+                    maxZoom={maxZoom}
+                    zoomControl={false}
+                >
+                    <ZoomControl position="bottomleft" />
+                    <TileLayer
+                        // Sets Map Boundaries - Keeps user from leaving Paris
+                        maxBoundsViscosity={1.0}
+                        bounds={bounds}
+                        minZoom={minZoom}
+                        // Retrieves Map image
 
-                    // HOT option
-                    url="https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}.png?api_key=42f43691-95d6-488e-ab8e-8c775d43f6e2"
-                />
-                {overlays}
-            </MapContainer>
+                        // HOT option
+                        url="https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}.png?api_key=42f43691-95d6-488e-ab8e-8c775d43f6e2"
+                    />
+                    {overlays}
+                </MapContainer>
+            </div>
         </div>
     );
 }
