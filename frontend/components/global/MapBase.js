@@ -5,6 +5,7 @@ import * as PropTypes from "prop-types";
 import {MapContainer, TileLayer, ZoomControl} from "react-leaflet";
 import GradientLegend from "./GradientLegend";
 import DataPreview from "./DataPreview";
+import DiscreteSlider from "./DiscreteSliderOnMap";
 // Default latitude and longitude values for the center of the map
 export const DEFAULT_MAP_CENTER_LAT = 24.5937;
 export const DEFAULT_MAP_CENTER_LNG = 80.9629;
@@ -25,9 +26,30 @@ export function MapBase({
     minZoom = 5,
     maxZoom = 8,
     mapChanged = false,
-    dataToDisplay = {}
+    dataToDisplay = {},
+    handleSliderChange
 }) {
+    const yearMarks = [
+        {
+            value: 2004,
+            label: 2004
+        },
+        {
+            value: 2009,
+            label: 2009
+        },
+        {
+            value: 2014,
+            label: 2014
+        },
+        {
+            value: 2019,
+            label: 2019
+        }
+    ];
+
     let visibleLayersInit = defaultVisibleLayers;
+
     if (singleLayer) {
         visibleLayersInit = layers[Object.keys(layers)[0]];
     } else if (!defaultVisibleLayers) {
@@ -71,7 +93,11 @@ export function MapBase({
                 }}
             >
                 <GradientLegend />
-                <DataPreview dataToDisplay={dataToDisplay} />
+                <div className="preview">
+                    <DataPreview dataToDisplay={dataToDisplay} />
+                    <DiscreteSlider handleSliderChange={handleSliderChange} marks={yearMarks} />
+                </div>
+
                 <MapContainer
                     key={"map"}
                     // Initial state of Map
@@ -120,7 +146,8 @@ MapBase.propTypes = {
     minZoom: PropTypes.number,
     maxZoom: PropTypes.number,
     mapChanged: PropTypes.bool,
-    dataToDisplay: PropTypes.array
+    dataToDisplay: PropTypes.array,
+    handleSliderChange: PropTypes.func
 };
 
 export default MapBase;

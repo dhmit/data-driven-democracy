@@ -136,6 +136,7 @@ const CompetitivenessMap = () => {
                         defaultVisibleLayers={["LS_2019_Competitiveness"]}
                         mapChanged={mapChanged}
                         dataToDisplay={previewData}
+                        handleSliderChange={handleSliderChange}
                     />
                 ) : (
                     <Loading />
