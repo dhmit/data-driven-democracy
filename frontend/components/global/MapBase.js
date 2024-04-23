@@ -6,8 +6,8 @@ import {MapContainer, TileLayer, ZoomControl} from "react-leaflet";
 import GradientLegend from "./GradientLegend";
 import DataPreview from "./DataPreview";
 // Default latitude and longitude values for the center of the map
-export const DEFAULT_MAP_CENTER_LAT = 22.5937;
-export const DEFAULT_MAP_CENTER_LNG = 75.9629;
+export const DEFAULT_MAP_CENTER_LAT = 24.5937;
+export const DEFAULT_MAP_CENTER_LNG = 80.9629;
 
 export function MapBase({
     className = "map-base",

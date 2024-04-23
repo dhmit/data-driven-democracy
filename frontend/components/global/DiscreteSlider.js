@@ -15,11 +15,11 @@ export default function DiscreteSlider({handleSliderChange, marks}) {
     return (
         <Box
             style={{
-                width: 320,
+                width: "90%",
                 right: 0,
                 display: "flex",
-                justifyContent: "right",
-                marginTop: "5%"
+                justifyContent: "center",
+                marginTop: "2%"
             }}
         >
             <Slider
