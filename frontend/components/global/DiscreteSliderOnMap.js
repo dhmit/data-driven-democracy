@@ -28,13 +28,16 @@ export default function DiscreteSlider({handleSliderChange, marks}) {
                 sx={{
                     "& .MuiSlider-markLabel": {
                         fontSize: "larger",
-                        opacity: "100%"
+                        fontWeight: "bold",
+                        opacity: "100%",
+                        color: "black",
+                        textShadow: "2px 0 0 #fff, 0 2px 0 #fff, -2px 0 0 #fff, 0 -2px 0 #fff"
                     },
                     "& .MuiSlider-rail": {
                         height: 12, // Increase the height of the track
                         borderRadius: 6,
                         backgroundColor: "black",
-                        opacity: "60%"
+                        opacity: "50%"
                     },
                     "& .MuiSlider-thumb": {
                         width: 24, // Increase the width of the thumb
