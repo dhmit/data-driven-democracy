@@ -12,6 +12,7 @@ from tqdm import tqdm
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
+from django.core.management import call_command
 from app import models
 
 
@@ -56,6 +57,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         config_names = options.get("config_names")
         hide_progress = options.get("hide_progress")
+
+        # Create db file and apply migrations if it does not exist
+        if not os.path.exists(settings.DB_PATH):
+            call_command("migrate")
 
         for config_name in config_names:
             config_path = os.path.join(
