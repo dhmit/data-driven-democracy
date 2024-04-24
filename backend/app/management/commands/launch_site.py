@@ -19,6 +19,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         on_windows = platform.system() == "Windows"
         frontend_cmd = [f"npm{".cmd" if on_windows else ""}", "run", "start"]
-        frontend = subprocess.Popen(frontend_cmd)
-        call_command("runserver")
-        frontend.kill()
+        with subprocess.Popen(frontend_cmd) as frontend:
+            call_command("runserver")
+            frontend.kill()
