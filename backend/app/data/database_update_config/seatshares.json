@@ -1,0 +1,10 @@
+{
+    "model_name": "SeatShare",
+    "attr_to_column": {
+        "election_year": "Year",
+        "seats_held": "Total_Candidates",
+        "total_seats": "Total_Seats_in_Assembly",
+        "party_name": "Party"
+    },
+    "file_names": ["TCPD_GE_LS_seatShare_1962-2019.csv"]
+}

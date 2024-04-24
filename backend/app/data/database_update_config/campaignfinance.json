@@ -1,0 +1,10 @@
+{
+    "model_name": "CampaignFinance",
+    "attr_to_column": {
+        "full_bond_number": "FullBondNumber",
+        "amount": "Amount",
+        "donor_name": "Donor",
+        "party_name": "Party"
+    },
+    "file_names": ["campaignfinance/Cleaned_Matched_Values.csv"]
+}
