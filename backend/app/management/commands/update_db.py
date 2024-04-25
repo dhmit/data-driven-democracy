@@ -35,6 +35,14 @@ def all_configs():
 class Command(BaseCommand):
     """
     Custom django-admin command to load data from base csvs
+
+    Looks for {config_name}.json files in app/data/database_update_config
+    which should be structured:
+    {
+        "model_name": class name of django model to update,
+        "attr_to_column": dictionary of model attribute to corresponding column in csv,
+        "file_names": list of file paths relative to "app/data" to load columns from
+    }
     """
 
     help = "Custom django-admin command to load data from base csvs"
@@ -79,17 +87,18 @@ class Command(BaseCommand):
             print(f"Updating {model_name} table:")
 
             for file_name in table_config["file_names"]:
-                file_path = os.path.join(settings.DATASET_DIR, file_name)
-                df = pandas.read_csv(file_path)
+                df = pandas.read_csv(os.path.join(settings.DATASET_DIR, file_name))
                 print(f"Importing from {file_name}:")
 
                 for i in tqdm(range(len(df)), disable=hide_progress):
                     # Skip column id if it has already been loaded
-                    # Should implement check based on some unique data id rather than column number
                     if model.objects.filter(id=i + 1):
+                        # Would be better to implement this check based on some unique
+                        # data id in csv rather than column number
                         continue
-                    instance = model(**{
+
+                    # Save model instance
+                    model(**{
                         model_attr: df[df_column_name][i]
                         for model_attr, df_column_name in attr_to_column.items()
-                    })
-                    instance.save()
+                    }).save()
