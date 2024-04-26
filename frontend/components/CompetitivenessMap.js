@@ -14,13 +14,19 @@ const CompetitivenessMap = () => {
 
     const [electionYear, setElectionYear] = useState(2004);
     const [displayData, setDisplayData] = useState(null);
+    const [displayId, setDisplayId] = useState(null);
     const [previewData, setPreviewData] = useState(null);
+    const [previewId, setPreviewId] = useState(null);
     const [mapChanged, setMapChanged] = useState(false);
 
     const constituencyDataRef = useRef(constituencyData);
 
     useEffect(() => {
         constituencyDataRef.current = constituencyData;
+        if (displayData) {
+            setDisplayData(constituencyData[displayId]);
+            setPreviewData(constituencyData[previewId]);
+        }
     }, [constituencyData]);
 
     const handleSliderChange = (newValue) => {
@@ -36,6 +42,7 @@ const CompetitivenessMap = () => {
 
                 if (constituencyData[e.target.feature.id].length > 0) {
                     setDisplayData(constituencyDataRef.current[e.target.feature["id"]]);
+                    setDisplayId(e.target.feature["id"]);
                 } else {
                     setDisplayData(null);
                 }
@@ -48,6 +55,7 @@ const CompetitivenessMap = () => {
 
                 if (constituencyData[e.target.feature.id].length > 0) {
                     setPreviewData(constituencyDataRef.current[e.target.feature["id"]]);
+                    setPreviewId(e.target.feature["id"]);
                 } else {
                     setPreviewData(null);
                 }
