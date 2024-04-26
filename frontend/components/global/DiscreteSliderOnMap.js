@@ -37,7 +37,7 @@ export default function DiscreteSlider({handleSliderChange, marks}) {
                         height: 12, // Increase the height of the track
                         borderRadius: 6,
                         backgroundColor: "black",
-                        opacity: "50%"
+                        opacity: "40%"
                     },
                     "& .MuiSlider-thumb": {
                         width: 24, // Increase the width of the thumb
