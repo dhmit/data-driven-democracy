@@ -1,0 +1,15 @@
+{
+    "model_name": "LSElection",
+    "attr_to_column": {
+        "election_year": "Year",
+        "state_name": "State_Name",
+        "constituency_name": "Constituency_Name",
+        "constituency_no": "Constituency_No",
+        "party_name": "Party",
+        "candidate": "Candidate",
+        "candidate_position": "Position",
+        "margin_percentage": "Margin_Percentage",
+        "vote_share": "Vote_Share_Percentage"
+    },
+    "file_names": ["TCPD_GE_1999_to_2019.csv"]
+}

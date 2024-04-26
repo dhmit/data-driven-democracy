@@ -5,6 +5,7 @@ django-extensions==3.2.3
 django-webpack-loader==3.0.1
 djangorestframework==3.14.0
 pandas==2.2.1
+pyreadstat==1.2.7
 pyshp==2.3.1
 sqlparse==0.4.4
 tqdm==4.66.2
