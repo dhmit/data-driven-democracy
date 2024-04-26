@@ -3,7 +3,6 @@ import * as PropTypes from "prop-types";
 import MapBase from "../components/global/MapBase";
 import Loading from "../components/global/Loading";
 import {GeoJSON} from "react-leaflet";
-import DiscreteSlider from "./global/DiscreteSlider";
 export const DEFAULT_MAP_CENTER_LAT = 20.5937;
 export const DEFAULT_MAP_CENTER_LNG = 50.9629;
 
@@ -92,25 +91,6 @@ const CompetitivenessMap = () => {
         getMapColors();
     }, [mapData, electionYear]);
 
-    const yearMarks = [
-        {
-            value: 2004,
-            label: 2004
-        },
-        {
-            value: 2009,
-            label: 2009
-        },
-        {
-            value: 2014,
-            label: 2014
-        },
-        {
-            value: 2019,
-            label: 2019
-        }
-    ];
-
     return (
         <div>
             <div className="map-title">Competitiveness Distribution in {electionYear}</div>
@@ -146,7 +126,6 @@ const CompetitivenessMap = () => {
                     <div style={{fontSize: "x-large", fontWeight: "bold", textAlign: "center"}}>
                         Election Year:&nbsp; {electionYear}
                     </div>
-                    <DiscreteSlider handleSliderChange={handleSliderChange} marks={yearMarks} />
 
                     <div className="data-display">
                         {displayData && (
