@@ -8,6 +8,7 @@ from rest_framework.response import Response
 
 from .models import (
     LSElection,
+    LoknitiResponse,
     TCPDElection,
     SeatShare,
     CampaignFinance,

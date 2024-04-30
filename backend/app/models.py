@@ -85,3 +85,17 @@ class CampaignFinance(models.Model):
     party_name = models.CharField(
         max_length=37,
     )
+
+
+class LoknitiResponse(models.Model):
+    """
+    Represents a response to a survey question during
+    a specific election year
+    """
+    election_year = models.IntegerField()
+    question_text = models.CharField()
+    question_variable = models.CharField()
+    state_name = models.CharField()
+    constituency_no = models.IntegerField(default=0)
+    respondent_no = models.IntegerField(default=0)
+    response = models.CharField(default="No Response")
