@@ -3,9 +3,8 @@ import * as PropTypes from "prop-types";
 import MapBase from "../components/global/MapBase";
 import Loading from "../components/global/Loading";
 import {GeoJSON} from "react-leaflet";
-import DiscreteSlider from "./global/DiscreteSlider";
 export const DEFAULT_MAP_CENTER_LAT = 20.5937;
-export const DEFAULT_MAP_CENTER_LNG = 78.9629;
+export const DEFAULT_MAP_CENTER_LNG = 50.9629;
 
 const CompetitivenessMap = () => {
     const [features, setFeatures] = useState(null);
@@ -15,13 +14,19 @@ const CompetitivenessMap = () => {
 
     const [electionYear, setElectionYear] = useState(2004);
     const [displayData, setDisplayData] = useState(null);
+    const [displayId, setDisplayId] = useState(null);
     const [previewData, setPreviewData] = useState(null);
+    const [previewId, setPreviewId] = useState(null);
     const [mapChanged, setMapChanged] = useState(false);
 
     const constituencyDataRef = useRef(constituencyData);
 
     useEffect(() => {
         constituencyDataRef.current = constituencyData;
+        if (displayData) {
+            setDisplayData(constituencyData[displayId]);
+            setPreviewData(constituencyData[previewId]);
+        }
     }, [constituencyData]);
 
     const handleSliderChange = (newValue) => {
@@ -37,6 +42,7 @@ const CompetitivenessMap = () => {
 
                 if (constituencyData[e.target.feature.id].length > 0) {
                     setDisplayData(constituencyDataRef.current[e.target.feature["id"]]);
+                    setDisplayId(e.target.feature["id"]);
                 } else {
                     setDisplayData(null);
                 }
@@ -49,6 +55,7 @@ const CompetitivenessMap = () => {
 
                 if (constituencyData[e.target.feature.id].length > 0) {
                     setPreviewData(constituencyDataRef.current[e.target.feature["id"]]);
+                    setPreviewId(e.target.feature["id"]);
                 } else {
                     setPreviewData(null);
                 }
@@ -92,25 +99,6 @@ const CompetitivenessMap = () => {
         getMapColors();
     }, [mapData, electionYear]);
 
-    const yearMarks = [
-        {
-            value: 2004,
-            label: 2004
-        },
-        {
-            value: 2009,
-            label: 2009
-        },
-        {
-            value: 2014,
-            label: 2014
-        },
-        {
-            value: 2019,
-            label: 2019
-        }
-    ];
-
     return (
         <div>
             <div className="map-title">Competitiveness Distribution in {electionYear}</div>
@@ -136,60 +124,60 @@ const CompetitivenessMap = () => {
                         defaultVisibleLayers={["LS_2019_Competitiveness"]}
                         mapChanged={mapChanged}
                         dataToDisplay={previewData}
+                        handleSliderChange={handleSliderChange}
                     />
                 ) : (
                     <Loading />
                 )}
 
                 <div className="slider">
-                    <div style={{fontSize: "x-large", fontWeight: "bold", textAlign: "left"}}>
+                    <div style={{fontSize: "x-large", fontWeight: "bold", textAlign: "center"}}>
                         Election Year:&nbsp; {electionYear}
                     </div>
-                    <DiscreteSlider handleSliderChange={handleSliderChange} marks={yearMarks} />
-                </div>
 
-                <div className="data-display">
-                    {displayData && (
-                        <div>
-                            <div className="map-subtitle">
-                                <div>State:</div>
-                                <div style={{fontWeight: "normal"}}>
-                                    {displayData[0].state_name.replace("_", " ")}
+                    <div className="data-display">
+                        {displayData && (
+                            <div>
+                                <div className="map-subtitle">
+                                    <div>State:</div>
+                                    <div style={{fontWeight: "normal"}}>
+                                        {displayData[0].state_name.replace("_", " ")}
+                                    </div>
+                                </div>
+
+                                <div className="map-subtitle">
+                                    <div>Constituency:</div>
+                                    <div style={{fontWeight: "normal"}}>
+                                        {displayData[0].constituency_name.charAt(0).toUpperCase() +
+                                            displayData[0].constituency_name.slice(1).toLowerCase()}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div className="map-subtitle">Winning Party:</div>
+                                    <div>{displayData[0].party_name}</div>
+                                </div>
+
+                                <div>
+                                    <div className="map-subtitle">Margin:</div>
+                                    <div>{displayData[0].margin_percentage}%</div>
+                                </div>
+
+                                <div>
+                                    <div className="bold text-left-align">Winning Candidate:</div>
+                                    <div>{displayData[0].candidate}</div>
+                                </div>
+
+                                <div>
+                                    <div className="bold text-left-align">Runner-Up Party:</div>
+                                    <div>{displayData[1].party_name}</div>
+
+                                    <div className="bold text-left-align">Runner-Up Candidate:</div>
+                                    <div>{displayData[1].candidate}</div>
                                 </div>
                             </div>
-
-                            <div className="map-subtitle">
-                                <div>Constituency:</div>
-                                <div style={{fontWeight: "normal"}}>
-                                    {displayData[0].constituency_name.charAt(0).toUpperCase() +
-                                        displayData[0].constituency_name.slice(1).toLowerCase()}
-                                </div>
-                            </div>
-
-                            <div>
-                                <div className="map-subtitle">Winning Party:</div>
-                                <div>{displayData[0].party_name}</div>
-                            </div>
-
-                            <div>
-                                <div className="map-subtitle">Margin:</div>
-                                <div>{displayData[0].margin_percentage}%</div>
-                            </div>
-
-                            <div>
-                                <div className="bold text-left-align">Winning Candidate:</div>
-                                <div>{displayData[0].candidate}</div>
-                            </div>
-
-                            <div>
-                                <div className="bold text-left-align">Runner-Up Party:</div>
-                                <div>{displayData[1].party_name}</div>
-
-                                <div className="bold text-left-align">Runner-Up Candidate:</div>
-                                <div>{displayData[1].candidate}</div>
-                            </div>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

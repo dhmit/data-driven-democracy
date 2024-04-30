@@ -2,6 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import * as PropTypes from "prop-types";
+import "../../scss/mapLegends.scss";
 
 function valuetext(value) {
     return `${value}°C`;
@@ -14,8 +15,9 @@ export default function DiscreteSlider({handleSliderChange, marks}) {
 
     return (
         <Box
+            class="timeline"
             style={{
-                width: "90%",
+                width: "100%",
                 right: 0,
                 display: "flex",
                 justifyContent: "center",
@@ -25,12 +27,17 @@ export default function DiscreteSlider({handleSliderChange, marks}) {
             <Slider
                 sx={{
                     "& .MuiSlider-markLabel": {
-                        fontSize: "larger"
+                        fontSize: "larger",
+                        fontWeight: "bold",
+                        opacity: "100%",
+                        color: "black",
+                        textShadow: "2px 0 0 #fff, 0 2px 0 #fff, -2px 0 0 #fff, 0 -2px 0 #fff"
                     },
                     "& .MuiSlider-rail": {
                         height: 12, // Increase the height of the track
                         borderRadius: 6,
-                        backgroundColor: "black"
+                        backgroundColor: "black",
+                        opacity: "40%"
                     },
                     "& .MuiSlider-thumb": {
                         width: 24, // Increase the width of the thumb
