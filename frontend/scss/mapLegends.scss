@@ -26,12 +26,18 @@
     }
 }
 
+.preview {
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 3%;
+}
 .previewLegend {
     width: 270px; /* Set a fixed width */
     height: 150x; /* Set a fixed height */
     line-height: 18px;
     color: #555;
-    position: absolute;
     background-color: white;
     border: 1px solid black;
     z-index: 999;
@@ -42,6 +48,18 @@
     color: black;
     text-align: center;
     overflow: auto; /* Add overflow handling */
+}
+
+.timeline {
+    width: 300px; /* Set a fixed width */
+    height: 150x; /* Set a fixed height */
+    z-index: 999;
+    padding: 0.5em;
+    padding-top: 1em;
+    right: 0.5em;
+    color: black;
+    text-align: center;
+    overflow: none; /* Add overflow handling */
 }
 
 .previewLegend div {
