@@ -116,7 +116,6 @@ class LoknitiResponses(models.Model):
     Represents a response to a survey question during
     a specific election year
     """
-    # for in key looking up data in another model
 
     respondent_no = models.IntegerField()
     election_year = models.IntegerField()
