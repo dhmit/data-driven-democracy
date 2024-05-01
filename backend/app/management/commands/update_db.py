@@ -63,6 +63,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        # pylint: disable=too-many-locals
         config_names = options.get("config_names")
         hide_progress = options.get("hide_progress")
 
