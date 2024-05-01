@@ -18,34 +18,8 @@ const CompetitivenessMap = () => {
     const [previewData, setPreviewData] = useState(null);
     const [previewId, setPreviewId] = useState(null);
     const [mapChanged, setMapChanged] = useState(false);
-    let newConstData = {};
-    const [allFeatures, setAllFeatures] = useState({});
-    const [allConstData, setAllConstData] = useState({});
-    const [allColors, setAllColors] = useState({});
 
     const constituencyDataRef = useRef(constituencyData);
-    // assigns a color to a constituency, will be used later
-    function getColor(value) {
-        if (value > 30) {
-            return "#FFD6D6";
-        } else if (value > 20) {
-            return "#FFB5B5";
-        } else if (value > 10) {
-            return "#FF8383";
-        } else if (value > 7) {
-            return "#FF5C5C";
-        } else if (value > 5) {
-            return "#FF2E2E";
-        } else if (value > 3) {
-            return "#FF0000";
-        } else if (value > 2) {
-            return "#D10000";
-        } else if (value > 1) {
-            return "#A30000";
-        } else {
-            return "#750000";
-        }
-    }
     useEffect(() => {
         constituencyDataRef.current = constituencyData;
         if (displayData) {
@@ -104,107 +78,24 @@ const CompetitivenessMap = () => {
     }, []);
 
     // updates map colors and data when electionYear changes
-    // useEffect(() => {
-    //     if (!mapData) return;
-    //     async function getMapColors() {
-    //         const colorsResponse = await fetch(`/api/competitiveness_colors/${electionYear}`);
-
-    //         const colorsResult = await colorsResponse.json();
-
-    //         const newFeatures = mapData["features"].map((feature, index) => ({
-    //             feature: feature,
-    //             ...colorsResult["colors"][index + 1] // Merge color object at index
-    //         }));
-
-    //         setFeatures(newFeatures);
-    //         setConstituencyData(colorsResult["data"]);
-    //         setMapChanged(!mapChanged);
-    //     }
-
-    //     getMapColors();
-    // }, [mapData, electionYear]);
-
-    // UNCOMMENT CODE BELOW TO GET INITAL COLOR DATA AND CONSTITUENCY DATA
-
-    async function fetchMoreFeatures(geojson, year) {
-        if (!geojson) return null;
-
-        const result = await Promise.all(
-            geojson["features"].map(async (feature) => {
-                let color = getColor(7);
-                let state = feature["properties"]["State_Name"];
-
-                if (state) {
-                    if (state === "Telangana" && year < 2019) {
-                        state = "Andhra Pradesh";
-                    }
-                    state = state.replace(/ /g, "_");
-                }
-
-                const constituency_no = feature["properties"]["Constituency_No"];
-                const dataResponse = await fetch(
-                    `/api/ls-elections/${year}/${state}/${constituency_no}`
-                );
-                const result = await dataResponse.json();
-
-                if (result && result.length > 0) {
-                    color = getColor(result[0]["margin_percentage"]);
-                    newConstData[feature.id] = result;
-                } else {
-                    newConstData[feature.id] = result;
-                }
-
-                return {feature, color};
-            })
-        );
-
-        return result;
-    }
-
-    // update colors on map and constituency data displayed when year changes
     useEffect(() => {
         if (!mapData) return;
-        let fetchMore = true;
+        async function getMapColors() {
+            const colorsResponse = await fetch(`/api/competitiveness_colors/${electionYear}`);
 
-        // checks if any year's data has been cached
+            const colorsResult = await colorsResponse.json();
 
-        if (allFeatures) {
-            console.log(allFeatures, allConstData);
-            const newObj = {};
-            let counter = 1;
-            for (const key in allFeatures[electionYear]) {
-                newObj[counter++] = {color: allFeatures[electionYear][key].color};
-            }
-            let newColorsData = {...allColors};
-            newColorsData[electionYear] = newObj;
-            setAllColors({...newColorsData});
-            console.log("COLORS DATA", newColorsData, allColors);
+            const newFeatures = mapData["features"].map((feature, index) => ({
+                feature: feature,
+                ...colorsResult["colors"][index + 1] // Merge color object at index
+            }));
 
-            // if the data for that given year is already cached
-            if (allFeatures[electionYear]) {
-                setFeatures(allFeatures[electionYear]);
-                setConstituencyData(allConstData[electionYear]);
-                setMapChanged(!mapChanged);
-                fetchMore = false;
-            }
+            setFeatures(newFeatures);
+            setConstituencyData(colorsResult["data"]);
+            setMapChanged(!mapChanged);
         }
-        if (fetchMore) {
-            async function getFeatures() {
-                newConstData = {};
-                const newFeatures = await fetchMoreFeatures(mapData, electionYear);
-                setFeatures(newFeatures);
 
-                allFeatures[electionYear] = newFeatures;
-                setAllFeatures({...allFeatures});
-
-                setConstituencyData(newConstData);
-                allConstData[electionYear] = newConstData;
-                setAllConstData({...allConstData});
-
-                setMapChanged(!mapChanged);
-            }
-            getFeatures();
-        }
+        getMapColors();
     }, [mapData, electionYear]);
 
     return (
