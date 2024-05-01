@@ -87,15 +87,39 @@ class CampaignFinance(models.Model):
     )
 
 
-class LoknitiResponse(models.Model):
+class LoknitiCodebook(models.Model):
+    election_year = models.IntegerField()
+    question_var = models.CharField(max_length=10)
+    question_text = models.CharField(max_length=500)
+
+
+class LoknitiResponders(models.Model):
+    """
+    Represents a responder
+    """
+    election_year = models.IntegerField()
+    state_name = models.CharField(max_length=50)
+    PC_id = models.IntegerField()
+    AC_id = models.IntegerField()
+    respondent_no = models.IntegerField()
+    age = models.IntegerField()
+    gender = models.CharField(max_length=50)
+    caste = models.CharField(max_length=50)
+    religion = models.CharField(max_length=100)
+    income = models.FloatField(default=0)
+    education_level = models.CharField(max_length=50, default="No response")
+    occupation = models.CharField(max_length=100, default="No response")
+
+
+class LoknitiResponses(models.Model):
     """
     Represents a response to a survey question during
     a specific election year
     """
+    # for in key looking up data in another model
+
+    respondent_no = models.IntegerField()
     election_year = models.IntegerField()
-    question_text = models.CharField()
-    question_variable = models.CharField()
-    state_name = models.CharField()
-    constituency_no = models.IntegerField(default=0)
-    respondent_no = models.IntegerField(default=0)
-    response = models.CharField(default="No Response")
+    question_var = models.CharField(max_length=20)
+    response = models.CharField(max_length=500)
+    responder = models.ForeignKey(LoknitiResponders, on_delete=models.CASCADE)
