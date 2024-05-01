@@ -1,0 +1,48 @@
+var_name,year,question_text
+state_id,2014,State Name
+pc_id,2014,P.C. ID
+ac_id,2014,A.C. ID
+ps_id,2014,P.S. ID
+resno,2014,Respondent Number
+q1a,2014,Who did you vote for?
+q5,2014,What was the most important issue for you while voting in this election?
+q7,2014,What mattered to you more while deciding whom to vote for in the recent election - party or candidate?
+q7a,2014,What was the most important consideration in favour of the party?
+q7b,2014,What was the most important consideration in favour of the candidate?
+q8,2014,"As compared to five years ago, would you say the economic condition of India has become much better, better, remained same, become worse or much worse?"
+q9a,2014,Who do you think cares for people like you?
+q9b,2014,Who do you think is reliable/trustworthy?
+q9c,2014,Who do you think can get things done?
+q9d,2014,Who do you think can take along other leaders of his/her party?
+q9e,2014,Who do you think is experienced?
+q10a,2014,"Agree/Disagree: In a democracy, the will of the majority
+ community should prevail."
+q10b,2014,"Agree/Disagree: Reservations based on caste and religion
+ divide the people of India."
+q10c,2014,"Agree/Disagree: We should consider ourselves Indians first
+ and only then comes our region."
+q10d,2014,"Agree/Disagree: The government/state should treat minorities
+ in the same way as it treats the majority."
+q10e,2014,"Agree/Disagree: The government should make special
+ provision to accomodate minorities."
+q15a,2014,Which party is better for administration?
+q15b,2014,Which party takes care of your religious sentiments?
+q15c,2014,Which party is better for national security?
+q15d,2014,Which party has good leadership?
+q15e,2014,Which party offers lots of free gifts/freebies?
+q24a,2014,Who do you think is best for women empowerment?
+q24b,2014,Who do you think is development of the country?
+q24c,2014,Who do you think is best for controlling price rise?
+q24d,2014,Who do you think is best for upliftment of Dalits and Adivasis?
+q24e,2014,Who do you think if best for controlling corruption?
+q24f,2014,Who do you think is best for the betterment of the Muslim community?
+q24g,2014,Who do you think is best for national security?
+q27,2014,Which party have you traditionally supported?
+q29,2014,"Let us assume that in this election Narendra Modi was not the PM candidate of the BJP/NDA in this Lok Sabha election. In such a situation, would you have voted for some other party instead of the party you have voted for or this would have made no difference on your decision?"
+z1,2014,What is your age?
+z2,2014,What is your gender?
+z3,2014,Up to what level have you studied?
+z4a,2014,What is your main occupation?
+z5a,2014,What is your caste?
+z6,2014,What is your religion?
+z13,2014,What is your total monthly household income?

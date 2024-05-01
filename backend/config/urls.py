@@ -44,11 +44,11 @@ urlpatterns = [
          api_views.get_specific_ls_election),
     path("api/SDE_DATA_IN_F7DSTRBND_1991/",
          api_views.get_SDE_DATA_IN_F7DSTRBND_1991
-    ),
+         ),
     path("api/all-campaign-finance/", api_views.campaign_finance),
     path("api/campaign-finance/party-donor-pair/<str:party_name>/<str:donor_name>/",
          api_views.campaign_finance
-    ),
+         ),
     path("api/campaign-finance/all-donors/<str:party_name>/",
          api_views.campaign_finance_party_subset),
     path("api/campaign-finance/all-parties/<str:donor_name>/",
@@ -59,5 +59,6 @@ urlpatterns = [
          api_views.get_India_PC_2019),
     path("api/competitiveness_colors/<int:election_year>/",
          api_views.get_competitiveness_data),
-
+    path("api/codebook/",
+         api_views.get_lokniti_codebook)
 ]

@@ -8,6 +8,7 @@ from rest_framework.response import Response
 
 from .models import (
     LSElection,
+    LoknitiResponders,
     LoknitiResponses,
     LoknitiCodebook,
     TCPDElection,
@@ -17,6 +18,7 @@ from .models import (
 
 from .serializers import (
     LSElectionSerializaer,
+    LoknitiRespondersSerializer,
     LoknitiResponsesSerializer,
     LoknitiCodebookSerializer,
     TCPDElectionSerializer,
@@ -184,6 +186,16 @@ def campaign_finance_donor_subset(request, donor_name):
     """
     campaign_finances = CampaignFinance.objects.filter(donor_name=donor_name)
     serializer = CampaignFinanceSerializer(campaign_finances, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_lokniti_codebook(request):
+    """
+    API endpoint to get codebook
+    """
+    responses = LoknitiCodebook.objects.all()
+    serializer = LoknitiCodebookSerializer(responses, many=True)
     return Response(serializer.data)
 
 

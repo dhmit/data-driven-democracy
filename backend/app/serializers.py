@@ -94,7 +94,7 @@ class LoknitiCodebookSerializer(serializers.ModelSerializer):
         fields = [
             "election_year",
             "question_text",
-            "question_variable",
+            "question_var",
         ]
 
 
