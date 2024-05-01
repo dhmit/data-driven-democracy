@@ -109,6 +109,7 @@ class LoknitiRespondersSerializer(serializers.ModelSerializer):
             "state_name",
             "PC_id",
             "AC_id",
+            "PS_id",
             "respondent_no",
             "age",
             "gender",
