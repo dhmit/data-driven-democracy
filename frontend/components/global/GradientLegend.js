@@ -6,11 +6,11 @@ const GradientLegend = () => {
     // TO-DO: make these variables props
     function getColor(value) {
         if (value > 30) {
-            return "#E9EAE0";
+            return "#FFD6D6";
         } else if (value > 20) {
-            return "#F7BEC0";
+            return "#FFB5B5";
         } else if (value > 10) {
-            return "#FF8A8A";
+            return "#FF8383";
         } else if (value > 7) {
             return "#FF5C5C";
         } else if (value > 5) {

@@ -20,7 +20,6 @@ const CompetitivenessMap = () => {
     const [mapChanged, setMapChanged] = useState(false);
 
     const constituencyDataRef = useRef(constituencyData);
-
     useEffect(() => {
         constituencyDataRef.current = constituencyData;
         if (displayData) {
