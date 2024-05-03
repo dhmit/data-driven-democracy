@@ -97,19 +97,26 @@ class LoknitiResponders(models.Model):
     """
     Represents a responder
     """
-    election_year = models.IntegerField()
-    state_name = models.CharField(max_length=50)
-    PC_id = models.IntegerField()
-    AC_id = models.IntegerField()
-    PS_id = models.IntegerField(default=0)
-    respondent_no = models.IntegerField(default=0)
-    age = models.IntegerField(default=0)
-    gender = models.CharField(max_length=50, default="No response")
-    caste = models.CharField(max_length=50, default="No response")
-    religion = models.CharField(max_length=100, default="No response")
-    income = models.CharField(max_length=100, default="No response")
-    education_level = models.CharField(max_length=50, default="No response")
-    occupation = models.CharField(max_length=100, default="No response")
+    election_year = models.IntegerField(null=True, blank=True, default=None)
+    state_name = models.CharField(
+        max_length=50, null=True, blank=True, default=None)
+    PC_id = models.IntegerField(null=True, blank=True, default=None)
+    AC_id = models.IntegerField(null=True, blank=True, default=None)
+    PS_id = models.IntegerField(default=None, null=True, blank=True)
+    respondent_no = models.IntegerField(null=True, blank=True, default=None)
+    age = models.IntegerField(default=None, null=True, blank=True)
+    gender = models.CharField(
+        max_length=50, default=None, null=True, blank=True)
+    caste = models.CharField(
+        max_length=50, default=None, null=True, blank=True)
+    religion = models.CharField(
+        max_length=100, default=None, null=True, blank=True)
+    income = models.CharField(
+        max_length=100, default=None, null=True, blank=True)
+    education_level = models.CharField(
+        max_length=50, default=None, null=True, blank=True)
+    occupation = models.CharField(
+        max_length=100, default=None, null=True, blank=True)
 
 
 class LoknitiResponses(models.Model):

@@ -192,10 +192,20 @@ def campaign_finance_donor_subset(request, donor_name):
 @api_view(['GET'])
 def get_lokniti_codebook(request):
     """
-    API endpoint to get codebook
+    API endpoint to get codebook for testing
     """
     responses = LoknitiCodebook.objects.all()
     serializer = LoknitiCodebookSerializer(responses, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_lokniti_responders(request):
+    """
+    API endpoint to get responders for testing
+    """
+    responses = LoknitiResponders.objects.filter(PC_id=1, PS_id=1)
+    serializer = LoknitiRespondersSerializer(responses, many=True)
     return Response(serializer.data)
 
 

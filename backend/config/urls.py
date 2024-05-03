@@ -60,5 +60,8 @@ urlpatterns = [
     path("api/competitiveness_colors/<int:election_year>/",
          api_views.get_competitiveness_data),
     path("api/codebook/",
-         api_views.get_lokniti_codebook)
+         api_views.get_lokniti_codebook),
+    path("api/responderstest/",
+         api_views.get_lokniti_responders)
+
 ]

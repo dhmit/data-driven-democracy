@@ -60,55 +60,56 @@ class Command(BaseCommand):
                     election_year=year, question_text=question_text
                 ).question_var
             except LoknitiCodebook.DoesNotExist:
-                print(column_name, "not recorded")
+                print(column_name, None)
 
         for (state_name, constituency_no, assembly_no, ps_no, respondent_no, age,
              gender, caste, religion, income, education_level, occupation) in zip(
             # column names based on file/election year
             df[cols.get("state", "")] if cols.get(
-                "state", "") else "State not recorded",
-            df[cols.get("pc", "")] if cols.get("pc", "") else [0]*len(df),
-            df[cols.get("ac", "")] if cols.get("ac", "") else [0]*len(df),
-            df[cols.get("ps", "")] if cols.get("ps", "") else [0]*len(df),
+                "state", "") else [None]*len(df),
+            df[cols.get("pc", "")] if cols.get("pc", "") else [None]*len(df),
+            df[cols.get("ac", "")] if cols.get("ac", "") else [None]*len(df),
+            df[cols.get("ps", "")] if cols.get("ps", "") else [None]*len(df),
             df[cols.get("resno", "")] if cols.get(
                 "resno", "") else [0]*len(df),
-            df[cols.get("age", "")] if cols.get("age", "") else [0]*len(df),
+            df[cols.get("age", "")] if cols.get("age", "") else [None]*len(df),
             df[cols.get("gender", "")] if cols.get(
-                "gender", "") else ["Not recorded"]*len(df),
+                "gender", "") else [None]*len(df),
             df[cols.get("caste", "")] if cols.get(
-                "caste", "") else ["Not recorded"]*len(df),
+                "caste", "") else [None]*len(df),
             df[cols.get("religion", "")] if cols.get(
-                "religion", "") else ["Not recorded"]*len(df),
+                "religion", "") else [None]*len(df),
             df[cols.get("income", "")] if cols.get(
-                "income", "") else ["Not recorded"]*len(df),
+                "income", "") else [None]*len(df),
             df[cols.get("education", "")
-               ] if cols.get("education", "") else ["Not recorded"]*len(df),
+               ] if cols.get("education", "") else [None]*len(df),
             df[cols.get("occupation", "")] if cols.get(
-                "occupation", "") else ["Not recorded"]*len(df),
+                "occupation", "") else [None]*len(df),
         ):
-            try:
-                age_int = int(float(age))
-            except ValueError:
-                age_int = 0
 
             try:
-                res_no = (int(respondent_no))
+                age = int(float(age))
             except ValueError:
-                res_no = 0
+                age = None
 
             try:
-                ps_id = (int(ps_no))
+                respondent_no = (int(respondent_no))
             except ValueError:
-                ps_id = 0
+                respondent_no = None
+
+            try:
+                ps_no = (int(ps_no))
+            except ValueError:
+                ps_no = None
 
             responders = LoknitiResponders(
                 election_year=year,
                 state_name=state_name.split(": ", 1)[1],
                 PC_id=constituency_no,
                 AC_id=assembly_no,
-                PS_id=ps_id,
-                respondent_no=res_no,
-                age=age_int,
+                PS_id=ps_no,
+                respondent_no=respondent_no,
+                age=age,
                 gender=gender,
                 caste=caste,
                 religion=religion,
