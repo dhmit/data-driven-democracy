@@ -3,30 +3,30 @@ import React from "react";
 import "../../scss/mapLegends.scss";
 
 const GradientLegend = () => {
-    // TO DO: make this a prop
+    // TO-DO: make these variables props
     function getColor(value) {
-        if (value > 70) {
-            return "#E9EAE0";
-        } else if (value > 50) {
-            return "#F7BEC0";
-        } else if (value > 40) {
-            return "#FF8A8A";
-        } else if (value > 30) {
-            return "#FF5C5C";
+        if (value > 30) {
+            return "#FFD6D6";
         } else if (value > 20) {
-            return "#FF2E2E";
+            return "#FFB5B5";
         } else if (value > 10) {
-            return "#FF0000";
+            return "#FF8383";
+        } else if (value > 7) {
+            return "#FF5C5C";
         } else if (value > 5) {
-            return "#D10000";
+            return "#FF2E2E";
         } else if (value > 3) {
+            return "#FF0000";
+        } else if (value > 2) {
+            return "#D10000";
+        } else if (value > 1) {
             return "#A30000";
         } else {
             return "#750000";
         }
     }
 
-    const grades = [0, 3, 5, 10, 20, 30, 40, 50, 70];
+    const grades = [0, 1, 2, 3, 5, 7, 10, 20, 30];
     const title = "Percent Margin";
     return (
         <div className="gradientLegend">

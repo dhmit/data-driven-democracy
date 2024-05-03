@@ -1,5 +1,6 @@
 .map-display {
     display: flex;
+    position: aboslute;
 }
 
 .data-display {
@@ -7,7 +8,6 @@
     text-align: left;
     font-size: large;
     background-color: "red";
-    width: 30%;
     align-items: center;
     justify-content: left;
     font-size: larger;
@@ -20,11 +20,13 @@
 }
 
 .slider {
-    width: 25%;
+    width: 50%;
     position: absolute;
     right: 0;
     display: flex;
-    justify-content: left;
+    display: flex;
+    justify-content: center;
+    padding-left: 5%;
     flex-direction: column;
 }
 
@@ -43,10 +45,13 @@
 #map-container {
     z-index: 1;
     height: calc(100vh);
+    padding-bottom: -20%;
+
     position: relative;
 }
 
 .map-base {
-    width: 80%;
-    height: 48em !important;
+    width: 50%;
+    padding-bottom: -20%;
+    position: relative;
 }

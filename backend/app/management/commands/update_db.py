@@ -63,12 +63,12 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        # pylint: disable=too-many-locals
         config_names = options.get("config_names")
         hide_progress = options.get("hide_progress")
 
-        # Create db file and apply migrations if it does not exist
-        if not os.path.exists(settings.DB_PATH):
-            call_command("migrate")
+        # Create db file if it does not exist and apply any migrations
+        call_command("migrate")
 
         for config_name in config_names:
             config_path = os.path.join(
@@ -86,13 +86,15 @@ class Command(BaseCommand):
 
             print(f"Updating {model_name} table:")
 
+            table_offset = 0  # Index in the database table (model id)
             for file_name in table_config["file_names"]:
                 df = pandas.read_csv(os.path.join(settings.DATASET_DIR, file_name))
                 print(f"Importing from {file_name}:")
 
-                for i in tqdm(range(len(df)), disable=hide_progress):
+                num_rows = len(df)
+                for i in tqdm(range(num_rows), disable=hide_progress):
                     # Skip column id if it has already been loaded
-                    if model.objects.filter(id=i + 1):
+                    if model.objects.filter(id=table_offset + i + 1):
                         # Would be better to implement this check based on some unique
                         # data id in csv rather than column number
                         continue
@@ -102,3 +104,9 @@ class Command(BaseCommand):
                         model_attr: df[df_column_name][i]
                         for model_attr, df_column_name in attr_to_column.items()
                     }).save()
+
+                # Increase offset by number of rows added from file
+                # (Temporary fix for configs with multiple files)
+                # TODO: Make duplicate checking reliable; currently depends on file
+                #       length and order.
+                table_offset += num_rows
