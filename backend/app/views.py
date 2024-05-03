@@ -96,3 +96,16 @@ def FinanceSankey(request):
         'component_name': 'FinanceSankey'
     }
     return render(request, 'index.html', context)
+
+def BubbleChart(request):
+    """
+    Displays FinanceSankey for data from election campaign finance
+    """
+
+    context = {
+        'page_metadata': {
+            'title': 'Donors Bubble Chart Visualization'
+        },
+        'component_name': 'BubbleChart'
+    }
+    return render(request, 'index.html', context)

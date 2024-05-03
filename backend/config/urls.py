@@ -31,6 +31,8 @@ urlpatterns = [
     path('campaign-finance/top-10-donors-piechart/', views.PieChart),
     path('campaign-finance/top-10-donors-barchart/', views.BarChart),
     path('campaign-finance/donor-party-sankey/', views.FinanceSankey),
+    path('campaign-finance/donor-bubble-chart/', views.BubbleChart),
+
 
 
     ################################################################################
