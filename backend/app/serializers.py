@@ -132,5 +132,7 @@ class LoknitiResponsesSerializer(serializers.ModelSerializer):
             "respondent_no",
             "election_year",
             "question_var",
-            "responder"
+            "response",
+            "responder",
+            "entry"
         ]

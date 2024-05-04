@@ -10,6 +10,7 @@ import pandas
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from app.models import LoknitiResponders, LoknitiCodebook
+from app.management import load_responses
 
 # pylint: disable=duplicate-code
 
@@ -117,4 +118,5 @@ class Command(BaseCommand):
                 education_level=education_level,
                 occupation=occupation
             )
+            # load_responses(responders, row, file_path)
             responders.save()
