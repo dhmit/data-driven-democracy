@@ -20,20 +20,19 @@ def get_questions(year):
         q_map[i.question_var] = i.question_text
     return q_map
 
-def load_responses(responders, row, filepath):
+def load_responses(responders, row):
     """
-    Load Responses given Responder, row of entry, and path to CSV 
+    Load Responses given Responder and Codebook instance row 
     """
     # get survey questions
     questions = get_questions(responders.election_year)
-    df = pandas.read_csv(filepath)
     for q_var in questions:
         responses = LoknitiResponses(
             respondent_no = responders.respondent_no,
             election_year = responders.election_year,
             question_var = q_var,
-            response = df.iloc[row][q_var],
+            response = row[q_var],
             responder = responders,
-            entry = df.iloc[row]
+            entry = row
         )
         responses.save()
