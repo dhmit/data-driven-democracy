@@ -1,4 +1,6 @@
 .navbar {
+    padding:0 15px!important;
+
     .link-home {
         font-size: 1.25rem;
         font-weight: bold;
@@ -14,3 +16,35 @@
         width: 10rem;
     }
 }
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.navbar li {
+    display: inline-block;
+}
+.navbar li a {
+    color: black;
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+.navbar ul ul {
+    position: absolute;
+    top: 100%;
+    display: none;
+}
+.navbar ul ul li {
+    display: block;
+    background-color: white;
+}
+    
+.navbar li:hover ul {
+    display: block;
+}
+.navbar ul ul li a:hover {
+    background-color: #555;
+    }
+    
+        
