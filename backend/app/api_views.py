@@ -192,7 +192,7 @@ def campaign_finance_donor_subset(request, donor_name):
 @api_view(['GET'])
 def get_lokniti_codebook(request):
     """
-    API endpoint to get codebook for testing
+    API endpoint to get codebook
     """
     responses = LoknitiCodebook.objects.all()
     serializer = LoknitiCodebookSerializer(responses, many=True)
@@ -202,9 +202,23 @@ def get_lokniti_codebook(request):
 @api_view(['GET'])
 def get_lokniti_responders(request):
     """
-    API endpoint to get responders for testing
+    API endpoint to get responders
     """
     responses = LoknitiResponders.objects.filter(PC_id=1, PS_id=1)
+    serializer = LoknitiRespondersSerializer(responses, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_responders_by_constituency(request, election_year, state_name, pc_id):
+    """
+    API endpoint to get responders by constituency
+    """
+    state_name = state_name.replace("_", " ")
+    if election_year == 2009:
+        state_name = state_name.upper()
+    responses = LoknitiResponders.objects.filter(
+        election_year=election_year, state_name=state_name, PC_id=pc_id)
     serializer = LoknitiRespondersSerializer(responses, many=True)
     return Response(serializer.data)
 

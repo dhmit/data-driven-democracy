@@ -19,7 +19,7 @@ export function MapBase({
     singleLayer = false,
     defaultVisibleLayers = [],
     bounds = [
-        [38.2, 100],
+        [38.2, 105],
         [5.63, 67]
     ],
     zoom = 5,
@@ -27,7 +27,11 @@ export function MapBase({
     maxZoom = 8,
     mapChanged = false,
     dataToDisplay = {},
-    handleSliderChange
+    handleSliderChange,
+    legendGrades,
+    legendLabels,
+    colorLegendFunc,
+    legendTitle
 }) {
     const yearMarks = [
         {
@@ -92,7 +96,12 @@ export function MapBase({
                     height: "100%"
                 }}
             >
-                <GradientLegend />
+                <GradientLegend
+                    getColor={colorLegendFunc}
+                    title={legendTitle}
+                    grades={legendGrades}
+                    labels={legendLabels}
+                />
                 <div className="preview">
                     <DataPreview dataToDisplay={dataToDisplay} />
                     <DiscreteSlider handleSliderChange={handleSliderChange} marks={yearMarks} />
@@ -147,7 +156,11 @@ MapBase.propTypes = {
     maxZoom: PropTypes.number,
     mapChanged: PropTypes.bool,
     dataToDisplay: PropTypes.array,
-    handleSliderChange: PropTypes.func
+    handleSliderChange: PropTypes.func,
+    legendGrades: PropTypes.array,
+    legendTitle: PropTypes.string,
+    colorLegendFunc: PropTypes.func,
+    legendLabels: PropTypes.object
 };
 
 export default MapBase;
