@@ -23,6 +23,12 @@ const Home = () => {
                     hands-on experience in translating complex datasets into compelling,
                     user-friendly narratives.
                 </p>
+                <p>
+                    This website contains sample mapping and graphical depictions of data from 
+                    three different datasources from the Ashoka University Trivedi Centre for
+                    Political Data, the Election Commission of India, and the Lokniti: Programme
+                    for Competitive Democracy.
+                </p>
             </div>
             <div className="image-block">
                 <img src={homepage_pic} alt="Data Driven Democracy Image" />
