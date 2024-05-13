@@ -9,6 +9,7 @@ import CompetitivenessMap from "./components/CompetitivenessMap";
 import PieChart from "./components/PieChart";
 import BarChart from "./components/BarChart";
 import FinanceSankey from "./components/FinanceSankey";
+import CasteMap from "./components/CasteMap";
 const COMPONENT_PROPS_RAW = document.getElementById("component_props").text;
 const COMPONENT_NAME_RAW = document.getElementById("component_name").text;
 const COMPONENT_PROPS = JSON.parse(COMPONENT_PROPS_RAW);
@@ -20,7 +21,8 @@ const COMPONENTS = {
     PieChart,
     BarChart,
     FinanceSankey,
-    CompetitivenessMap
+    CompetitivenessMap,
+    CasteMap
 };
 
 const PreselectedComponent = COMPONENTS[COMPONENT_NAME || "ErrorNotFoundComponent"];

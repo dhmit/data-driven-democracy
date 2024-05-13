@@ -31,6 +31,7 @@ urlpatterns = [
     path('campaign-finance/top-10-donors-piechart/', views.PieChart),
     path('campaign-finance/top-10-donors-barchart/', views.BarChart),
     path('campaign-finance/donor-party-sankey/', views.FinanceSankey),
+    path('castemap/', views.LoknitiCasteMap),
 
 
     ################################################################################
@@ -62,6 +63,9 @@ urlpatterns = [
     path("api/codebook/",
          api_views.get_lokniti_codebook),
     path("api/responderstest/",
-         api_views.get_lokniti_responders)
+         api_views.get_lokniti_responders),
+    path("api/responders/<int:election_year>/<str:state_name>/<int:pc_id>",
+         api_views.get_responders_by_constituency)
+
 
 ]
