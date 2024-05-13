@@ -10,7 +10,6 @@ import pandas
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from app.models import LoknitiResponders, LoknitiCodebook
-from app.management import load_responses
 
 # pylint: disable=duplicate-code
 
