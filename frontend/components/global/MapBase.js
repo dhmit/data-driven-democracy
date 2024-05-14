@@ -74,7 +74,6 @@ export function MapBase({
 
     function toggleLayer(event) {
         const clickedLayer = event.target.value;
-        console.log(clickedLayer);
         let newVisibleLayers = visibleLayers;
         if (singleLayer) {
             newVisibleLayers = [];

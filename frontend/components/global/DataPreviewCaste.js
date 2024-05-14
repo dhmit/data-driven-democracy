@@ -4,7 +4,6 @@ import * as PropTypes from "prop-types";
 import "../../scss/mapLegends.scss";
 
 const DataPreview = ({dataToDisplay}) => {
-    console.log("DATA TO DI", dataToDisplay);
     return (
         <div className="previewLegend">
             {dataToDisplay && (
