@@ -230,13 +230,15 @@ def get_lokniti_responses_by_question_and_year(request, election_year, question_
     election year
     """
     responses = LoknitiResponses.objects.filter(
-        election_yearyear=election_year, question_var=question_var)
+        responder__election_year=election_year, question_var=question_var)
     serializer = LoknitiResponsesSerializer(responses, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
-def get_lokniti_responses_by_constituency(request, election_year, state_name, PC_id, question_election_year, question_var_orig):
+# pylint: disable=too-many-arguments
+def get_lokniti_responses_by_constituency(
+    request, election_year, state_name, PC_id, question_election_year, question_var_orig):
     """
     API endpoint to get all responses to a question in a specific
     election year and constituency based on a question variable name
@@ -250,7 +252,9 @@ def get_lokniti_responses_by_constituency(request, election_year, state_name, PC
         question_text=question_text, election_year=election_year).question_var
 
     responses = LoknitiResponses.objects.filter(
-        election_year=election_year, question_var=question_var, responder__state_name=state_name, responder__PC_id=PC_id)
+        responder__election_year=election_year, question_var=question_var,
+        responder__state_name=state_name, responder__PC_id=PC_id
+    )
     serializer = LoknitiResponsesSerializer(responses, many=True)
 
     return Response(serializer.data)
