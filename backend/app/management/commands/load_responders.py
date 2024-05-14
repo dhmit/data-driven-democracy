@@ -39,7 +39,7 @@ DISTINGUISHING_ATTRS = [
 
 class Command(BaseCommand):
     """
-    Custom django-admin command to load Lok Sabha data over the years
+    Custom django-admin command to load Lokniti data over the years
     """
 
     help = ""
