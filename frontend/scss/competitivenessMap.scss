@@ -7,7 +7,7 @@
     text-align: left;
     font-size: large;
     background-color: "red";
-    align-items: center;
+    align-items: top;
     justify-content: left;
     font-size: larger;
     padding-left: 2%;
@@ -20,11 +20,11 @@
 
 .slider {
     width: 50%;
-    position: absolute;
+    position: relative;
     right: 0;
     display: flex;
-    display: flex;
     justify-content: center;
+    align-items: top;
     padding-left: 5%;
     flex-direction: column;
 }
@@ -50,7 +50,7 @@
 }
 
 .map-base {
-    width: 50%;
+    width: 80%;
     padding-bottom: -20%;
     position: relative;
 }

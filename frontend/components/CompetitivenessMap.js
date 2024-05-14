@@ -20,6 +20,43 @@ const CompetitivenessMap = () => {
     const [mapChanged, setMapChanged] = useState(false);
 
     const constituencyDataRef = useRef(constituencyData);
+
+    function getColor(value) {
+        if (value > 30) {
+            return "#FFD6D6";
+        } else if (value > 20) {
+            return "#FFB5B5";
+        } else if (value > 10) {
+            return "#FF8383";
+        } else if (value > 7) {
+            return "#FF5C5C";
+        } else if (value > 5) {
+            return "#FF2E2E";
+        } else if (value > 3) {
+            return "#FF0000";
+        } else if (value > 2) {
+            return "#D10000";
+        } else if (value > 1) {
+            return "#A30000";
+        } else {
+            return "#750000";
+        }
+    }
+
+    const grades = [0, 1, 2, 3, 5, 7, 10, 20, 30];
+    const labels = {
+        0: "0%",
+        1: "1%",
+        2: "2%",
+        3: "3%",
+        5: "5%",
+        7: "7%",
+        10: "10%",
+        20: "20%",
+        30: "30%"
+    };
+
+    const title = "Percent Margin";
     useEffect(() => {
         constituencyDataRef.current = constituencyData;
         if (displayData) {
@@ -124,6 +161,10 @@ const CompetitivenessMap = () => {
                         mapChanged={mapChanged}
                         dataToDisplay={previewData}
                         handleSliderChange={handleSliderChange}
+                        legendGrades={grades}
+                        legendLabels={labels}
+                        colorLegendFunc={getColor}
+                        legendTitle={title}
                     />
                 ) : (
                     <Loading />

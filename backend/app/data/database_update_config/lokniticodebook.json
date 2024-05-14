@@ -1,0 +1,14 @@
+{
+    "model_name": "LoknitiCodebook",
+    "attr_to_column": {
+        "election_year": "year",
+        "question_var": "var_name",
+        "question_text": "question_text"
+    },
+    "file_names": [
+        "lokniti_data/Lokniti_Data_Codebook_2004.csv",
+        "lokniti_data/Lokniti_Data_Codebook_2009.csv",
+        "lokniti_data/Lokniti_Data_Codebook_2014.csv",
+        "lokniti_data/Lokniti_Data_Codebook_2019.csv"
+    ]
+}

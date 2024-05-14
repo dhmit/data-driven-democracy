@@ -1,0 +1,11 @@
+{
+    "config_type": "management_command",
+    "command_name": "load_responders",
+    "model_names": ["LoknitiResponders", "LoknitiResponses"],
+    "file_names": [
+        "lokniti_data/NES_2004_Data_file.csv",
+        "lokniti_data/NES_2009_Data_file.csv",
+        "lokniti_data/NES_2014_Data_file.csv",
+        "lokniti_data/NES_2019_Data_file.csv"
+    ]
+}

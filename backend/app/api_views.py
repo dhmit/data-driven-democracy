@@ -8,6 +8,9 @@ from rest_framework.response import Response
 
 from .models import (
     LSElection,
+    LoknitiResponders,
+    LoknitiResponses,
+    LoknitiCodebook,
     TCPDElection,
     SeatShare,
     CampaignFinance,
@@ -15,6 +18,9 @@ from .models import (
 
 from .serializers import (
     LSElectionSerializaer,
+    LoknitiRespondersSerializer,
+    LoknitiResponsesSerializer,
+    LoknitiCodebookSerializer,
     TCPDElectionSerializer,
     SeatShareSerializer,
     CampaignFinanceSerializer,
@@ -181,3 +187,95 @@ def campaign_finance_donor_subset(request, donor_name):
     campaign_finances = CampaignFinance.objects.filter(donor_name=donor_name)
     serializer = CampaignFinanceSerializer(campaign_finances, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_lokniti_codebook(request):
+    """
+    API endpoint to get codebook
+    """
+    responses = LoknitiCodebook.objects.all()
+    serializer = LoknitiCodebookSerializer(responses, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_lokniti_responders(request):
+    """
+    API endpoint to get responders
+    """
+    responses = LoknitiResponders.objects.filter(PC_id=1, PS_id=1)
+    serializer = LoknitiRespondersSerializer(responses, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_responders_by_constituency(request, election_year, state_name, pc_id):
+    """
+    API endpoint to get responders by constituency
+    """
+    state_name = state_name.replace("_", " ")
+    if election_year == 2009:
+        state_name = state_name.upper()
+    responses = LoknitiResponders.objects.filter(
+        election_year=election_year, state_name__icontains=state_name, PC_id=pc_id)
+    serializer = LoknitiRespondersSerializer(responses, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_lokniti_responses_by_question_and_year(request, election_year, question_var):
+    """
+    API endpoint to get all responses to a question in a specific
+    election year
+    """
+    responses = LoknitiResponses.objects.filter(
+        responder__election_year=election_year, question_var=question_var)
+    serializer = LoknitiResponsesSerializer(responses, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+# pylint: disable=too-many-arguments
+def get_lokniti_responses_by_constituency(
+        request, election_year, state_name, PC_id, question_election_year, question_var_orig):
+    """
+    API endpoint to get all responses to a question in a specific
+    election year and constituency based on a question variable name
+    from a specific year
+    """
+
+    question_text = LoknitiCodebook.objects.get(
+        question_var=question_var_orig, election_year=question_election_year).question_text
+
+    question_var = LoknitiCodebook.objects.get(
+        question_text=question_text, election_year=election_year).question_var
+
+    responses = LoknitiResponses.objects.filter(
+        responder__election_year=election_year, question_var=question_var,
+        responder__state_name__icontains=state_name, responder__PC_id=PC_id
+    )
+    serializer = LoknitiResponsesSerializer(responses, many=True)
+
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_caste_data(request, election_year=2004):
+    """
+    API endpoint to get data and colors for competitiveness map
+    """
+    colors_path = os.path.join(
+        settings.GEOJSON_DIR, "casteColors.json")
+    with open(colors_path, encoding='utf-8') as f:
+        colors_json = json.load(f)
+
+    data_path = os.path.join(
+        settings.GEOJSON_DIR, "casteData.json")
+    with open(data_path, encoding='utf-8') as f:
+        data_json = json.load(f)
+
+        return Response({
+            "colors": colors_json[str(election_year)],
+            "data": data_json[str(election_year)]
+        })
