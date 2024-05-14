@@ -19,10 +19,6 @@ const CasteMap = () => {
     const [previewId, setPreviewId] = useState(null);
     const [mapChanged, setMapChanged] = useState(false);
     // COMMENTED VARIABLES USED TO GET INITIAL DATA TO PLACE ON BACKEND
-    let newConstData = {};
-    const [allFeatures, setAllFeatures] = useState({});
-    const [allConstData, setAllConstData] = useState({});
-    const [allColors, setAllColors] = useState({});
 
     const constituencyDataRef = useRef(constituencyData);
 
@@ -48,15 +44,6 @@ const CasteMap = () => {
     };
 
     useEffect(() => {}, [displayData]);
-    function countObjects(obj, condiiton) {
-        let count = 0;
-        obj.forEach((obj1) => {
-            if (obj1.caste.substring(0, 1) === condiiton) {
-                count++;
-            }
-        });
-        return count;
-    }
 
     useEffect(() => {
         constituencyDataRef.current = constituencyData;
@@ -115,136 +102,25 @@ const CasteMap = () => {
         getGeojson();
     }, []);
 
-    useEffect(() => {}, features);
-    async function fetchMoreFeatures(geojson, year) {
-        if (!geojson) return null;
-
-        const result = await Promise.all(
-            geojson["features"].map(async (feature) => {
-                let color = "#ababab";
-                let state = feature["properties"]["State_Name"];
-
-                if (state) {
-                    if (state === "Telangana" && year < 2019) {
-                        state = "Andhra Pradesh";
-                    }
-                    state = state.replace(/ /g, "_");
-                }
-
-                const constituency_no = feature["properties"]["Constituency_No"];
-                const dataResponse = await fetch(
-                    `/api/responders/${year}/${state}/${constituency_no}`
-                );
-
-                const result = await dataResponse.json();
-                let caste_count = {
-                    1: 0,
-                    2: 0,
-                    3: 0,
-                    4: 0
-                };
-                if (result && result.length > 0) {
-                    caste_count[1] = countObjects(result, "1");
-                    caste_count[2] = countObjects(result, "2");
-
-                    caste_count[3] = countObjects(result, "3");
-
-                    caste_count[4] = countObjects(result, "4");
-
-                    let maxKey = null;
-                    let maxValue = -Infinity;
-
-                    // Iterate over object keys
-                    let total_responses = 0;
-                    for (let key in caste_count) {
-                        total_responses += caste_count[key];
-                        // Compare current value with max value
-                        if (caste_count[key] > maxValue) {
-                            maxValue = caste_count[key];
-                            maxKey = key;
-                        }
-                    }
-                    const caste_mapping = {
-                        1: "Scheduled Caste",
-                        2: "Scheduled Tribe",
-                        3: "Other Backwards Caste",
-                        4: "Other"
-                    };
-                    color = getColor(maxKey);
-
-                    if (!color) {
-                        color = "#ababab";
-                    }
-
-                    newConstData[feature.id] = {
-                        election_year: electionYear,
-                        state_name: result[0].state_name,
-                        constituency_name: feature.properties.Constituency_Name,
-                        caste_one: Math.round((caste_count[1] / total_responses) * 100),
-                        caste_two: Math.round((caste_count[2] / total_responses) * 100),
-                        caste_three: Math.round((caste_count[3] / total_responses) * 100),
-                        caste_four: Math.round((caste_count[4] / total_responses) * 100),
-                        top_caste: caste_mapping[maxKey],
-                        top_caste_percentage: Math.round(
-                            (caste_count[maxKey] / total_responses) * 100
-                        )
-                    };
-                } else {
-                    newConstData[feature.id] = null;
-                    console.log("NOT FOUND", electionYear, state, constituency_no);
-                }
-
-                return {feature, color};
-            })
-        );
-
-        return result;
-    }
-
-    useEffect(() => {}, [electionYear]);
-    // update colors on map and constituency data displayed when year changes
+    // updates map colors and data when electionYear changes
     useEffect(() => {
         if (!mapData) return;
-        let fetchMore = true;
+        async function getMapColors() {
+            const colorsResponse = await fetch(`/api/caste_colors/${electionYear}`);
 
-        // checks if any year's data has been cached
+            const colorsResult = await colorsResponse.json();
 
-        if (allFeatures) {
-            const newObj = {};
-            let counter = 1;
-            for (const key in allFeatures[electionYear]) {
-                newObj[counter++] = {color: allFeatures[electionYear][key].color};
-            }
-            let newColorsData = {...allColors};
-            newColorsData[electionYear] = newObj;
-            setAllColors({...newColorsData});
+            const newFeatures = mapData["features"].map((feature, index) => ({
+                feature: feature,
+                ...colorsResult["colors"][index + 1] // Merge color object at index
+            }));
 
-            // if the data for that given year is already cached
-            if (allFeatures[electionYear]) {
-                setFeatures(allFeatures[electionYear]);
-                setConstituencyData(allConstData[electionYear]);
-                setMapChanged(!mapChanged);
-                fetchMore = false;
-            }
+            setFeatures(newFeatures);
+            setConstituencyData(colorsResult["data"]);
+            setMapChanged(!mapChanged);
         }
-        if (fetchMore) {
-            async function getFeatures() {
-                newConstData = {};
-                const newFeatures = await fetchMoreFeatures(mapData, electionYear);
 
-                setFeatures(newFeatures);
-
-                allFeatures[electionYear] = newFeatures;
-                setAllFeatures({...allFeatures});
-
-                setConstituencyData(newConstData);
-                allConstData[electionYear] = newConstData;
-                setAllConstData({...allConstData});
-
-                setMapChanged(!mapChanged);
-            }
-            getFeatures();
-        }
+        getMapColors();
     }, [mapData, electionYear]);
 
     return (

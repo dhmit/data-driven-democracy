@@ -238,7 +238,7 @@ def get_lokniti_responses_by_question_and_year(request, election_year, question_
 @api_view(['GET'])
 # pylint: disable=too-many-arguments
 def get_lokniti_responses_by_constituency(
-    request, election_year, state_name, PC_id, question_election_year, question_var_orig):
+        request, election_year, state_name, PC_id, question_election_year, question_var_orig):
     """
     API endpoint to get all responses to a question in a specific
     election year and constituency based on a question variable name
@@ -258,3 +258,24 @@ def get_lokniti_responses_by_constituency(
     serializer = LoknitiResponsesSerializer(responses, many=True)
 
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_caste_data(request, election_year=2004):
+    """
+    API endpoint to get data and colors for competitiveness map
+    """
+    colors_path = os.path.join(
+        settings.GEOJSON_DIR, "casteColors.json")
+    with open(colors_path, encoding='utf-8') as f:
+        colors_json = json.load(f)
+
+    data_path = os.path.join(
+        settings.GEOJSON_DIR, "casteData.json")
+    with open(data_path, encoding='utf-8') as f:
+        data_json = json.load(f)
+
+        return Response({
+            "colors": colors_json[str(election_year)],
+            "data": data_json[str(election_year)]
+        })
