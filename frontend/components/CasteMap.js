@@ -78,7 +78,7 @@ const CasteMap = () => {
                 layer.setStyle({color: "white", weight: 2});
 
                 if (constituencyData[e.target.feature.id]) {
-                    setDisplayData(constituencyData[e.target.feature.id]);
+                    setDisplayData(constituencyDataRef.current[e.target.feature.id]);
                     setDisplayId(e.target.feature.id);
                 } else {
                     setDisplayData(null);
@@ -91,7 +91,7 @@ const CasteMap = () => {
                 layer.setStyle({color: "white", weight: 2});
 
                 if (constituencyData[e.target.feature.id]) {
-                    setPreviewData(constituencyData[e.target.feature.id]);
+                    setPreviewData(constituencyDataRef.current[e.target.feature.id]);
                     setPreviewId(e.target.feature.id);
                 } else {
                     setPreviewData(null);
