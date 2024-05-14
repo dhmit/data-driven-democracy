@@ -23,7 +23,7 @@ context = {
     'component_name': 'ExampleId'
 }
 """
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
 
 def index(request):
@@ -31,14 +31,14 @@ def index(request):
     Home page
     """
 
-    _context = {
+    context = {
         'page_metadata': {
             'title': 'Home page'
         },
         'component_name': 'Home'
     }
 
-    return redirect("/competitiveness")
+    return render(request, 'index.html', context)
 
 
 def competitiveness(request):
