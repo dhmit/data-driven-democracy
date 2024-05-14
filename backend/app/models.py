@@ -125,8 +125,6 @@ class LoknitiResponses(models.Model):
     a specific election year
     """
 
-    respondent_no = models.IntegerField()
-    election_year = models.IntegerField()
     question_var = models.CharField(max_length=20)
     response = models.CharField(max_length=500)
     responder = models.ForeignKey(LoknitiResponders,  on_delete=models.SET_NULL, null=True)

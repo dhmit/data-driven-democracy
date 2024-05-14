@@ -28,8 +28,6 @@ def load_responses(responder, row):
 
     for q_var, codebook_entry in question_vars.items():
         response = LoknitiResponses(
-            respondent_no=responder.respondent_no,
-            election_year=responder.election_year,
             question_var=q_var,
             response=getattr(row, q_var),
             responder=responder,
