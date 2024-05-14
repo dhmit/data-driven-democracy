@@ -5,13 +5,36 @@ Updates local db with values from base csv dataset
 """
 
 import os
-import pandas
+import pandas as pd
 
-from django.conf import settings
+from tqdm import tqdm
+
 from django.core.management.base import BaseCommand
 from app.models import LoknitiResponders, LoknitiCodebook
+from .load_responses import load_responses
 
-# pylint: disable=duplicate-code
+ATTR_TO_QUESTION = {
+    "state_name": "State Name",
+    "PC_id": "P.C. ID",
+    "AC_id": "A.C. ID",
+    "PS_id": "P.S. ID",
+    "respondent_no": "Respondent Number",
+    "age": "What is your age?",
+    "gender": "What is your gender?",
+    "caste": "What is your caste?",
+    "religion": "What is your religion?",
+    "income": "What is your total monthly household income?",
+    "education_level": "Up to what level have you studied?",
+    "occupation": "What is your main occupation?"
+}
+
+DISTINGUISHING_ATTRS = [
+    "state_name",
+    "PC_id",
+    "AC_id",
+    "PS_id",
+    "respondent_no"
+]
 
 
 class Command(BaseCommand):
@@ -23,99 +46,62 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "dataset_name",
+            "dataset_path",
             type=str,
             action="store",
-            help="Name of dataset in app/data folder (with extension)",
+            help="Path to dataset",
+        )
+        parser.add_argument(
+            "--hide_progress",
+            action="store_true",
+            help="Hide import progress bar"
         )
 
     def handle(self, *args, **options):
-        file_name = options.get("dataset_name")
-        file_path = os.path.join(settings.DATASET_DIR, file_name)
-        df = pandas.read_csv(file_path)
+        file_path = options.get("dataset_path")
+        hide_progress = options.get("hide_progress")
 
-        year = file_name[file_name.index("2"):file_name.index("2")+4]
+        df = pd.read_csv(file_path)
+        _, file_name = os.path.split(file_path)
+        year = file_name.split('_')[1]
 
-        cols = {}
-
-        question_column_mappings = [
-            ("state", "State Name"),
-            ("pc", "P.C. ID"),
-            ("ac", "A.C. ID"),
-            ("ps", "P.S. ID"),
-            ("resno", "Respondent Number"),
-            ("age", "What is your age?"),
-            ("gender", "What is your gender?"),
-            ("caste", "What is your caste?"),
-            ("religion", "What is your religion?"),
-            ("income", "What is your total monthly household income?"),
-            ("education", "Up to what level have you studied?"),
-            ("occupation", "What is your main occupation?")
-        ]
+        attr_to_column = {}
+        if not LoknitiCodebook.objects.all():
+            raise Exception("""LoknitiCodebook needs to be populated first by running:
+                            'python manage.py update_db --config_names lokniticodebook'""")
 
         # Retrieve LoknitiCodebook question variables for each question text
-        for column_name, question_text in question_column_mappings:
+        for attr_name, question_text in ATTR_TO_QUESTION.items():
             try:
-                cols[column_name] = LoknitiCodebook.objects.get(
+                attr_to_column[attr_name] = LoknitiCodebook.objects.get(
                     election_year=year, question_text=question_text
                 ).question_var
             except LoknitiCodebook.DoesNotExist:
-                print(column_name, None)
+                attr_to_column[attr_name] = None
+                print(attr_name, "not recorded")
 
-        for (state_name, constituency_no, assembly_no, ps_no, respondent_no, age,
-             gender, caste, religion, income, education_level, occupation) in zip(
-            # column names based on file/election year
-            df[cols.get("state", "")] if cols.get(
-                "state", "") else [None]*len(df),
-            df[cols.get("pc", "")] if cols.get("pc", "") else [None]*len(df),
-            df[cols.get("ac", "")] if cols.get("ac", "") else [None]*len(df),
-            df[cols.get("ps", "")] if cols.get("ps", "") else [None]*len(df),
-            df[cols.get("resno", "")] if cols.get(
-                "resno", "") else [0]*len(df),
-            df[cols.get("age", "")] if cols.get("age", "") else [None]*len(df),
-            df[cols.get("gender", "")] if cols.get(
-                "gender", "") else [None]*len(df),
-            df[cols.get("caste", "")] if cols.get(
-                "caste", "") else [None]*len(df),
-            df[cols.get("religion", "")] if cols.get(
-                "religion", "") else [None]*len(df),
-            df[cols.get("income", "")] if cols.get(
-                "income", "") else [None]*len(df),
-            df[cols.get("education", "")
-               ] if cols.get("education", "") else [None]*len(df),
-            df[cols.get("occupation", "")] if cols.get(
-                "occupation", "") else [None]*len(df),
-        ):
+        def get_column_value(row, column_name, attr_name):
+            value = getattr(row, column_name, None)
+            if pd.isnull(value):
+                value = None
+            if value is not None and attr_name in ["PS_id", "respondent_no", "age"]:
+                value = int(float(value))
+            return value
 
-            try:
-                age = int(float(age))
-            except ValueError:
-                age = None
+        for row in tqdm(df.itertuples(), total=len(df), disable=hide_progress):
+            attr_dict = {
+                attr_name: get_column_value(row, column_name, attr_name)
+                for attr_name, column_name in attr_to_column.items()
+                if column_name is not None
+            }
 
-            try:
-                respondent_no = (int(respondent_no))
-            except ValueError:
-                respondent_no = None
+            # Responder already exists
+            if LoknitiResponders.objects.filter(**{
+                    attr: attr_dict[attr] for attr in DISTINGUISHING_ATTRS}):
+                continue
 
-            try:
-                ps_no = (int(ps_no))
-            except ValueError:
-                ps_no = None
-
-            responders = LoknitiResponders(
-                election_year=year,
-                state_name=state_name.split(": ", 1)[1],
-                PC_id=constituency_no,
-                AC_id=assembly_no,
-                PS_id=ps_no,
-                respondent_no=respondent_no,
-                age=age,
-                gender=gender,
-                caste=caste,
-                religion=religion,
-                income=income,
-                education_level=education_level,
-                occupation=occupation
+            responder = LoknitiResponders(
+                election_year=year, **attr_dict
             )
-            # load_responses(responders, row, file_path)
-            responders.save()
+            responder.save()
+            load_responses(responder, row)
