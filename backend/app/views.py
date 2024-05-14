@@ -23,7 +23,7 @@ context = {
     'component_name': 'ExampleId'
 }
 """
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
 
 def index(request):
