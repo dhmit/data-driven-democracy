@@ -1,0 +1,58 @@
+var_name,year,question_text
+st_id,2009,State Name
+pc_id,2009,P.C. ID
+ac_id,2009,A.C. ID
+ps_id,2009,P.S. ID
+res,2009,Respondent Number
+q1a,2009,Who did you vote for?
+q3a1,2009,Heard/Not Heard: Indo-US Nuclear Deal
+q3a2,2009,"(If Yes) For each one of them, please tell me how it affected your decision of whom to vote for - not very much, a lot or almost entierly?: Indo-US Nuclear Deal"
+q3b1,2009,Heard/Not Heard: Ram Setu controversy
+q3b2,2009,"(If Yes) For each one of them, please tell me how it affected your decision of whom to vote for - not very much, a lot or almost entierly?: Ram Setu controversy"
+q3c1,2009,Heard/Not Heard: Prices of everyday goods
+q3c2,2009,"(If Yes) For each one of them, please tell me how it affected your decision of whom to vote for - not very much, a lot or almost entierly?: Prices of everyday goods"
+q3d1,2009,Heard/Not Heard: Terrorist attacks
+q3d2,2009,"(If Yes) For each one of them, please tell me how it affected your decision of whom to vote for - not very much, a lot or almost entierly?: Terrorist attacks"
+q3e1,2009,Heard/Not Heard: Farmers sucides
+q3e2,2009,"(If Yes) For each one of them, please tell me how it affected your decision of whom to vote for - not very much, a lot or almost entierly?: Farmers sucides"
+q3f1,2009,Heard/Not Heard: Reservations for OBCs
+q3f2,2009,"(If Yes) For each one of them, please tell me how it affected your decision of whom to vote for - not very much, a lot or almost entierly?: Reservations for OBCs"
+q3g1,2009,Heard/Not Heard: Livelihood/employment opportunities
+q3g2,2009,"(If Yes) For each one of them, please tell me how it affected your decision of whom to vote for - not very much, a lot or almost entierly?: Livelihood/employment opportunities"
+q10,2009,What mattered to you more while deciding whom to vote for in the recent election - party or candidate?
+q10a,2009,(If ‘Party’ in Q10) What was the most important consideration in favour of the party?
+q10b,2009,(If ‘Candidate’ in Q10) What was the most important consideration in favour of the candidate?
+q16a,2009,(Now I will ask you about the last Lok Sabha elections held in 2004? I mean the MP elections for electing the Central Government in Delhi. Were you able to cast your vote or not? If yes) Who did you vote for?
+q20,2009,What is your opinion about the performance of the Congress led UPA Government during the last five years – would you say that you are satisfied or dissatisfied with it?
+q26a,2009,"(Agree/Disagree) People themselves are responsible for their poverty, not the government"
+q26b,2009,(Agree/Disagree) Foreign companies should not be allowed free trade in India
+q26c,2009,(Agree/Disagree) Country should increase spending on the army even if it increases the burden on ordinary people
+q26d,2009,(Agree/Disagree) The number of government employees should be reduced
+q26e,2009,(Agree/Disagree) The government factories and businesses should be sold/handed over to private companies.
+q26f,2009,(Agree/Disagree) Government should curb the right of workers and employees to strike
+q26g,2009,(Agree/Disagree) War is the only solution to the Indo-Pakistan problem
+a3a,2009,(Have you heard of the disputed structure (Babri Masjid) at Ayodhya? If Yes) Some people say that the demolition was justified while others say it was not justified – what would you say – was it justified or not justified?
+a3b,2009,"(Have you heard of the disputed structure (Babri Masjid) at Ayodhya? If heard about demolition) What would you suggest should be built on that site now - neither mosque nor temple, a mosque should be built, a temple should be built or both a mosque and a temple should be built?"
+a4a,2009,(Agree/Disagree) We should be loyal to our own region first and then to the country
+a4b,2009,(Agree/Disagree) Every community should be allowed to have it’s own laws to govern marriage and property rights
+a4c,2009,(Agree/Disagree) There should be a legal ban on religious conversions
+a4d,2009,(Agree/Disagree) Marriage of boys and girls from different castes should be banned
+a4e,2009,(Agree/Disagree) Prohibition (Ban of Liquor) should be imposed all over the country
+a4f,2009,"(Agree/Disagree) In a democracy, the will of the majority community should prevail"
+a4g,2009,(Agree/Disagree) Both sons and daughters should have equal share in their parents property
+a4h,2009,(Agree/Disagree) Minorities should adopt the customs of the majority community
+a4i,2009,(Agree/Disagree) Too much education for women is not good
+a6a,2009,(1) Reservation for SCs and STs is correct because it is in accordance with the principle of social justice. (2) Reservation for SCs and STs is wrong because it goes against the principle of merit
+a6b,2009,"(1) It is important that the government should make special schemes to uplift the poor and disadvantaged. (2) Instead of wasting money on such schemes, the government should improve the entire economy"
+a6c,2009,"(1) It does not matter what we wear Religion is about faith and not about tilak, cap, cross etc. (2) Tilak, cap, cross etc. are Markers of religion; it is essential that we wear such distinct Symbol of our religion."
+a6d,2009,"(1) Temples, Mosques, Churches and Gurudwaras are place of worship and should not be used for political purpose. (2) Even though Temples, Mosques, Churches and Gurudwaras are place of worship, there is nothing wrong in using them political purpose"
+a9,2009,Would you say that you belong to the majority community or you belong to the minority community?
+c11a,2009,(1) Someone who is accessible but corrupt. (2) Someone who is honest but inaccessible.
+c11b,2009,"(1) Someone who is involved in criminal cases, but can be relied on to get work done. (2)Someone who is known to be a gentleman, but can not always get work done."
+c11c,2009,"(1) A strong leader who does not listen to anyone else. (2) Someone who consults everyone, but is not a strong leader"
+c13,2009,"People have different opinions about the Congress led UPA Government. Some people believe that the economic policies of this Government have brought prosperity to the whole country, whereas some believe that only the rich have benefited and others believe that no one has benefited. What is your opinion – the whole country has become prosperous, only the rich have benefited or no one has benefited?"
+z2,2009,What is your age?
+z3,2009,What is your gender?
+z5,2009,Up to what level have you studied?
+z7a,2009,What is your caste?
+z8,2009,What is your religion?

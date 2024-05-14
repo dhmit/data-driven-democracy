@@ -85,3 +85,47 @@ class CampaignFinance(models.Model):
     party_name = models.CharField(
         max_length=37,
     )
+
+
+class LoknitiCodebook(models.Model):
+    election_year = models.IntegerField()
+    question_var = models.CharField(max_length=10)
+    question_text = models.CharField(max_length=500)
+
+
+class LoknitiResponders(models.Model):
+    """
+    Represents a responder
+    """
+    election_year = models.IntegerField(null=True, blank=True, default=None)
+    state_name = models.CharField(
+        max_length=50, null=True, blank=True, default=None)
+    PC_id = models.IntegerField(null=True, blank=True, default=None)
+    AC_id = models.IntegerField(null=True, blank=True, default=None)
+    PS_id = models.IntegerField(default=None, null=True, blank=True)
+    respondent_no = models.IntegerField(null=True, blank=True, default=None)
+    age = models.IntegerField(default=None, null=True, blank=True)
+    gender = models.CharField(
+        max_length=50, default=None, null=True, blank=True)
+    caste = models.CharField(
+        max_length=50, default=None, null=True, blank=True)
+    religion = models.CharField(
+        max_length=100, default=None, null=True, blank=True)
+    income = models.CharField(
+        max_length=100, default=None, null=True, blank=True)
+    education_level = models.CharField(
+        max_length=50, default=None, null=True, blank=True)
+    occupation = models.CharField(
+        max_length=100, default=None, null=True, blank=True)
+
+
+class LoknitiResponses(models.Model):
+    """
+    Represents a response to a survey question during
+    a specific election year
+    """
+
+    question_var = models.CharField(max_length=20)
+    response = models.CharField(max_length=500)
+    responder = models.ForeignKey(LoknitiResponders,  on_delete=models.SET_NULL, null=True)
+    entry = models.ForeignKey(LoknitiCodebook, on_delete=models.SET_NULL, null=True)

@@ -96,3 +96,17 @@ def FinanceSankey(request):
         'component_name': 'FinanceSankey'
     }
     return render(request, 'index.html', context)
+
+
+def LoknitiCasteMap(request):
+    """
+    Displays the distribution of caste groups on a map
+    """
+
+    context = {
+        'page_metadata': {
+            'title': 'Caste Map'
+        },
+        'component_name': 'CasteMap'
+    }
+    return render(request, 'index.html', context)

@@ -7,6 +7,9 @@ allow the frontend to suggest changes to the backend/database.
 from rest_framework import serializers
 from .models import (
     LSElection,
+    LoknitiCodebook,
+    LoknitiResponses,
+    LoknitiResponders,
     TCPDElection,
     SeatShare,
     CampaignFinance,
@@ -79,4 +82,54 @@ class CampaignFinanceSerializer(serializers.ModelSerializer):
             "party_name",
             "amount",
             "full_bond_number"
+        ]
+
+
+class LoknitiCodebookSerializer(serializers.ModelSerializer):
+    """
+    Serializes Lokniti codebook
+    """
+    class Meta:
+        model = LoknitiCodebook
+        fields = [
+            "election_year",
+            "question_text",
+            "question_var",
+        ]
+
+
+class LoknitiRespondersSerializer(serializers.ModelSerializer):
+    """
+    Serializes lokniti responses
+    """
+    class Meta:
+        model = LoknitiResponders
+        fields = [
+            "election_year",
+            "state_name",
+            "PC_id",
+            "AC_id",
+            "PS_id",
+            "respondent_no",
+            "age",
+            "gender",
+            "caste",
+            "religion",
+            "income",
+            "education_level",
+            "occupation"
+        ]
+
+
+class LoknitiResponsesSerializer(serializers.ModelSerializer):
+    """
+    Serializes lokniti responses
+    """
+    class Meta:
+        model = LoknitiResponses
+        fields = [
+            "question_var",
+            "response",
+            "responder",
+            "entry"
         ]
