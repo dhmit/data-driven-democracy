@@ -9,7 +9,6 @@ const BarChart = () => {
             try {
                 const response = await fetch("/api/all-campaign-finance/");
                 const jsonData = await response.json();
-                console.log("Fetched data:", jsonData); // Log fetched data to the console
                 setData(jsonData);
             } catch (error) {
                 console.error("Error fetching data:", error);
