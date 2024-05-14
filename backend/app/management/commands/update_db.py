@@ -32,6 +32,58 @@ def all_configs():
     return config_names
 
 
+def default_table_updater(table_config, file_path, table_offset, hide_progress=False):
+    """
+    Update table by creating model instances from specific csv columns
+    """
+    df = pandas.read_csv(file_path)
+
+    # Get model object
+    model = getattr(models, table_config["model_name"])
+
+    # Mapping of model attribute name to column in csv
+    attr_to_column = table_config["attr_to_column"]
+
+    num_rows = len(df)
+    for i in tqdm(range(num_rows), disable=hide_progress):
+        # Skip column id if it has already been loaded
+        if model.objects.filter(id=table_offset + i + 1):
+            # Would be better to implement this check based on some unique
+            # data id in csv rather than column number
+            continue
+
+        # Save model instance
+        model(**{
+            model_attr: df[df_column_name][i]
+            for model_attr, df_column_name in attr_to_column.items()
+        }).save()
+
+    # Increase offset by number of rows added from file
+    # (Temporary fix for configs with multiple files)
+    # TODO: Make duplicate checking reliable; currently depends on file
+    #       length and order.
+    return num_rows
+
+
+def command_based_table_updater(table_config, file_path, table_offset, hide_progress=False):
+    """
+    Use an arbitrary django management command to update a table
+    """
+    call_command(
+        table_config["command_name"],
+        file_path,
+        **table_config.get("args", {}),
+        hide_progress=hide_progress
+    )
+    return 0
+
+
+TABLE_UPDATERS = {
+    "default": default_table_updater,
+    "management_command": command_based_table_updater
+}
+
+
 class Command(BaseCommand):
     """
     Custom django-admin command to load data from base csvs
@@ -68,6 +120,7 @@ class Command(BaseCommand):
         hide_progress = options.get("hide_progress")
 
         # Create db file if it does not exist and apply any migrations
+        call_command("makemigrations")
         call_command("migrate")
 
         for config_name in config_names:
@@ -77,36 +130,23 @@ class Command(BaseCommand):
             with open(config_path, 'r', encoding="utf-8") as f:
                 table_config = json.load(f)
 
-            # Get model object
-            model_name = table_config["model_name"]
-            model = getattr(models, model_name)
+            # Get model names to print to console
+            if not (model_names := table_config.get("model_names")):
+                model_names = [table_config["model_name"]]            
+            model_names_str = ", ".join(model_names)
+            print(f"Updating tables: {model_names_str}")
 
-            # Mapping of model attribute name to column in csv
-            attr_to_column = table_config["attr_to_column"]
-
-            print(f"Updating {model_name} table:")
+            table_updater = TABLE_UPDATERS.get(
+                table_config.get("config_type"),
+                default_table_updater
+            )
 
             table_offset = 0  # Index in the database table (model id)
             for file_name in table_config["file_names"]:
-                df = pandas.read_csv(os.path.join(settings.DATASET_DIR, file_name))
+                file_path = os.path.join(settings.DATASET_DIR, file_name)
                 print(f"Importing from {file_name}:")
 
-                num_rows = len(df)
-                for i in tqdm(range(num_rows), disable=hide_progress):
-                    # Skip column id if it has already been loaded
-                    if model.objects.filter(id=table_offset + i + 1):
-                        # Would be better to implement this check based on some unique
-                        # data id in csv rather than column number
-                        continue
-
-                    # Save model instance
-                    model(**{
-                        model_attr: df[df_column_name][i]
-                        for model_attr, df_column_name in attr_to_column.items()
-                    }).save()
-
-                # Increase offset by number of rows added from file
-                # (Temporary fix for configs with multiple files)
-                # TODO: Make duplicate checking reliable; currently depends on file
-                #       length and order.
-                table_offset += num_rows
+                table_offset += table_updater(
+                    table_config, file_path, table_offset,
+                    hide_progress=hide_progress
+                )
