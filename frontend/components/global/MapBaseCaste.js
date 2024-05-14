@@ -10,6 +10,7 @@ import DiscreteSlider from "./DiscreteSliderOnMap";
 export const DEFAULT_MAP_CENTER_LAT = 24.5937;
 export const DEFAULT_MAP_CENTER_LNG = 80.9629;
 
+// TODO: Integrate with existing MapBase to reduce duplicate code
 export function MapBase({
     className = "map-base",
     lat = DEFAULT_MAP_CENTER_LAT,
