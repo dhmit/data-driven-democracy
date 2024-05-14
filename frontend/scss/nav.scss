@@ -1,4 +1,8 @@
 .navbar {
+    padding:0 15px!important;
+    position: relative;
+    z-index: 1000;
+
     .link-home {
         font-size: 1.25rem;
         font-weight: bold;
@@ -13,4 +17,41 @@
         max-width: 75vw;
         width: 10rem;
     }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 50%; // to get the links to be spaced out, may look different on bigger screens
+        display: flex; 
+        justify-content: space-around;
+    }
+    li {
+        display: block;
+        flex-grow: 1;
+    }
+    li a {
+        color: black;
+        display: block;
+        padding: 10px 20px;
+        width: 100%;
+        box-sizing: border-box;
+        text-decoration: none;
+    }
+    ul ul {
+        position: absolute;
+        top: 100%;
+        display: none;
+        z-index: 2000;
+    }
+    ul ul li {
+        display: block;
+        background-color: white;
+        width: 30%
+    }
+    li:hover ul {
+        display: block;
+    }
+    ul ul li a:hover {
+        background-color: #555;
+        }
 }
