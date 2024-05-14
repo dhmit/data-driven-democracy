@@ -132,7 +132,7 @@ class Command(BaseCommand):
 
             # Get model names to print to console
             if not (model_names := table_config.get("model_names")):
-                model_names = [table_config["model_name"]]            
+                model_names = [table_config["model_name"]]
             model_names_str = ", ".join(model_names)
             print(f"Updating tables: {model_names_str}")
 
