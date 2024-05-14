@@ -210,6 +210,16 @@ def get_lokniti_responders(request):
 
 
 @api_view(['GET'])
+def get_all_lokniti_responders(request):
+    """
+    API endpoint to get responders
+    """
+    responses = LoknitiResponders.objects.all()
+    serializer = LoknitiRespondersSerializer(responses, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
 def get_responders_by_constituency(request, election_year, state_name, pc_id):
     """
     API endpoint to get responders by constituency
@@ -218,7 +228,7 @@ def get_responders_by_constituency(request, election_year, state_name, pc_id):
     if election_year == 2009:
         state_name = state_name.upper()
     responses = LoknitiResponders.objects.filter(
-        election_year=election_year, state_name=state_name, PC_id=pc_id)
+        election_year=election_year, state_name__icontains=state_name, PC_id=pc_id)
     serializer = LoknitiRespondersSerializer(responses, many=True)
     return Response(serializer.data)
 
@@ -253,7 +263,7 @@ def get_lokniti_responses_by_constituency(
 
     responses = LoknitiResponses.objects.filter(
         responder__election_year=election_year, question_var=question_var,
-        responder__state_name=state_name, responder__PC_id=PC_id
+        responder__state_name__icontains=state_name, responder__PC_id=PC_id
     )
     serializer = LoknitiResponsesSerializer(responses, many=True)
 

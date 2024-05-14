@@ -118,7 +118,6 @@ class LoknitiRespondersSerializer(serializers.ModelSerializer):
             "income",
             "education_level",
             "occupation"
-
         ]
 
 
@@ -129,8 +128,6 @@ class LoknitiResponsesSerializer(serializers.ModelSerializer):
     class Meta:
         model = LoknitiResponses
         fields = [
-            "respondent_no",
-            "election_year",
             "question_var",
             "response",
             "responder",
