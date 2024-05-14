@@ -18,7 +18,6 @@ const CasteMap = () => {
     const [previewData, setPreviewData] = useState(null);
     const [previewId, setPreviewId] = useState(null);
     const [mapChanged, setMapChanged] = useState(false);
-    // COMMENTED VARIABLES USED TO GET INITIAL DATA TO PLACE ON BACKEND
 
     const constituencyDataRef = useRef(constituencyData);
 
