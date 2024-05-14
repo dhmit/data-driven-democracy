@@ -47,9 +47,7 @@ const CasteMap = () => {
         3: "Other"
     };
 
-    useEffect(() => {
-        console.log("DIDPLEYD", displayData);
-    }, [displayData]);
+    useEffect(() => {}, [displayData]);
     function countObjects(obj, condiiton) {
         let count = 0;
         obj.forEach((obj1) => {
@@ -80,7 +78,6 @@ const CasteMap = () => {
                 layer.setStyle({color: "white", weight: 2});
 
                 if (constituencyData[e.target.feature.id]) {
-                    console.log("TARGET", e.target);
                     setDisplayData(constituencyData[e.target.feature.id]);
                     setDisplayId(e.target.feature.id);
                 } else {
@@ -90,12 +87,6 @@ const CasteMap = () => {
             mouseover: (e) => {
                 // Highlight feature and display data on hover
                 e.target.bringToFront();
-                console.log(
-                    e,
-                    constituencyData,
-                    e.target.feature.id,
-                    constituencyData[e.target.feature.id]
-                );
 
                 layer.setStyle({color: "white", weight: 2});
 
@@ -124,30 +115,7 @@ const CasteMap = () => {
         getGeojson();
     }, []);
 
-    // updates map colors and data when electionYear changes
-    // useEffect(() => {
-    //     if (!mapData) return;
-    //     async function getMapColors() {
-    //         const colorsResponse = await fetch(`/api/competitiveness_colors/${electionYear}`);
-
-    //         const colorsResult = await colorsResponse.json();
-
-    //         const newFeatures = mapData["features"].map((feature, index) => ({
-    //             feature: feature,
-    //             ...colorsResult["colors"][index + 1] // Merge color object at index
-    //         }));
-
-    //         setFeatures(newFeatures);
-    //         setConstituencyData(colorsResult["data"]);
-    //         setMapChanged(!mapChanged);
-    //     }
-
-    //     getMapColors();
-    // }, [mapData, electionYear]);
-
-    useEffect(() => {
-        console.log("FEATURES CHANGED");
-    }, features);
+    useEffect(() => {}, features);
     async function fetchMoreFeatures(geojson, year) {
         if (!geojson) return null;
 
@@ -176,7 +144,6 @@ const CasteMap = () => {
                     4: 0
                 };
                 if (result && result.length > 0) {
-                    console.log("HIII", result);
                     caste_count[1] = countObjects(result, "1");
                     caste_count[2] = countObjects(result, "2");
 
@@ -187,7 +154,6 @@ const CasteMap = () => {
                     let maxKey = null;
                     let maxValue = -Infinity;
 
-                    console.log(electionYear, caste_count);
                     // Iterate over object keys
                     let total_responses = 0;
                     for (let key in caste_count) {
@@ -205,10 +171,8 @@ const CasteMap = () => {
                         4: "Other"
                     };
                     color = getColor(maxKey);
-                    console.log("COLOR", maxKey, color, state, constituency_no);
 
                     if (!color) {
-                        console.log("color undefined", maxKey, state_name, constituency_no);
                         color = "#ababab";
                     }
 
@@ -237,9 +201,7 @@ const CasteMap = () => {
         return result;
     }
 
-    useEffect(() => {
-        console.log("ELECTION YEAR CHANGED", electionYear);
-    }, [electionYear]);
+    useEffect(() => {}, [electionYear]);
     // update colors on map and constituency data displayed when year changes
     useEffect(() => {
         if (!mapData) return;
@@ -248,7 +210,6 @@ const CasteMap = () => {
         // checks if any year's data has been cached
 
         if (allFeatures) {
-            console.log(allFeatures, allConstData);
             const newObj = {};
             let counter = 1;
             for (const key in allFeatures[electionYear]) {
@@ -257,7 +218,6 @@ const CasteMap = () => {
             let newColorsData = {...allColors};
             newColorsData[electionYear] = newObj;
             setAllColors({...newColorsData});
-            console.log("COLORS DATA", newColorsData, allColors);
 
             // if the data for that given year is already cached
             if (allFeatures[electionYear]) {
@@ -273,7 +233,6 @@ const CasteMap = () => {
                 const newFeatures = await fetchMoreFeatures(mapData, electionYear);
 
                 setFeatures(newFeatures);
-                console.log("FEATURES CHANGED");
 
                 allFeatures[electionYear] = newFeatures;
                 setAllFeatures({...allFeatures});
