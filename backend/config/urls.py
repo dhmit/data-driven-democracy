@@ -63,7 +63,6 @@ urlpatterns = [
      path("api/responderstest/",
           api_views.get_lokniti_responders),
      path("api/responders/<int:election_year>/<str:state_name>/<int:pc_id>",
-          api_views.get_responders_by_constituency),
-     path("api/all_responders/", api_views.get_all_lokniti_responders)
+          api_views.get_responders_by_constituency)
 
 ]
