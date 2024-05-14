@@ -28,8 +28,7 @@ const Nav = () => {
                 <li>
                     <a href="#">Lokniti Data</a>
                     <ul>
-                        <li><a href="#">Placeholder</a></li>
-                        <li><a href="#">Option 2</a></li>
+                        <li><a href="/castemap/">Caste Map</a></li>
                     </ul>
                 </li>
             </ul>
